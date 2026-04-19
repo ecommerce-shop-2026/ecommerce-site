@@ -1,4 +1,4 @@
-// Product Data
+// Product Data with detailed specifications
 const products = [
     {
         id: 1,
@@ -6,7 +6,30 @@ const products = [
         price: 89.99,
         category: "Electronics",
         rating: 4.5,
-        icon: "fas fa-headphones"
+        reviews: 128,
+        icon: "fas fa-headphones",
+        images: [
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=600&fit=crop"
+        ],
+        description: "Premium wireless headphones with noise cancellation and 30-hour battery life.",
+        specifications: {
+            brand: "AudioPro",
+            model: "AP-2024",
+            connectivity: "Bluetooth 5.2",
+            battery: "30 hours",
+            charging: "USB-C, Wireless",
+            weight: "250g",
+            features: ["Noise Cancellation", "Touch Controls", "Voice Assistant", "Foldable Design"]
+        },
+        features: [
+            "Active Noise Cancellation",
+            "30-hour battery life",
+            "Quick charge (5 min = 3 hours)",
+            "Hi-Res Audio support",
+            "Comfortable memory foam ear cups"
+        ]
     },
     {
         id: 2,
@@ -14,7 +37,30 @@ const products = [
         price: 249.99,
         category: "Electronics",
         rating: 4.8,
-        icon: "fas fa-clock"
+        reviews: 256,
+        icon: "fas fa-clock",
+        images: [
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1579586337278-3fecf0d6e8e7?w=600&h=600&fit=crop"
+        ],
+        description: "Advanced smartwatch with health monitoring, GPS, and LTE connectivity.",
+        specifications: {
+            brand: "TechWear",
+            model: "TW-S5",
+            display: "1.78\" AMOLED",
+            battery: "48 hours",
+            connectivity: "Bluetooth, Wi-Fi, LTE",
+            waterResistance: "5 ATM",
+            sensors: ["Heart Rate", "ECG", "SpO2", "GPS", "Accelerometer"]
+        },
+        features: [
+            "Health monitoring (ECG, SpO2, Heart Rate)",
+            "Built-in GPS",
+            "LTE connectivity",
+            "Sleep tracking",
+            "Water resistant (50m)"
+        ]
     },
     {
         id: 3,
@@ -22,7 +68,30 @@ const products = [
         price: 29.99,
         category: "Fashion",
         rating: 4.3,
-        icon: "fas fa-tshirt"
+        reviews: 89,
+        icon: "fas fa-tshirt",
+        images: [
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=600&h=600&fit=crop"
+        ],
+        description: "100% organic cotton t-shirt with premium fit and sustainable production.",
+        specifications: {
+            material: "100% Organic Cotton",
+            weight: "180 GSM",
+            fit: "Regular Fit",
+            care: "Machine wash cold",
+            origin: "Made in USA",
+            sizes: ["S", "M", "L", "XL", "XXL"],
+            colors: ["Black", "White", "Gray", "Navy", "Green"]
+        },
+        features: [
+            "100% organic cotton",
+            "Sustainable production",
+            "Premium stitching",
+            "Soft touch finish",
+            "Colorfast dye"
+        ]
     },
     {
         id: 4,
@@ -30,7 +99,29 @@ const products = [
         price: 34.99,
         category: "Home & Living",
         rating: 4.6,
-        icon: "fas fa-mug-hot"
+        reviews: 67,
+        icon: "fas fa-mug-hot",
+        images: [
+            "https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1577937927131-5a34c0c62b3b?w=600&h=600&fit=crop"
+        ],
+        description: "Set of 4 premium ceramic mugs with ergonomic handle and dishwasher safe.",
+        specifications: {
+            material: "Premium Ceramic",
+            capacity: "12 oz each",
+            microwave: "Yes",
+            dishwasher: "Yes",
+            set: "4 pieces",
+            colors: ["White", "Black", "Blue", "Green"]
+        },
+        features: [
+            "Set of 4 premium mugs",
+            "Ergonomic handle design",
+            "Microwave and dishwasher safe",
+            "Lead-free glaze",
+            "Stackable design"
+        ]
     },
     {
         id: 5,
@@ -38,7 +129,29 @@ const products = [
         price: 49.99,
         category: "Health & Beauty",
         rating: 4.7,
-        icon: "fas fa-spa"
+        reviews: 142,
+        icon: "fas fa-spa",
+        images: [
+            "https://images.unsplash.com/photo-1556228578-9c360e1d8d34?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1556228578-9c360e1d8d34?w=600&h=600&fit=crop"
+        ],
+        description: "Organic face cream with hyaluronic acid and vitamin C for radiant skin.",
+        specifications: {
+            volume: "50ml",
+            skinType: "All skin types",
+            ingredients: "Organic, Vegan, Cruelty-free",
+            shelfLife: "24 months",
+            country: "Made in France",
+            keyIngredients: ["Hyaluronic Acid", "Vitamin C", "Jojoba Oil", "Aloe Vera"]
+        },
+        features: [
+            "Hydrates for 24 hours",
+            "Reduces fine lines",
+            "Brightens complexion",
+            "Non-greasy formula",
+            "Suitable for all skin types"
+        ]
     },
     {
         id: 6,
@@ -46,7 +159,30 @@ const products = [
         price: 79.99,
         category: "Health & Beauty",
         rating: 4.4,
-        icon: "fas fa-running"
+        reviews: 203,
+        icon: "fas fa-running",
+        images: [
+            "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=600&h=600&fit=crop"
+        ],
+        description: "Advanced fitness tracker with heart rate monitoring and 7-day battery life.",
+        specifications: {
+            brand: "FitTrack",
+            model: "FT-2024",
+            display: "1.4\" Color Touch",
+            battery: "7 days",
+            waterResistance: "IP68",
+            connectivity: "Bluetooth 5.0",
+            sensors: ["Heart Rate", "SpO2", "Sleep", "Steps", "Calories"]
+        },
+        features: [
+            "24/7 heart rate monitoring",
+            "Sleep tracking",
+            "Water resistant (IP68)",
+            "7-day battery life",
+            "Smart notifications"
+        ]
     },
     {
         id: 7,
@@ -54,7 +190,29 @@ const products = [
         price: 45.99,
         category: "Fashion",
         rating: 4.5,
-        icon: "fas fa-wallet"
+        reviews: 56,
+        icon: "fas fa-wallet",
+        images: [
+            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&h=600&fit=crop"
+        ],
+        description: "Genuine leather wallet with RFID protection and multiple card slots.",
+        specifications: {
+            material: "Genuine Leather",
+            color: "Brown",
+            dimensions: "4.5\" x 3.5\"",
+            slots: "8 card slots, 2 ID windows",
+            features: ["RFID Protection", "Coin Pocket", "Bill Compartment"],
+            closure: "Snap button"
+        },
+        features: [
+            "Genuine leather construction",
+            "RFID blocking technology",
+            "Multiple card slots",
+            "Coin pocket",
+            "Slim design"
+        ]
     },
     {
         id: 8,
@@ -62,7 +220,30 @@ const products = [
         price: 39.99,
         category: "Home & Living",
         rating: 4.2,
-        icon: "fas fa-lightbulb"
+        reviews: 78,
+        icon: "fas fa-lightbulb",
+        images: [
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=600&fit=crop",
+            "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=600&fit=crop"
+        ],
+        description: "Modern LED desk lamp with adjustable brightness and USB charging ports.",
+        specifications: {
+            brand: "LightPro",
+            model: "LP-DL2024",
+            lightSource: "LED",
+            brightness: "3000K-6000K adjustable",
+            power: "USB powered",
+            ports: "2x USB-A, 1x USB-C",
+            adjustable: "360° rotation"
+        },
+        features: [
+            "Adjustable color temperature",
+            "5 brightness levels",
+            "3 USB charging ports",
+            "Touch controls",
+            "Energy efficient LED"
+        ]
     }
 ];
 
@@ -113,16 +294,29 @@ function loadProducts() {
 function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
+    card.setAttribute('data-id', product.id);
     card.innerHTML = `
-        <div class="product-image">
-            <i class="${product.icon}"></i>
+        <div class="product-image" onclick="viewProductDetail(${product.id})">
+            <img src="${product.images[0]}" alt="${product.name}" loading="lazy" class="product-img">
+            <div class="product-overlay">
+                <button class="btn-quick-view" onclick="event.stopPropagation(); viewProductDetail(${product.id})">
+                    <i class="fas fa-eye"></i> Quick View
+                </button>
+            </div>
         </div>
         <div class="product-info">
-            <h3 class="product-title">${product.name}</h3>
+            <h3 class="product-title" onclick="viewProductDetail(${product.id})">${product.name}</h3>
+            <div class="product-category">${product.category}</div>
             <div class="product-price">$${product.price.toFixed(2)}</div>
             <div class="product-rating">
                 ${createStarRating(product.rating)}
                 <span class="rating-score">${product.rating}</span>
+                <span class="review-count">(${product.reviews})</span>
+            </div>
+            <div class="product-features">
+                ${product.features.slice(0, 2).map(feature => 
+                    `<span class="feature-tag">${feature}</span>`
+                ).join('')}
             </div>
             <button class="btn-add-to-cart" data-id="${product.id}">
                 <i class="fas fa-cart-plus"></i> Add to Cart
@@ -493,6 +687,11 @@ function loadCart() {
     } catch (e) {
         console.error('Failed to load cart:', e);
     }
+}
+
+// Product Detail Functions
+function viewProductDetail(productId) {
+    window.location.href = `product-detail.html?id=${productId}`;
 }
 
 // Initialize cart display
