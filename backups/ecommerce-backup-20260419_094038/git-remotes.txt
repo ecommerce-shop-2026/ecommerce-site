@@ -1,0 +1,2 @@
+origin	git@github.com:ecommerce-shop-2026/ecommerce-site.git (fetch)
+origin	git@github.com:ecommerce-shop-2026/ecommerce-site.git (push)

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background-color: #d4edda; }
+        .fail { background-color: #f8d7da; }
+        button { margin: 5px; padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Functionality Test</h1>
+    
+    <div class="test" id="test1">
+        <h3>Test 1: Check if main.js loads</h3>
+        <button onclick="testMainJS()">Test main.js</button>
+        <div id="result1"></div>
+    </div>
+    
+    <div class="test" id="test2">
+        <h3>Test 2: Check if fix.js loads</h3>
+        <button onclick="testFixJS()">Test fix.js</button>
+        <div id="result2"></div>
+    </div>
+    
+    <div class="test" id="test3">
+        <h3>Test 3: Test localStorage</h3>
+        <button onclick="testLocalStorage()">Test localStorage</button>
+        <div id="result3"></div>
+    </div>
+    
+    <div class="test" id="test4">
+        <h3>Test 4: Test DOM manipulation</h3>
+        <button onclick="testDOM()">Test DOM</button>
+        <div id="result4"></div>
+    </div>
+
+    <script>
+        function testMainJS() {
+            try {
+                if (typeof products !== 'undefined') {
+                    document.getElementById('result1').innerHTML = 
+                        '<span class="pass">✓ PASS: products array loaded (' + products.length + ' products)</span>';
+                } else {
+                    document.getElementById('result1').innerHTML = 
+                        '<span class="fail">✗ FAIL: products array not defined</span>';
+                }
+            } catch (e) {
+                document.getElementById('result1').innerHTML = 
+                    '<span class="fail">✗ ERROR: ' + e.message + '</span>';
+            }
+        }
+        
+        function testFixJS() {
+            try {
+                if (typeof fixAllIssues !== 'undefined') {
+                    document.getElementById('result2').innerHTML = 
+                        '<span class="pass">✓ PASS: fix.js functions loaded</span>';
+                } else {
+                    document.getElementById('result2').innerHTML = 
+                        '<span class="fail">✗ FAIL: fix.js functions not loaded</span>';
+                }
+            } catch (e) {
+                document.getElementById('result2').innerHTML = 
+                    '<span class="fail">✗ ERROR: ' + e.message + '</span>';
+            }
+        }
+        
+        function testLocalStorage() {
+            try {
+                localStorage.setItem('test', 'test-value');
+                const value = localStorage.getItem('test');
+                if (value === 'test-value') {
+                    document.getElementById('result3').innerHTML = 
+                        '<span class="pass">✓ PASS: localStorage works</span>';
+                } else {
+                    document.getElementById('result3').innerHTML = 
+                        '<span class="fail">✗ FAIL: localStorage not working</span>';
+                }
+                localStorage.removeItem('test');
+            } catch (e) {
+                document.getElementById('result3').innerHTML = 
+                    '<span class="fail">✗ ERROR: ' + e.message + '</span>';
+            }
+        }
+        
+        function testDOM() {
+            try {
+                const testDiv = document.createElement('div');
+                testDiv.id = 'test-div';
+                testDiv.textContent = 'DOM test successful';
+                document.body.appendChild(testDiv);
+                
+                const found = document.getElementById('test-div');
+                if (found && found.textContent === 'DOM test successful') {
+                    document.getElementById('result4').innerHTML = 
+                        '<span class="pass">✓ PASS: DOM manipulation works</span>';
+                    document.body.removeChild(testDiv);
+                } else {
+                    document.getElementById('result4').innerHTML = 
+                        '<span class="fail">✗ FAIL: DOM manipulation failed</span>';
+                }
+            } catch (e) {
+                document.getElementById('result4').innerHTML = 
+                    '<span class="fail">✗ ERROR: ' + e.message + '</span>';
+            }
+        }
+        
+        // Run all tests on load
+        window.onload = function() {
+            setTimeout(() => {
+                testMainJS();
+                testFixJS();
+                testLocalStorage();
+                testDOM();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
