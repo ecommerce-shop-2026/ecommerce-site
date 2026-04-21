@@ -1,0 +1,5 @@
+560c43c 完成自动化优化：产品详情页增强、多平台部署配置、自动化测试和备份系统
+ec3d0a6 添加测试页面
+60c950a Resolve merge conflict: use detailed README
+0ad9fb7 Initial commit
+a860746 Initial commit: Complete e-commerce site with automatic updates
