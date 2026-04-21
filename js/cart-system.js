@@ -1,13 +1,14 @@
 // 全新购物车系统 - 简单可靠版
+
+// 购物车数据（全局）
+let cart = {
+    items: [],
+    total: 0,
+    count: 0
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🛒 初始化购物车系统...');
-    
-    // 购物车数据
-    let cart = {
-        items: [],
-        total: 0,
-        count: 0
-    };
     
     // 产品数据
     const products = [
