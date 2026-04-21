@@ -268,10 +268,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load products
     loadProducts();
     
-    // Load cart from localStorage
-    loadCart();
+    // NOTE: Cart functionality is now handled by cart-system.js
+    // Disabling main.js cart initialization to avoid conflicts
+    // loadCart(); // Disabled - handled by cart-system.js
     
-    // Setup event listeners
+    // Setup event listeners (excluding cart events)
     setupEventListeners();
     
     // Setup smooth scrolling for navigation links
@@ -487,9 +488,13 @@ function updateCart() {
     cartCount = cart.reduce((total, item) => total + item.quantity, 0);
     cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     
-    // Update UI
-    cartCountElement.textContent = cartCount;
-    totalAmountElement.textContent = `$${cartTotal.toFixed(2)}`;
+    // Update UI only if elements exist
+    if (cartCountElement) {
+        cartCountElement.textContent = cartCount;
+    }
+    if (totalAmountElement) {
+        totalAmountElement.textContent = `$${cartTotal.toFixed(2)}`;
+    }
     
     // Update cart items display
     updateCartDisplay();
