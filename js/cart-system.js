@@ -1,7 +1,7 @@
 // 全新购物车系统 - 简单可靠版
 
 // 购物车数据（全局）
-let cart = {
+window.cart = {
     items: [],
     total: 0,
     count: 0
@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const saved = localStorage.getItem('shopEasyCart');
             if (saved) {
-                cart = JSON.parse(saved);
-                console.log('已加载购物车:', cart);
+                window.cart = JSON.parse(saved);
+                console.log('已加载购物车:', window.cart);
             }
         } catch (e) {
             console.log('无法加载购物车，使用新购物车');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 保存购物车到localStorage
     function saveCart() {
         try {
-            localStorage.setItem('shopEasyCart', JSON.stringify(cart));
+            localStorage.setItem('shopEasyCart', JSON.stringify(window.cart));
         } catch (e) {
             console.log('无法保存购物车到localStorage');
         }
@@ -59,14 +59,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // 检查是否已在购物车中
-        const existingIndex = cart.items.findIndex(item => item.id === productId);
+        const existingIndex = window.cart.items.findIndex(item => item.id === productId);
         
         if (existingIndex > -1) {
             // 更新数量
-            cart.items[existingIndex].quantity += quantity;
+            window.cart.items[existingIndex].quantity += quantity;
         } else {
             // 添加新项目
-            cart.items.push({
+            window.cart.items.push({
                 id: product.id,
                 name: product.name,
                 price: product.price,
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 从购物车移除
     window.removeFromCart = function(productId) {
-        cart.items = cart.items.filter(item => item.id !== productId);
+        window.cart.items = window.cart.items.filter(item => item.id !== productId);
         calculateCart();
         saveCart();
         updateCartDisplay();
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 更新数量
     window.updateCartQuantity = function(productId, quantity) {
-        const item = cart.items.find(item => item.id === productId);
+        const item = window.cart.items.find(item => item.id === productId);
         if (item) {
             if (quantity <= 0) {
                 removeFromCart(productId);
@@ -112,9 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 计算购物车
     function calculateCart() {
-        cart.count = cart.items.reduce((total, item) => total + item.quantity, 0);
-        cart.total = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-        console.log('购物车计算完成:', cart);
+        window.cart.count = window.cart.items.reduce((total, item) => total + item.quantity, 0);
+        window.cart.total = window.cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+        console.log('购物车计算完成:', window.cart);
     }
     
     // 更新购物车显示
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 更新购物车图标 - 查找.cart-count元素
         const cartCountElements = document.querySelectorAll('.cart-count');
         cartCountElements.forEach(element => {
-            element.textContent = cart.count;
+            element.textContent = window.cart.count;
         });
         
         // 同时更新所有包含购物车图标的元素
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     countSpan.className = 'cart-count';
                     parent.appendChild(countSpan);
                 }
-                countSpan.textContent = cart.count;
+                countSpan.textContent = window.cart.count;
             }
         });
         
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!container) return;
         
-        if (cart.items.length === 0) {
+        if (window.cart.items.length === 0) {
             container.innerHTML = `
                 <div class="empty-cart">
                     <i class="fas fa-shopping-cart fa-3x"></i>
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         } else {
             let html = '';
-            cart.items.forEach(item => {
+            window.cart.items.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 html += `
                 <div class="cart-item" data-id="${item.id}">
@@ -201,11 +201,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (totalElement) {
-            totalElement.textContent = `$${cart.total.toFixed(2)}`;
+            totalElement.textContent = `$${window.cart.total.toFixed(2)}`;
         }
         
         if (countElement) {
-            countElement.textContent = cart.count;
+            countElement.textContent = window.cart.count;
         }
     }
     
