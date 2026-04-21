@@ -118,12 +118,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 更新购物车显示
     function updateCartDisplay() {
-        // 更新购物车图标
+        // 更新购物车图标 - 查找.cart-count元素
+        const cartCountElements = document.querySelectorAll('.cart-count');
+        cartCountElements.forEach(element => {
+            element.textContent = cart.count;
+        });
+        
+        // 同时更新所有包含购物车图标的元素
         const cartIcons = document.querySelectorAll('.fa-shopping-cart');
         cartIcons.forEach(icon => {
             const parent = icon.parentElement;
-            if (parent && parent.textContent.includes('')) {
-                parent.innerHTML = `<i class="fas fa-shopping-cart"></i> ${cart.count}`;
+            // 检查是否是导航栏中的购物车按钮
+            if (parent && parent.classList.contains('btn-cart')) {
+                // 确保.cart-count元素存在
+                let countSpan = parent.querySelector('.cart-count');
+                if (!countSpan) {
+                    countSpan = document.createElement('span');
+                    countSpan.className = 'cart-count';
+                    parent.appendChild(countSpan);
+                }
+                countSpan.textContent = cart.count;
             }
         });
         
