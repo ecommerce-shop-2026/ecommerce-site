@@ -5,6 +5,84 @@
     box-sizing: border-box;
 }
 
+/* 图片优化样式 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 懒加载图片样式 */
+.lazy-image {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+.lazy-image.loaded {
+    opacity: 1;
+}
+
+/* 低质量图片占位符 (LQIP) */
+.lazy-image.placeholder {
+    filter: blur(10px);
+    transform: scale(1.1);
+}
+
+/* 响应式图片容器 */
+.responsive-image-container {
+    position: relative;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.responsive-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 产品图片优化 */
+.product-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: linear-gradient(45deg, #f5f5f5 25%, #e0e0e0 25%, #e0e0e0 50%, #f5f5f5 50%, #f5f5f5 75%, #e0e0e0 75%);
+    background-size: 40px 40px;
+    position: relative;
+}
+
+.product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-image:hover img {
+    transform: scale(1.05);
+}
+
+/* 图片加载动画 */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.image-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;

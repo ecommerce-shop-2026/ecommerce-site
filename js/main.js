@@ -889,3 +889,197 @@ function initReturnForm() {
         }
     }
 }
+
+// ======================
+// 图片懒加载功能
+// ======================
+
+function initLazyLoading() {
+    console.log('初始化图片懒加载...');
+    
+    // 获取所有需要懒加载的图片
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    
+    if ('IntersectionObserver' in window) {
+        // 使用IntersectionObserver API（现代浏览器）
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    loadImage(img);
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px', // 提前50px开始加载
+            threshold: 0.01
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        // 回退方案：滚动事件监听
+        console.log('IntersectionObserver不可用，使用回退方案');
+        let ticking = false;
+        
+        function checkImages() {
+            lazyImages.forEach(img => {
+                if (isInViewport(img)) {
+                    loadImage(img);
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkImages();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        
+        // 初始检查
+        checkImages();
+    }
+}
+
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.bottom >= 0 &&
+        rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
+        rect.right >= 0
+    );
+}
+
+function loadImage(img) {
+    const src = img.getAttribute('data-src');
+    if (!src) return;
+    
+    // 添加加载类
+    img.classList.add('lazy-image', 'placeholder');
+    
+    // 创建新的Image对象预加载
+    const image = new Image();
+    image.src = src;
+    
+    image.onload = function() {
+        // 设置实际src
+        img.src = src;
+        
+        // 移除data-src属性
+        img.removeAttribute('data-src');
+        
+        // 添加加载完成类
+        img.classList.remove('placeholder');
+        setTimeout(() => {
+            img.classList.add('loaded');
+        }, 100);
+        
+        console.log(`图片加载完成: ${src}`);
+    };
+    
+    image.onerror = function() {
+        console.error(`图片加载失败: ${src}`);
+        img.classList.remove('lazy-image', 'placeholder');
+        img.classList.add('loaded');
+    };
+}
+
+// ======================
+// 图片优化工具函数
+// ======================
+
+function optimizeProductImages() {
+    console.log('优化产品图片...');
+    
+    // 获取所有产品图片
+    const productImages = document.querySelectorAll('.product-card img, .product-image img');
+    
+    productImages.forEach(img => {
+        // 添加懒加载属性
+        if (!img.hasAttribute('data-src') && img.src) {
+            img.setAttribute('data-src', img.src);
+            
+            // 设置低质量占位符
+            const src = img.src;
+            if (src.includes('unsplash.com')) {
+                // 对于Unsplash图片，使用小尺寸版本作为占位符
+                const placeholderSrc = src.replace(/w=\d+&h=\d+/, 'w=50&h=50&blur=10');
+                img.src = placeholderSrc;
+            } else {
+                // 对于其他图片，使用空白data URL
+                img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PC9zdmc+';
+            }
+            
+            // 添加懒加载类
+            img.classList.add('lazy-image');
+        }
+    });
+}
+
+// ======================
+// WebP格式检测和回退
+// ======================
+
+function checkWebPSupport() {
+    return new Promise((resolve) => {
+        const webP = new Image();
+        webP.onload = webP.onerror = function() {
+            const isSupported = (webP.height === 2);
+            window.webPSupported = isSupported;
+            console.log(`WebP支持: ${isSupported}`);
+            resolve(isSupported);
+        };
+        webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    });
+}
+
+// ======================
+// 响应式图片处理
+// ======================
+
+function setupResponsiveImages() {
+    // 根据设备像素比和屏幕宽度选择合适的图片尺寸
+    const dpr = window.devicePixelRatio || 1;
+    const screenWidth = window.innerWidth;
+    
+    console.log(`设备信息: DPR=${dpr}, 屏幕宽度=${screenWidth}px`);
+    
+    // 可以根据需要实现更复杂的响应式图片逻辑
+    // 例如：为不同屏幕尺寸加载不同分辨率的图片
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('ShopEasy initialized');
+    
+    // 检查WebP支持
+    await checkWebPSupport();
+    
+    // Initialize all components
+    initCart();
+    initSearch();
+    initReturnForm();
+    initProductCards();
+    initQuickView();
+    initCategoryFilters();
+    
+    // 初始化图片优化
+    optimizeProductImages();
+    initLazyLoading();
+    setupResponsiveImages();
+    
+    // Update cart count on page load
+    updateCartCount();
+    
+    // Check for any stored return requests
+    checkStoredReturnRequests();
+    
+    console.log('所有组件初始化完成');
+});
+
+// 监听窗口大小变化，重新设置响应式图片
+window.addEventListener('resize', setupResponsiveImages);
