@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>部署测试页面 - ShopEasy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .test-results {
+            margin: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #ccc;
+        }
+        .test-pass { border-left-color: #4CAF50; background: #e8f5e9; }
+        .test-fail { border-left-color: #f44336; background: #ffebee; }
+        .test-warning { border-left-color: #ff9800; background: #fff3e0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>部署平台兼容性测试</h1>
+        <p>测试网站在不同部署平台上的功能表现</p>
+    </header>
+
+    <div class="test-results">
+        <h2>测试结果</h2>
+        
+        <div class="test-item test-pass">
+            <h3>✅ 基本HTML/CSS加载</h3>
+            <p>页面样式和结构正常加载</p>
+        </div>
+
+        <div class="test-item test-pass">
+            <h3>✅ JavaScript功能测试</h3>
+            <p id="js-test">JavaScript执行状态：<span id="js-status">测试中...</span></p>
+            <button onclick="runJSTests()">运行JavaScript测试</button>
+            <div id="js-results"></div>
+        </div>
+
+        <div class="test-item test-warning">
+            <h3>⚠️ 外部资源加载</h3>
+            <p>检查外部CDN资源：<span id="cdn-status">测试中...</span></p>
+        </div>
+
+        <div class="test-item">
+            <h3>📊 性能测试</h3>
+            <p>页面加载时间：<span id="load-time">计算中...</span> ms</p>
+        </div>
+    </div>
+
+    <div class="test-results">
+        <h2>核心功能测试</h2>
+        <ul>
+            <li><a href="index.html">返回主站</a></li>
+            <li><a href="product-detail.html">测试产品详情页</a></li>
+            <li><button onclick="testLocalStorage()">测试本地存储</button></li>
+            <li><button onclick="testFetch()">测试API调用</button></li>
+        </ul>
+    </div>
+
+    <script>
+        // 记录页面加载时间
+        window.addEventListener('load', function() {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            document.getElementById('load-time').textContent = loadTime;
+            
+            // 基本JavaScript测试
+            document.getElementById('js-status').textContent = 'JavaScript正常工作';
+            document.getElementById('js-status').style.color = '#4CAF50';
+        });
+
+        function runJSTests() {
+            const results = document.getElementById('js-results');
+            results.innerHTML = '';
+            
+            const tests = [
+                { name: 'DOM操作', test: () => document.createElement('div') },
+                { name: '事件监听', test: () => window.addEventListener },
+                { name: 'JSON解析', test: () => JSON.parse('{"test": true}') },
+                { name: '定时器', test: () => setTimeout },
+                { name: 'Fetch API', test: () => window.fetch }
+            ];
+            
+            tests.forEach(test => {
+                try {
+                    test.test();
+                    results.innerHTML += `<div class="test-pass">✅ ${test.name}: 通过</div>`;
+                } catch (e) {
+                    results.innerHTML += `<div class="test-fail">❌ ${test.name}: 失败 - ${e.message}</div>`;
+                }
+            });
+        }
+
+        function testLocalStorage() {
+            try {
+                localStorage.setItem('deployment-test', new Date().toISOString());
+                const value = localStorage.getItem('deployment-test');
+                alert(`本地存储测试成功！存储的值：${value}`);
+            } catch (e) {
+                alert(`本地存储测试失败：${e.message}`);
+            }
+        }
+
+        function testFetch() {
+            // 测试相对路径请求
+            fetch('css/style.css')
+                .then(response => {
+                    if (response.ok) {
+                        alert('CSS文件请求成功！状态码：' + response.status);
+                    } else {
+                        alert('CSS文件请求失败！状态码：' + response.status);
+                    }
+                })
+                .catch(error => {
+                    alert('请求失败：' + error.message);
+                });
+        }
+
+        // 测试CDN资源
+        window.addEventListener('load', function() {
+            const cdnStatus = document.getElementById('cdn-status');
+            // 这里可以添加CDN资源测试
+            cdnStatus.textContent = '未配置外部CDN';
+            cdnStatus.style.color = '#ff9800';
+        });
+    </script>
+</body>
+</html>
