@@ -793,4 +793,99 @@ function initSearch() {
 // Initialize search when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initSearch();
+    initReturnForm();
 });
+
+// Return Form Functionality
+function initReturnForm() {
+    const returnForm = document.getElementById('returnRequestForm');
+    
+    if (!returnForm) return;
+    
+    returnForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const orderNumber = returnForm.querySelector('input[type="text"]').value;
+        const email = returnForm.querySelector('input[type="email"]').value;
+        const reason = returnForm.querySelector('textarea').value;
+        
+        // Validate form
+        if (!orderNumber || !email) {
+            showFormMessage('Please fill in all required fields', 'error');
+            return;
+        }
+        
+        if (!isValidEmail(email)) {
+            showFormMessage('Please enter a valid email address', 'error');
+            return;
+        }
+        
+        // Simulate form submission
+        showFormMessage('Processing your return request...', 'info');
+        
+        // Simulate API call delay
+        setTimeout(() => {
+            // Save to localStorage for demo purposes
+            const returnRequest = {
+                orderNumber,
+                email,
+                reason,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            saveReturnRequest(returnRequest);
+            
+            // Show success message
+            showFormMessage('Return request submitted successfully! We will contact you within 24 hours.', 'success');
+            
+            // Reset form
+            returnForm.reset();
+        }, 1500);
+    });
+    
+    function showFormMessage(message, type) {
+        // Remove existing message
+        const existingMessage = returnForm.querySelector('.form-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        // Create new message
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `form-message form-message-${type}`;
+        messageDiv.textContent = message;
+        
+        // Add to form
+        returnForm.appendChild(messageDiv);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.remove();
+            }
+        }, 5000);
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function saveReturnRequest(request) {
+        try {
+            // Get existing requests or create new array
+            const existingRequests = JSON.parse(localStorage.getItem('shopEasyReturnRequests')) || [];
+            
+            // Add new request
+            existingRequests.push(request);
+            
+            // Save back to localStorage
+            localStorage.setItem('shopEasyReturnRequests', JSON.stringify(existingRequests));
+            
+            console.log('Return request saved:', request);
+        } catch (error) {
+            console.error('Failed to save return request:', error);
+        }
+    }
+}
