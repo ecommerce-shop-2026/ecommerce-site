@@ -701,3 +701,96 @@ function viewProductDetail(productId) {
 
 // Initialize cart display
 updateCart();
+
+// Search Functionality
+function initSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const searchResults = document.getElementById('searchResults');
+    
+    if (!searchInput || !searchBtn || !searchResults) return;
+    
+    let searchTimeout;
+    
+    // Search on input
+    searchInput.addEventListener('input', function(e) {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            performSearch(e.target.value);
+        }, 300);
+    });
+    
+    // Search on button click
+    searchBtn.addEventListener('click', function() {
+        performSearch(searchInput.value);
+    });
+    
+    // Search on Enter key
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch(searchInput.value);
+        }
+    });
+    
+    // Close results when clicking outside
+    document.addEventListener('click', function(e) {
+        const searchContainer = document.querySelector('.search-container');
+        if (searchContainer && !searchContainer.contains(e.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+    
+    function performSearch(query) {
+        if (!query.trim()) {
+            searchResults.style.display = 'none';
+            return;
+        }
+        
+        const searchTerm = query.toLowerCase().trim();
+        const results = products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.category.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
+        );
+        
+        displaySearchResults(results);
+    }
+    
+    function displaySearchResults(results) {
+        searchResults.innerHTML = '';
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = '<div class="no-results">No products found</div>';
+            searchResults.style.display = 'block';
+            return;
+        }
+        
+        results.forEach(product => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'search-result-item';
+            resultItem.innerHTML = `
+                <img src="${product.images[0]}" alt="${product.name}" class="search-result-image">
+                <div class="search-result-info">
+                    <div class="search-result-name">${product.name}</div>
+                    <div class="search-result-price">$${product.price.toFixed(2)}</div>
+                    <div class="search-result-category">${product.category}</div>
+                </div>
+            `;
+            
+            resultItem.addEventListener('click', function() {
+                viewProductDetail(product.id);
+                searchResults.style.display = 'none';
+                searchInput.value = '';
+            });
+            
+            searchResults.appendChild(resultItem);
+        });
+        
+        searchResults.style.display = 'block';
+    }
+}
+
+// Initialize search when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initSearch();
+});

@@ -65,7 +65,11 @@
             </div>
             
             <div class="nav-actions">
-                <button class="btn-search"><i class="fas fa-search"></i></button>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+                    <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
                 <a href="#cart" class="btn-cart">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
