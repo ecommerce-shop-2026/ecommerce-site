@@ -1,0 +1,6 @@
+ShopEasy 外网访问验证报告
+生成时间: 2026年04月22日 11:11:28
+网站URL: https://ecommerce-shop-2026.github.io/ecommerce-site
+总页面: 10
+可访问页面: 8
+成功率: 80%

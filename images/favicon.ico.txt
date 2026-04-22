@@ -1,0 +1,13 @@
+# Favicon placeholder
+# This is a placeholder for favicon.ico
+# You can replace this with a real favicon image
+# Recommended size: 16x16, 32x32, 48x48 pixels
+# Format: ICO format for compatibility
+
+# To create a real favicon:
+# 1. Use an online favicon generator
+# 2. Save as favicon.ico
+# 3. Replace this file
+
+# Current favicon is referenced in HTML as:
+# <link rel="icon" type="image/x-icon" href="images/favicon.ico">
