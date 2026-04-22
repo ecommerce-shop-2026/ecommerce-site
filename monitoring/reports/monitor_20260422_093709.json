@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-04-22T09:37:12",
+  "checks": {
+    "main_website": {
+      "available": true,
+      "status_code": "200",
+      "response_time": 
+    },
+    "content": {
+      "contains_shopeasy": false
+    },
+    "product_detail": {
+      "available": true,
+      "status_code": "200
+    },
+    "javascript": {
+      "cart_system": false,
+      "search_function": false,
+      "return_form": false
+    }
+  },
+  "summary": {
+    "all_passed": false,
+    "passed_checks": 2,
+    "total_checks": 9
+  }
+}
