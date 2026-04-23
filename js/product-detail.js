@@ -304,44 +304,50 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Add to cart function (shared with main.js)
+// Add to cart function (delegated to cart-system.js)
 function addToCart(productId, quantity = 1) {
+    // Use cart-system.js if available
+    if (typeof window.addToCart === 'function') {
+        window.addToCart(productId, quantity);
+        updateCartCount();
+        return;
+    }
+    
+    // Fallback: use localStorage directly
     const product = products.find(p => p.id === productId);
     if (!product) return;
     
-    // Get existing cart from localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart = JSON.parse(localStorage.getItem('shopEasyCart')) || { items: [], total: 0, count: 0 };
     
-    // Check if product already in cart
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if (existingItem) {
-        existingItem.quantity += quantity;
+    const existingIndex = cart.items.findIndex(item => item.id === productId);
+    if (existingIndex > -1) {
+        cart.items[existingIndex].quantity += quantity;
     } else {
-        cart.push({
+        cart.items.push({
             id: productId,
             name: product.name,
             price: product.price,
             image: product.images[0],
-            quantity: quantity
+            quantity: quantity,
+            category: product.category
         });
     }
     
-    // Save to localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
+    cart.count = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+    cart.total = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-    // Update cart count
+    localStorage.setItem('shopEasyCart', JSON.stringify(cart));
+    window.cart = cart;
     updateCartCount();
 }
 
-// Update cart count (shared with main.js)
+// Update cart count (shared with cart-system.js)
 function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartData = (typeof window.cart !== 'undefined' && window.cart.items) 
+        ? window.cart : { items: [], total: 0, count: 0 };
     
-    // Update cart count in all pages
     document.querySelectorAll('.cart-count').forEach(element => {
-        element.textContent = totalItems;
+        element.textContent = cartData.count;
     });
 }
 
