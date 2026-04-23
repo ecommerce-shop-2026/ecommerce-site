@@ -247,11 +247,6 @@ const products = [
     }
 ];
 
-// Cart State
-let cart = [];
-let cartCount = 0;
-let cartTotal = 0;
-
 // DOM Elements
 const productsGrid = document.getElementById('productsGrid');
 const cartModal = document.getElementById('cartModal');
@@ -447,76 +442,62 @@ function setupSmoothScrolling() {
 }
 
 // Cart Functions
+// Cart functions delegated to cart-system.js
+// This function serves as a bridge between main.js event system and cart-system.js
 function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-    
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
+    // cart-system.js provides window.addToCart
+    if (typeof window.addToCart === 'function') {
+        window.addToCart(productId);
     } else {
-        cart.push({
-            ...product,
-            quantity: 1
-        });
+        console.warn('cart-system.js not loaded yet, cart not available');
     }
-    
-    updateCart();
-    showNotification(`${product.name} added to cart!`);
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCart();
+    if (typeof window.removeFromCart === 'function') {
+        window.removeFromCart(productId);
+    }
 }
 
 function updateCartQuantity(productId, quantity) {
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        if (quantity <= 0) {
-            removeFromCart(productId);
-        } else {
-            item.quantity = quantity;
-        }
-        updateCart();
+    if (typeof window.updateCartQuantity === 'function') {
+        window.updateCartQuantity(productId, quantity);
     }
 }
 
 function updateCart() {
-    // Calculate totals
-    cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-    cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    
-    // Update UI only if elements exist
-    if (cartCountElement) {
-        cartCountElement.textContent = cartCount;
+    // Cart display is now handled by cart-system.js
+    // This function is kept for backwards compatibility
+    // Just refresh the cart modal display if it's open
+    if (cartModal && cartModal.style.display === 'block') {
+        // Re-trigger display from cart-system.js
+        if (typeof window.cart !== 'undefined' && window.cart.items) {
+            updateCartDisplay();
+        }
     }
-    if (totalAmountElement) {
-        totalAmountElement.textContent = `$${cartTotal.toFixed(2)}`;
-    }
-    
-    // Update cart items display
-    updateCartDisplay();
-    
-    // Save to localStorage
-    saveCart();
 }
 
 function updateCartDisplay() {
     if (!cartItems) return;
     
-    if (cart.length === 0) {
+    // Use cart-system.js data if available
+    const cartData = (typeof window.cart !== 'undefined' && window.cart.items) 
+        ? window.cart : { items: [], total: 0, count: 0 };
+    
+    if (cartData.items.length === 0) {
         cartItems.innerHTML = `
             <div class="empty-cart">
                 <i class="fas fa-shopping-cart"></i>
                 <p>Your cart is empty</p>
             </div>
         `;
+        // Update count display
+        if (cartCountElement) cartCountElement.textContent = '0';
+        if (totalAmountElement) totalAmountElement.textContent = '$0.00';
         return;
     }
     
-    cartItems.innerHTML = cart.map(item => `
+    cartItems.innerHTML = cartData.items.map(item => `
         <div class="cart-item" data-id="${item.id}">
             <div class="cart-item-info">
                 <h4>${item.name}</h4>
@@ -536,11 +517,15 @@ function updateCartDisplay() {
         </div>
     `).join('');
     
+    // Update count and total
+    if (cartCountElement) cartCountElement.textContent = cartData.count;
+    if (totalAmountElement) totalAmountElement.textContent = `$${cartData.total.toFixed(2)}`;
+    
     // Add event listeners to cart item controls
     cartItems.querySelectorAll('.btn-quantity.minus').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.getAttribute('data-id'));
-            const item = cart.find(item => item.id === id);
+            const item = cartData.items.find(item => item.id === id);
             if (item) {
                 updateCartQuantity(id, item.quantity - 1);
             }
@@ -550,7 +535,7 @@ function updateCartDisplay() {
     cartItems.querySelectorAll('.btn-quantity.plus').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.getAttribute('data-id'));
-            const item = cart.find(item => item.id === id);
+            const item = cartData.items.find(item => item.id === id);
             if (item) {
                 updateCartQuantity(id, item.quantity + 1);
             }
@@ -584,7 +569,10 @@ function closeCart() {
 }
 
 function processCheckout() {
-    if (cart.length === 0) {
+    const cartData = (typeof window.cart !== 'undefined' && window.cart.items) 
+        ? window.cart : { items: [], total: 0, count: 0 };
+    
+    if (cartData.items.length === 0) {
         alert('Your cart is empty!');
         return;
     }
@@ -595,13 +583,20 @@ function processCheckout() {
     setTimeout(() => {
         showNotification('Payment successful! Order confirmed.');
         
-        // Clear cart
-        cart = [];
+        // Clear cart via cart-system.js
+        if (typeof window.cart !== 'undefined') {
+            window.cart.items = [];
+            window.cart.count = 0;
+            window.cart.total = 0;
+            try {
+                localStorage.setItem('shopEasyCart', JSON.stringify(window.cart));
+            } catch(e) {}
+        }
         updateCart();
         closeCart();
         
         // Show order confirmation
-        alert(`Order confirmed! Total: $${cartTotal.toFixed(2)}\nThank you for your purchase!`);
+        alert(`Order confirmed! Total: $${cartData.total.toFixed(2)}\nThank you for your purchase!`);
     }, 2000);
 }
 

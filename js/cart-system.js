@@ -246,25 +246,19 @@ document.addEventListener('DOMContentLoaded', function() {
         buttons.forEach((button, index) => {
             const buttonText = button.textContent || '';
             if (buttonText.includes('Add to Cart') || buttonText.includes('')) {
-                // 给按钮添加data-id属性
+                // 确保按钮有 data-id 属性
                 const productId = button.getAttribute('data-id') || (index % 8) + 1;
                 button.setAttribute('data-id', productId);
                 
-                // 移除现有事件监听器，添加新的
-                button.replaceWith(button.cloneNode(true));
-                const newButton = document.querySelector(`[data-id="${productId}"]`);
-                
-                newButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    addToCart(parseInt(productId));
-                });
+                // 使用事件委托而非直接绑定，避免与 main.js 冲突
+                // main.js 通过 document 事件委托处理点击，这里不再重复绑定
+                // 只确保 data-id 属性正确
                 
                 boundCount++;
             }
         });
         
-        console.log(`已绑定 ${boundCount} 个"添加到购物车"按钮`);
+        console.log(`已更新 ${boundCount} 个\"添加到购物车\"按钮的属性`);
     }
     
     // 初始化
