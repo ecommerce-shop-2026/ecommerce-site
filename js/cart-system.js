@@ -30,7 +30,17 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const saved = localStorage.getItem('shopEasyCart');
             if (saved) {
-                window.cart = JSON.parse(saved);
+                const parsed = JSON.parse(saved);
+                // 兼容旧格式：如果是数组，转成对象格式
+                if (Array.isArray(parsed)) {
+                    window.cart.items = parsed;
+                    window.cart.total = 0;
+                    window.cart.count = parsed.length;
+                } else if (typeof parsed === 'object' && parsed !== null) {
+                    window.cart.items = parsed.items || [];
+                    window.cart.total = parsed.total || 0;
+                    window.cart.count = parsed.count || 0;
+                }
                 console.log('已加载购物车:', window.cart);
             }
         } catch (e) {
