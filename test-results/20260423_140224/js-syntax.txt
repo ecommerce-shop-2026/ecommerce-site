@@ -1,0 +1,6 @@
+✅ js/cart-system.js 语法正确
+✅ js/checkout.js 语法正确
+✅ js/fix.js 语法正确
+✅ js/main.js 语法正确
+✅ js/product-detail.js 语法正确
+✅ js/products_data.js 语法正确
