@@ -260,15 +260,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 const productId = button.getAttribute('data-id') || (index % 8) + 1;
                 button.setAttribute('data-id', productId);
                 
-                // 使用事件委托而非直接绑定，避免与 main.js 冲突
-                // main.js 通过 document 事件委托处理点击，这里不再重复绑定
-                // 只确保 data-id 属性正确
+                // 直接绑定点击事件到每个按钮，不再依赖 main.js 事件委托
+                // main.js 的事件委托可能在某些环境（如浏览器自动化工具）中不触发
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const id = parseInt(this.getAttribute('data-id'));
+                    console.log('添加产品到购物车(按钮点击):', id);
+                    window.addToCart(id);
+                });
                 
                 boundCount++;
             }
         });
         
-        console.log(`已更新 ${boundCount} 个\"添加到购物车\"按钮的属性`);
+        console.log(`已绑定 ${boundCount} 个\"添加到购物车\"按钮`);
     }
     
     // 初始化
