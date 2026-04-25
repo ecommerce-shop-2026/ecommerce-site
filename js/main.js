@@ -246,6 +246,7 @@ const products = [
         ]
     },
     {
+        id: 9,
         name: "4K Ultra HD Drone with Camera",
     price: 399.99,
     category: "Electronics",
