@@ -370,6 +370,32 @@ body {
     border-color: #667eea;
     transform: translateY(-1px);
 }
+/* Compare button on product cards */
+.btn-compare-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #e0e0e0;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.btn-compare-sm:hover {
+    border-color: #667eea;
+    color: #667eea;
+    background: #f0f4ff;
+}
+.btn-compare-sm.in-compare {
+    border-color: #27ae60;
+    color: #27ae60;
+    background: #e8f5e9;
+}
 
 .nav-toggle {
     display: none;

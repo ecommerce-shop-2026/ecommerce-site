@@ -556,6 +556,7 @@
                         <div class="card-price">${priceHtml}</div>
                         <div class="card-actions">
                             <a class="btn-details" href="${p.slug}.html"><i class="fas fa-eye"></i> 查看详情</a>
+                            <button class="btn-compare-sm" data-product-id="${p.id}" title="Add to Compare" onclick="event.stopPropagation(); var id=this.getAttribute('data-product-id'); CompareSystem.isInCompare(id) ? CompareSystem.remove(id) : CompareSystem.add(id);"><i class="fas ${CompareSystem.isInCompare(p.id) ? 'fa-check-circle' : 'fa-plus-circle'}"></i></button>
                             <button class="btn-cart" onclick="event.stopPropagation(); addToCartLocal(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price})"><i class="fas fa-shopping-cart"></i></button>
                         </div>
                     </div>
@@ -629,5 +630,8 @@
         document.getElementById('sortFilter').addEventListener('change', filterAndRender);
     });
     </script>
+    <!-- 产品对比功能 -->
+    <script src="../js/compare.js"></script>
+    <script src="../js/i18n.js"></script>
 </body>
 </html>
