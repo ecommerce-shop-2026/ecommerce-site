@@ -92,7 +92,7 @@ fi
 # 5. 检查网站状态
 log_info "5. 检查网站在线状态..."
 if command -v curl &> /dev/null; then
-    curl -s -o /dev/null -w "%{http_code}" https://ecommerce-shop-2026.github.io/ecommerce-site/ > "$LOG_FILE.tmp"
+    curl -s -o /dev/null -w "%{http_code}" https://shop2026easy.com/ > "$LOG_FILE.tmp"
     STATUS_CODE=$(cat "$LOG_FILE.tmp")
     if [ "$STATUS_CODE" = "200" ]; then
         log_success "网站在线 (HTTP $STATUS_CODE)"

@@ -17,7 +17,7 @@ echo "   ✓ monitoring/ 目录结构已创建"
 echo "2. 创建监控配置文件..."
 cat > monitoring/monitor-config.json << 'EOF'
 {
-  "website_url": "https://ecommerce-shop-2026.github.io/ecommerce-site",
+  "website_url": "https://shop2026easy.com",
   "check_interval_minutes": 30,
   "alerts": {
     "enabled": true,

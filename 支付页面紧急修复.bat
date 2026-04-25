@@ -84,7 +84,7 @@ echo.
 :STEP5
 echo 步骤5: 测试访问
 echo 测试支付页面访问...
-curl -s -o /dev/null -w "HTTP状态码: %%{http_code}\n" https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html 2>nul
+curl -s -o /dev/null -w "HTTP状态码: %%{http_code}\\n" https://shop2026easy.com/payment.html 2>nul
 echo.
 
 echo 🎉 自动修复完成!
@@ -155,7 +155,7 @@ echo 步骤3: 等待部署完成
 echo   GitHub Pages 会自动部署，约1-2分钟
 echo.
 echo 步骤4: 验证访问
-echo   访问: https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html
+echo   访问: https://shop2026easy.com/payment.html
 echo.
 echo 📁 文件位置:
 echo   支付页面: ecommerce-site\payment.html
@@ -189,7 +189,7 @@ if exist ecommerce-site\payment.html (
 echo.
 echo 🌐 线上访问检查:
 echo 正在检查线上支付页面...
-curl -s -o /dev/null -w "HTTP状态码: %%{http_code}\n" https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html 2>nul
+curl -s -o /dev/null -w "HTTP状态码: %%{http_code}\n" https://shop2026easy.com/payment.html 2>nul
 echo.
 
 echo 📁 相关文件检查:
@@ -234,7 +234,7 @@ if exist ecommerce-site\payment.html (
 echo.
 echo 测试2: 线上可访问性
 echo 正在测试线上访问...
-start https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html
+start https://shop2026easy.com/payment.html
 echo ✅ 测试页面已打开
 echo 💡 请在浏览器中检查:
 echo   - 页面是否正常加载

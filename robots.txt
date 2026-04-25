@@ -5,7 +5,7 @@ Disallow: /monitoring/
 Disallow: /private/
 
 # Sitemap location
-Sitemap: https://ecommerce-shop-2026.github.io/ecommerce-site/sitemap.xml
+Sitemap: https://shop2026easy.com/sitemap.xml
 
 # Crawl delay (optional)
 # Crawl-delay: 10

@@ -70,8 +70,8 @@ goto MAIN_MENU
 :CHECK_STATUS
 echo.
 echo 📊 检查网站状态...
-echo 正在检查 https://ecommerce-shop-2026.github.io/ecommerce-site/ ...
-powershell -Command "try { $response = Invoke-WebRequest -Uri 'https://ecommerce-shop-2026.github.io/ecommerce-site/' -Method Head -UseBasicParsing -TimeoutSec 10; Write-Host '✅ 网站在线 (HTTP' $response.StatusCode ')' -ForegroundColor Green } catch { Write-Host '❌ 网站访问失败' -ForegroundColor Red }"
+echo 正在检查 https://shop2026easy.com/ ...
+powershell -Command "try { $response = Invoke-WebRequest -Uri 'https://shop2026easy.com/' -Method Head -UseBasicParsing -TimeoutSec 10; Write-Host '✅ 网站在线 (HTTP' $response.StatusCode ')' -ForegroundColor Green } catch { Write-Host '❌ 网站访问失败' -ForegroundColor Red }"
 echo.
 pause
 goto MAIN_MENU

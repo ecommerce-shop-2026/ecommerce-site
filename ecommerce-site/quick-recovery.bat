@@ -78,12 +78,12 @@ echo.
 echo 📊 检查网站状态...
 echo.
 echo 正在检查网站可访问性...
-powershell -Command "try { $response = Invoke-WebRequest -Uri 'https://ecommerce-shop-2026.github.io/ecommerce-site/' -Method Head -UseBasicParsing -TimeoutSec 10; Write-Host '✅ 主页在线 (HTTP' $response.StatusCode ')' -ForegroundColor Green } catch { Write-Host '❌ 主页访问失败' -ForegroundColor Red }"
-powershell -Command "try { $response = Invoke-WebRequest -Uri 'https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html' -Method Head -UseBasicParsing -TimeoutSec 10; Write-Host '✅ 支付页面在线 (HTTP' $response.StatusCode ')' -ForegroundColor Green } catch { Write-Host '❌ 支付页面访问失败' -ForegroundColor Red }"
+powershell -Command "try { $response = Invoke-WebRequest -Uri 'https://shop2026easy.com/' -Method Head -UseBasicParsing -TimeoutSec 10; Write-Host '✅ 主页在线 (HTTP' $response.StatusCode ')' -ForegroundColor Green } catch { Write-Host '❌ 主页访问失败' -ForegroundColor Red }"
+powershell -Command "try { $response = Invoke-WebRequest -Uri 'https://shop2026easy.com/payment.html' -Method Head -UseBasicParsing -TimeoutSec 10; Write-Host '✅ 支付页面在线 (HTTP' $response.StatusCode ')' -ForegroundColor Green } catch { Write-Host '❌ 支付页面访问失败' -ForegroundColor Red }"
 echo.
 echo 💡 快速访问：
-echo 1. 主页: https://ecommerce-shop-2026.github.io/ecommerce-site/
-echo 2. 支付页: https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html
+echo 1. 主页: https://shop2026easy.com/
+echo 2. 支付页: https://shop2026easy.com/payment.html
 echo.
 pause
 goto MAIN_MENU

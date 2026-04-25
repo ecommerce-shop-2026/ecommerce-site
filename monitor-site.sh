@@ -40,7 +40,7 @@ mkdir -p "$MONITOR_DIR/logs"
 
 # 网站URL（本地测试）
 LOCAL_URL="http://localhost:8000"
-GITHUB_URL="https://ecommerce-shop-2026.github.io/ecommerce-site"
+GITHUB_URL="https://shop2026easy.com"
 
 log_info "监控报告将保存到: $REPORT_DIR"
 
