@@ -149,24 +149,8 @@
             </div>
 
             <!-- Product Reviews Section -->
-            <div class="product-reviews">
-                <h2>客户评价 (423)</h2>
-                <div class="reviews-summary">
-                    <div class="overall-rating">
-                        <div class="rating-number">4.6</div>
-                        <div class="rating-stars">★★★★½</div>
-                        <div class="rating-text">基于 423 条评价</div>
-                    </div>
-                    <div class="rating-distribution">
-                        <!-- 评分分布可以在这里添加 -->
-                    </div>
-                </div>
-                <div class="reviews-list">
-                    <!-- 评价列表可以在这里添加 -->
-                    <div class="no-reviews">
-                        <p>暂时还没有评价，成为第一个评价此产品的人吧！</p>
-                    </div>
-                </div>
+            <div class="product-reviews" data-product-id="12">
+                <div class="reviews-container" id="reviewsContainer"></div>
             </div>
 
             <!-- Related Products -->
@@ -222,10 +206,16 @@
     </footer>
 
     <!-- JavaScript -->
+    <script src="../js/reviews.js"></script>
     <script src="../js/main.js"></script>
     <script>
         // 产品页面特定的JavaScript
         document.addEventListener('DOMContentLoaded', function() {
+            var container = document.getElementById('reviewsContainer');
+            if (container && window.reviews) {
+                window.reviews.renderReviews(12, container);
+                window.reviews.renderForm(12, container);
+            }
             // 初始化购物车
             updateCartCount();
             
