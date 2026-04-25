@@ -345,6 +345,9 @@ function processPayment() {
         // 保存订单历史到 localStorage
         saveOrder(order);
         
+        // 保存到 shopeasy_last_order 供 order-confirmed.html 读取
+        saveLastOrder(order);
+        
         // Clear cart
         clearCart();
         
@@ -531,7 +534,7 @@ function showOrderConfirmation(order) {
                 <i class="fas fa-info-circle"></i> A confirmation email has been sent to <strong>${order.customer.email}</strong>
             </div>
             
-            <button class="btn btn-primary" onclick="closeOrderConfirmation()" style="
+            <button class=\"btn btn-primary\" onclick=\"window.location.href='order-confirmed.html'\" style=\"
                 background: #007bff;
                 color: white;
                 border: none;
@@ -636,4 +639,36 @@ function showCheckoutNotification(message, type) {
             if (notification.parentNode) notification.remove();
         }, 300);
     }, 3000);
+}
+
+/**
+ * Save the last completed order data for order-confirmed.html
+ */
+function saveLastOrder(order) {
+    try {
+        var shippingData = {
+            email: order.customer.email,
+            firstName: order.customer.firstName,
+            lastName: order.customer.lastName,
+            address: order.customer.address,
+            city: order.customer.city,
+            zip: order.customer.zip,
+            country: order.customer.country
+        };
+        
+        var orderData = {
+            orderId: order.id,
+            total: '$' + order.total.toFixed(2),
+            items: order.items.map(function(item) {
+                return { name: item.name, quantity: item.quantity, price: '$' + (item.price * item.quantity).toFixed(2) };
+            }),
+            shipping: shippingData
+        };
+        
+        localStorage.setItem('shopeasy_last_order', JSON.stringify(orderData));
+        sessionStorage.setItem('shopeasy_last_order', JSON.stringify(orderData));
+        console.log('Last order saved for confirmation page:', order.id);
+    } catch(e) {
+        console.log('Could not save last order data');
+    }
 }
