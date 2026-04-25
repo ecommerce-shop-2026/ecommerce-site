@@ -221,7 +221,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 显示通知
     function showNotification(message) {
-        // 创建通知元素
+        // Use new notification system if available
+        if (typeof window.notify === 'function') {
+            window.notify(message, 'success', 3000);
+            return;
+        }
+        // Fallback: create notification element
         const notification = document.createElement('div');
         notification.className = 'cart-notification';
         notification.innerHTML = `
