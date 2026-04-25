@@ -46,5 +46,16 @@
         return origAddEventListener.call(this, type, wrappedListener, options);
     };
 
-    console.log('[ERRDIAG] Error diagnostics loaded');
+    console.log('[ERRDIAG] Error diagnostics loaded', new Date().toISOString());
+    console.log('[ERRDIAG] head script count:', document.head.querySelectorAll('script').length);
+    
+    // Try to identify empty-string errors by intercepting at a deeper level
+    var origConsoleError = console.error;
+    console.error = function() {
+        var args = Array.prototype.slice.call(arguments);
+        if (args.length === 0 || (args.length === 1 && args[0] === '')) {
+            console.log('[ERRDIAG] Empty console.error detected, stack:', new Error().stack);
+        }
+        return origConsoleError.apply(console, args);
+    };
 })();
