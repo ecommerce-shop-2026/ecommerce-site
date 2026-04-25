@@ -16,7 +16,7 @@ fi
 # 1. 部署到 GitHub Pages
 echo "📦 1. 部署到 GitHub Pages..."
 echo "   当前已通过 GitHub Actions 自动部署"
-echo "   网站地址: https://ecommerce-shop-2026.github.io/ecommerce-site"
+echo "   网站地址: https://shop2026easy.com"
 echo "   ✅ GitHub Pages 部署已配置"
 
 # 2. 部署到 Vercel
@@ -282,7 +282,7 @@ cat > DEPLOYMENT.md << 'EOF'
 ### 自动部署
 网站已配置 GitHub Actions 自动部署到 GitHub Pages。
 
-访问地址：https://ecommerce-shop-2026.github.io/ecommerce-site
+访问地址：https://shop2026easy.com
 
 ### 手动部署
 如果需要手动部署，可以运行：

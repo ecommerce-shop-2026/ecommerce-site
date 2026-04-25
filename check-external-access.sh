@@ -8,7 +8,7 @@ echo "开始时间: $(date)"
 echo ""
 
 # 网站URL
-BASE_URL="https://ecommerce-shop-2026.github.io/ecommerce-site"
+BASE_URL="https://shop2026easy.com"
 
 # 检查的页面列表
 PAGES=(

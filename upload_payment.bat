@@ -26,7 +26,7 @@ echo.
 echo 6. 输入 "添加支付页面" → 点击 "Commit changes"
 echo.
 echo 7. 等待1分钟后访问验证:
-echo    https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html
+echo    https://shop2026easy.com/payment.html
 echo.
 echo ================================================
 echo 🔧 方案B: 自动上传 (需要GitHub Token)
@@ -54,5 +54,5 @@ curl -X PUT ^
 cd ..
 echo.
 echo 上传完成！等待1分钟后验证...
-echo https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html
+echo https://shop2026easy.com/payment.html
 pause

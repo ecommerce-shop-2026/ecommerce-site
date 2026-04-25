@@ -8,7 +8,7 @@ echo ""
 
 # 检查网站可用性
 echo "1. 检查网站可用性..."
-URL="https://ecommerce-shop-2026.github.io/ecommerce-site"
+URL="https://shop2026easy.com"
 if curl -s --head --fail "$URL" > /dev/null 2>&1; then
     echo "   ✅ 网站可访问: $URL"
     echo "available: true" > monitoring/last-check.txt
@@ -29,7 +29,7 @@ fi
 
 # 检查产品详情页
 echo "3. 检查产品详情页..."
-if curl -s "https://ecommerce-shop-2026.github.io/ecommerce-site/product-detail.html" | grep -q "404"; then
+if curl -s "https://shop2026easy.com/product-detail.html" | grep -q "404"; then
     echo "   ❌ 产品详情页返回404错误"
     echo "product_detail: 404" >> monitoring/last-check.txt
 else

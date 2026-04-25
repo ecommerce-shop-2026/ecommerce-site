@@ -26,7 +26,7 @@ echo.
 echo 步骤6: 点击 "Commit changes" 按钮
 echo.
 echo 步骤7: 等待几秒钟，然后访问以下链接验证：
-echo     https://ecommerce-shop-2026.github.io/ecommerce-site/payment.html
+echo     https://shop2026easy.com/payment.html
 echo.
 echo 如果页面显示正常（不是404错误），则上传成功！
 echo.

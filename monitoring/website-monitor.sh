@@ -9,8 +9,8 @@ echo "----------------------------------------"
 mkdir -p monitoring/reports monitoring/logs monitoring/alerts
 
 # 网站URL
-MAIN_URL="https://ecommerce-shop-2026.github.io/ecommerce-site"
-PRODUCT_URL="https://ecommerce-shop-2026.github.io/ecommerce-site/product-detail.html"
+MAIN_URL="https://shop2026easy.com"
+PRODUCT_URL="https://shop2026easy.com/product-detail.html"
 
 # 生成时间戳
 TIMESTAMP=$(date '+%Y%m%d_%H%M%S')
