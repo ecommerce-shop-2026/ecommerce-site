@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - ShopEasy</title>
+    <meta name="description" content="View your order history on ShopEasy">
+    <meta name="keywords" content="order history, my orders, ShopEasy, purchase history">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="My Orders - ShopEasy">
+    <meta property="og:description" content="View and track your order history on ShopEasy">
+    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    <meta property="og:url" content="https://shop2026easy.com/order-history.html">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="My Orders - ShopEasy">
+    <meta name="twitter:description" content="View and track your order history on ShopEasy">
+    <meta name="twitter:image" content="https://shop2026easy.com/images/twitter-card.jpg">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "My Orders - ShopEasy",
+        "url": "https://shop2026easy.com/order-history.html",
+        "description": "View and track your order history on ShopEasy.",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://shop2026easy.com/"
+            },{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "My Orders",
+                "item": "https://shop2026easy.com/order-history.html"
+            }]
+        }
+    }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="logo-text">ShopEasy</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+                    <li class="nav-item"><a href="order-history.html" class="nav-link active"><i class="fas fa-history"></i> My Orders</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="index.html" class="btn-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Order History Section -->
+    <section class="section orders-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title"><i class='fas fa-history'></i> My Orders</h2>
+                <p class="section-subtitle">View and track all your orders</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="order-filters">
+                <button class="filter-btn active" data-status="all">All</button>
+                <button class="filter-btn" data-status="Pending">Pending</button>
+                <button class="filter-btn" data-status="Processing">Processing</button>
+                <button class="filter-btn" data-status="Shipped">Shipped</button>
+                <button class="filter-btn" data-status="Delivered">Delivered</button>
+                <button class="filter-btn" data-status="Cancelled">Cancelled</button>
+            </div>
+
+            <!-- Order List -->
+            <div class="orders-list" id="ordersList">
+                <!-- Orders rendered by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Detail Modal -->
+    <div class="order-modal-overlay" id="orderModal">
+        <div class="order-modal">
+            <button class="order-modal-close">&times;</button>
+            <div class="order-modal-body" id="orderModalBody">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="logo-text">ShopEasy</span>
+                    </a>
+                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4 class="link-title">Shop</h4>
+                        <a href="index.html#products" class="footer-link">All Products</a>
+                        <a href="index.html#categories" class="footer-link">Categories</a>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4 class="link-title">Support</h4>
+                        <a href="index.html#returns" class="footer-link">Returns & Refunds</a>
+                        <a href="#" class="footer-link">Shipping Info</a>
+                        <a href="#" class="footer-link">FAQ</a>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4 class="link-title">Legal</h4>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2024 ShopEasy. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/ux-enhancements.js"></script>
+    <script>
+        // ===== Order History Page Script =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const ordersList = document.getElementById('ordersList');
+            const modal = document.getElementById('orderModal');
+            const modalBody = document.getElementById('orderModalBody');
+            const modalClose = document.querySelector('.order-modal-close');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            let currentFilter = 'all';
+            
+            // Load orders from localStorage
+            function loadOrders() {
+                try {
+                    const saved = localStorage.getItem('shopEasyOrders');
+                    if (!saved) return [];
+                    const orders = JSON.parse(saved);
+                    return Array.isArray(orders) ? orders : [];
+                } catch(e) {
+                    console.error('Could not load orders:', e);
+                    return [];
+                }
+            }
+            
+            // Get status color
+            function getStatusColor(status) {
+                const colors = {
+                    'Pending': '#ffc107',
+                    'Processing': '#17a2b8',
+                    'Shipped': '#007bff',
+                    'Delivered': '#28a745',
+                    'Cancelled': '#dc3545'
+                };
+                return colors[status] || '#6c757d';
+            }
+            
+            // Format date
+            function formatDate(dateStr) {
+                const d = new Date(dateStr);
+                return d.toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'short', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+            }
+            
+            // Render order list
+            function renderOrders() {
+                const allOrders = loadOrders();
+                const filtered = currentFilter === 'all' 
+                    ? allOrders 
+                    : allOrders.filter(o => o.status === currentFilter);
+                
+                if (filtered.length === 0) {
+                    ordersList.innerHTML = `
+                        <div class="empty-orders">
+                            <i class="fas fa-inbox"></i>
+                            <h3>No orders yet</h3>
+                            <p>${currentFilter === 'all' ? "You haven't placed any orders yet." : "No orders with this status."}</p>
+                            <a href="index.html#products" class="btn-empty-shop">
+                                <i class="fas fa-shopping-bag"></i> Start Shopping
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                filtered.forEach(order => {
+                    const statusColor = getStatusColor(order.status);
+                    const itemCount = order.items.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                    
+                    html += `
+                        <div class="order-card" data-order-id="${order.id}">
+                            <div class="order-card-header">
+                                <div class="order-id">
+                                    <i class="fas fa-receipt"></i>
+                                    <span>${order.id}</span>
+                                </div>
+                                <span class="order-status-badge" style="background:${statusColor}20; color:${statusColor}; border:1px solid ${statusColor}40;">
+                                    <i class="fas fa-circle" style="font-size:8px; margin-right:5px;"></i>
+                                    ${order.status}
+                                </span>
+                            </div>
+                            <div class="order-card-body">
+                                <div class="order-card-info">
+                                    <div class="order-card-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        ${formatDate(order.date)}
+                                    </div>
+                                    <div class="order-card-items">
+                                        <i class="fas fa-box"></i>
+                                        ${itemCount} item(s)
+                                    </div>
+                                </div>
+                                <div class="order-card-total">
+                                    <span class="total-label">Total</span>
+                                    <span class="total-value">$${order.total.toFixed(2)}</span>
+                                </div>
+                            </div>
+                            <div class="order-card-footer">
+                                <button class="btn-view-detail" onclick="openOrderDetail('${order.id}')">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                ordersList.innerHTML = html;
+                
+                // Update cart count
+                updateCartCount();
+            }
+            
+            // Update cart count in nav
+            function updateCartCount() {
+                const counts = document.querySelectorAll('.cart-count');
+                let count = 0;
+                try {
+                    const saved = localStorage.getItem('shopEasyCart');
+                    if (saved) {
+                        const cart = JSON.parse(saved);
+                        count = cart.count || 0;
+                    }
+                } catch(e) {}
+                counts.forEach(el => { el.textContent = count; });
+            }
+            
+            // Open order detail modal
+            window.openOrderDetail = function(orderId) {
+                const orders = loadOrders();
+                const order = orders.find(o => o.id === orderId);
+                if (!order) return;
+                
+                const statusColor = getStatusColor(order.status);
+                const itemRows = order.items.map(item => {
+                    const subtotal = (item.price || 0) * (item.quantity || 1);
+                    return `
+                        <tr>
+                            <td class="detail-item-name">${item.name}</td>
+                            <td class="detail-item-price">$${(item.price || 0).toFixed(2)}</td>
+                            <td class="detail-item-qty">${item.quantity || 1}</td>
+                            <td class="detail-item-subtotal">$${subtotal.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }).join('');
+                
+                const customer = order.customer || {};
+                const payment = order.payment || {};
+                const shippingLabel = order.shippingMethod || 'Standard Shipping';
+                const shippingCost = order.shipping || 0;
+                const subtotal = order.subtotal || 0;
+                const tax = order.tax || 0;
+                const total = order.total || 0;
+                
+                // Build status progress (only show if not cancelled)
+                let progressHtml = '';
+                if (order.status !== 'Cancelled') {
+                    const statuses = ['Pending', 'Processing', 'Shipped', 'Delivered'];
+                    const currentIdx = statuses.indexOf(order.status);
+                    progressHtml = `
+                        <div class="order-progress">
+                            ${statuses.map((s, i) => `
+                                <div class="progress-step ${i <= currentIdx ? 'completed' : ''} ${i === currentIdx ? 'active' : ''}">
+                                    <div class="progress-dot" style="background:${i <= currentIdx ? statusColor : '#d1d5db'}">
+                                        ${i < currentIdx ? '<i class="fas fa-check"></i>' : (i === currentIdx ? `<i class="fas fa-circle" style="font-size:8px;"></i>` : '')}
+                                    </div>
+                                    <span class="progress-label">${s}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    progressHtml = `
+                        <div class="order-cancelled-badge">
+                            <i class="fas fa-times-circle"></i> Order Cancelled
+                        </div>
+                    `;
+                }
+                
+                modalBody.innerHTML = `
+                    <div class="detail-header">
+                        <div class="detail-header-left">
+                            <h3><i class="fas fa-receipt"></i> Order Details</h3>
+                            <span class="detail-order-id">${order.id}</span>
+                            <span class="detail-date"><i class="far fa-calendar-alt"></i> ${formatDate(order.date)}</span>
+                        </div>
+                        <span class="order-status-badge large" style="background:${statusColor}20; color:${statusColor}; border:1px solid ${statusColor}40;">
+                            <i class="fas fa-circle" style="font-size:8px; margin-right:5px;"></i>
+                            ${order.status}
+                        </span>
+                    </div>
+                    
+                    ${progressHtml}
+                    
+                    <div class="detail-section">
+                        <h4><i class="fas fa-shopping-bag"></i> Items</h4>
+                        <table class="detail-items-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${itemRows}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="detail-grid">
+                        <div class="detail-section">
+                            <h4><i class="fas fa-truck"></i> Shipping</h4>
+                            <div class="detail-info-block">
+                                <p><strong>${customer.firstName || ''} ${customer.lastName || ''}</strong></p>
+                                <p>${customer.address || ''}</p>
+                                <p>${customer.city || ''}${customer.state ? ', ' + customer.state : ''} ${customer.zip || ''}</p>
+                                <p>${customer.country || ''}</p>
+                                <p class="detail-method"><i class="fas fa-shipping-fast"></i> ${shippingLabel}</p>
+                                <p class="detail-method"><i class="fas fa-dollar-sign"></i> Shipping: ${shippingCost === 0 ? 'Free' : '$' + shippingCost.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h4><i class="fas fa-credit-card"></i> Payment</h4>
+                            <div class="detail-info-block">
+                                <p><i class="fas fa-wallet"></i> ${payment.method || 'Credit Card'}</p>
+                                ${payment.last4 ? `<p><i class="fas fa-credit-card"></i> Card ending in ****${payment.last4}</p>` : ''}
+                                <p><i class="far fa-envelope"></i> ${customer.email || ''}</p>
+                                ${customer.phone ? `<p><i class="fas fa-phone"></i> ${customer.phone}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-totals">
+                        <div class="totals-row">
+                            <span>Subtotal</span>
+                            <span>$${subtotal.toFixed(2)}</span>
+                        </div>
+                        <div class="totals-row">
+                            <span>Shipping</span>
+                            <span>${shippingCost === 0 ? 'Free' : '$' + shippingCost.toFixed(2)}</span>
+                        </div>
+                        <div class="totals-row">
+                            <span>Tax</span>
+                            <span>$${tax.toFixed(2)}</span>
+                        </div>
+                        <div class="totals-row total-final">
+                            <span>Total</span>
+                            <span>$${total.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+                
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            };
+            
+            // Close modal
+            function closeModal() {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+            
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
+            
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.getAttribute('data-status');
+                    renderOrders();
+                });
+            });
+            
+            // Initial render
+            renderOrders();
+        });
+        
+        // Nav toggle for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('navToggle');
+            const navMenu = document.querySelector('.nav-menu');
+            if (toggle && navMenu) {
+                toggle.addEventListener('click', function() {
+                    navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
