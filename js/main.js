@@ -1265,7 +1265,199 @@ document.addEventListener('DOMContentLoaded', async function() {
     checkStoredReturnRequests();
     
     console.log('所有组件初始化完成');
+    
+    // 初始化页面动画系统
+    initPageAnimations();
+    
+    // 隐藏骨架屏
+    hideSkeletonLoader();
+    
 });
+
+/* ==================================================================
+   Page Load & Scroll Animation System
+   ================================================================== */
+
+/**
+ * Hide the skeleton loader with a smooth fade-out
+ */
+function hideSkeletonLoader() {
+    const skeleton = document.getElementById('skeletonLoader');
+    if (skeleton) {
+        // Wait for all assets to load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                skeleton.classList.add('hidden');
+                document.body.classList.add('page-loaded');
+                // Remove skeleton from DOM after transition
+                setTimeout(function() {
+                    if (skeleton.parentNode) skeleton.parentNode.removeChild(skeleton);
+                }, 600);
+            }, 300);
+        });
+        // Fallback: hide after 2s even if load event already fired
+        setTimeout(function() {
+            if (!skeleton.classList.contains('hidden')) {
+                skeleton.classList.add('hidden');
+                document.body.classList.add('page-loaded');
+            }
+        }, 2500);
+    }
+}
+
+/**
+ * Initialize IntersectionObserver-based scroll reveal animations
+ */
+function initPageAnimations() {
+    // Watch all .reveal, .reveal-left, .reveal-right, .reveal-scale elements
+    const revealElements = document.querySelectorAll(
+        '.reveal, .reveal-left, .reveal-right, .reveal-scale'
+    );
+    
+    if (revealElements.length === 0) return;
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                el.classList.add('revealed');
+                
+                // If this element also has .stagger-children, reveal children
+                if (el.classList.contains('stagger-children')) {
+                    el.classList.add('revealed');
+                }
+                
+                // Unobserve after revealing
+                observer.unobserve(el);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'  // trigger slightly before element enters viewport
+    });
+    
+    revealElements.forEach(function(el) {
+        observer.observe(el);
+    });
+}
+
+/**
+ * Show a toast notification
+ * @param {string} message - The message to display
+ * @param {string} type - 'success', 'error', or 'info'
+ * @param {number} duration - Auto-dismiss in ms (0 = manual close)
+ */
+function showToast(message, type, duration) {
+    type = type || 'info';
+    duration = duration || 3000;
+    
+    // Create toast container if it doesn't exist
+    let container = document.querySelector('.toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+    
+    // Icon mapping
+    var icons = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        info: 'fa-info-circle'
+    };
+    var icon = icons[type] || icons.info;
+    
+    // Create toast element
+    var toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.innerHTML = '<span class="toast-icon"><i class="fas ' + icon + '"></i></span> ' + message;
+    
+    container.appendChild(toast);
+    
+    // Auto-dismiss
+    if (duration > 0) {
+        setTimeout(function() {
+            toast.classList.add('out');
+            setTimeout(function() {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+                // Remove container if empty
+                if (container.children.length === 0 && container.parentNode) {
+                    container.parentNode.removeChild(container);
+                }
+            }, 300);
+        }, duration);
+    }
+    
+    return toast;
+}
+
+/**
+ * Animate a counter from start to end value
+ * @param {HTMLElement} el - Target element
+ * @param {number} start - Start value
+ * @param {number} end - End value
+ * @param {number} duration - Animation duration in ms
+ * @param {string} suffix - Optional suffix like '+' or '%'
+ */
+function animateCounter(el, start, end, duration, suffix) {
+    suffix = suffix || '';
+    var range = end - start;
+    var startTime = null;
+    
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var current = Math.floor(start + range * easeOutCubic(progress));
+        el.textContent = current + suffix;
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            el.textContent = end + suffix;
+        }
+    }
+    
+    requestAnimationFrame(step);
+}
+
+function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+}
+
+/**
+ * Add a bounce animation to the cart icon
+ */
+function bounceCartIcon() {
+    var cartIcon = document.querySelector('.cart-icon i');
+    if (!cartIcon) return;
+    cartIcon.classList.remove('cart-bounce');
+    // Force reflow
+    void cartIcon.offsetWidth;
+    cartIcon.classList.add('cart-bounce');
+}
+
+/**
+ * Add a pop animation to wishlist heart icon
+ */
+function popHeartIcon() {
+    var heartIcon = document.querySelector('.nav-icon-link[title="Wishlist"] i');
+    if (!heartIcon) return;
+    heartIcon.classList.remove('heart-pop');
+    void heartIcon.offsetWidth;
+    heartIcon.classList.add('heart-pop');
+}
+
+/**
+ * Scroll to a section smoothly with offset for fixed navbar
+ * @param {string} sectionId - The element ID to scroll to
+ * @param {number} offset - Optional offset in px (default: 70 for navbar)
+ */
+function smoothScrollTo(sectionId, offset) {
+    offset = offset || 70;
+    var el = document.getElementById(sectionId);
+    if (!el) return;
+    var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+}
 
 // 监听窗口大小变化，重新设置响应式图片
 window.addEventListener('resize', setupResponsiveImages);
