@@ -244,7 +244,142 @@ const products = [
             "Touch controls",
             "Energy efficient LED"
         ]
-    }
+    },
+    {
+        name: "4K Ultra HD Drone with Camera",
+    price: 399.99,
+    category: "Electronics",
+    rating: 4.7,
+    reviews: 312,
+    icon: "fas fa-drone",
+    isNew: true,
+    isSale: true,
+    originalPrice: 549.99,
+    discount: 27,
+    images: [
+      "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1579829366248-204fe8413f31?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=600&fit=crop"
+    ],
+    description: "Professional 4K drone with 3-axis gimbal, 30-minute flight time, and intelligent tracking mode.",
+    specifications: {
+      brand: "SkyVision",
+      model: "SV-Pro4K",
+      camera: "4K 60fps HDR",
+      gimbal: "3-axis stabilized",
+      flightTime: "30 minutes",
+      range: "5 km",
+      features: ["GPS Return-to-Home", "Obstacle Avoidance", "Follow Me Mode", "Waypoint Navigation"]
+    },
+    features: [
+      "4K HDR video at 60fps",
+      "3-axis gimbal stabilization",
+      "30-minute flight time",
+      "5 km transmission range",
+      "Obstacle avoidance sensors"
+    ]
+  },
+  {
+    id: 10,
+    name: "Smart Home Security Camera 360°",
+    price: 79.99,
+    category: "Electronics",
+    rating: 4.5,
+    reviews: 567,
+    icon: "fas fa-video",
+    isNew: true,
+    images: [
+      "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1591102972654-3ea125c0ae60?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1591102972654-3ea125c0ae60?w=600&h=600&fit=crop"
+    ],
+    description: "360° panoramic security camera with night vision, two-way audio, and AI motion detection.",
+    specifications: {
+      brand: "SafeHome",
+      model: "SH-360Pro",
+      resolution: "2K QHD",
+      fieldOfView: "360° horizontal, 120° vertical",
+      nightVision: "IR up to 30ft",
+      audio: "Two-way with noise cancellation",
+      storage: "MicroSD up to 256GB / Cloud"
+    },
+    features: [
+      "2K QHD resolution",
+      "360° panoramic view",
+      "AI motion detection alerts",
+      "Two-way audio talk",
+      "Night vision up to 30ft"
+    ]
+  },
+  {
+    id: 11,
+    name: "Portable Blender USB-C Rechargeable",
+    price: 34.99,
+    category: "Home & Living",
+    rating: 4.4,
+    reviews: 890,
+    icon: "fas fa-blender",
+    isNew: true,
+    isSale: true,
+    originalPrice: 49.99,
+    discount: 30,
+    images: [
+      "https://images.unsplash.com/photo-1622484211816-c35a14c1fef2?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1571935443042-d0a5b29b6cf7?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1622484211816-c35a14c1fef2?w=600&h=600&fit=crop"
+    ],
+    description: "Portable USB-C rechargeable blender, perfect for smoothies on-the-go. 6-blade design, 400ml capacity.",
+    specifications: {
+      brand: "BlendGo",
+      model: "BG-400",
+      capacity: "400ml",
+      power: "120W",
+      battery: "3000mAh USB-C",
+      blades: "6 stainless steel",
+      material: "Tritan plastic, BPA-free"
+    },
+    features: [
+      "USB-C rechargeable",
+      "6-blade stainless steel",
+      "400ml BPA-free bottle",
+      "IPX5 water resistant",
+      "30-second blend cycle"
+    ]
+  },
+  {
+    id: 12,
+    name: "Massage Gun Deep Tissue",
+    price: 89.99,
+    category: "Health & Beauty",
+    rating: 4.6,
+    reviews: 423,
+    icon: "fas fa-hand-holding-heart",
+    isSale: true,
+    originalPrice: 129.99,
+    discount: 31,
+    images: [
+      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=600&fit=crop"
+    ],
+    description: "Deep tissue massage gun with 6 speed levels, 4 head attachments, and ultra-quiet brushless motor.",
+    specifications: {
+      brand: "RelaxPro",
+      model: "RP-6000",
+      speeds: "6 levels (1200-3200 rpm)",
+      motor: "Brushless, ultra-quiet",
+      battery: "2600mAh lithium",
+      attachments: "4 heads (ball, bullet, fork, flat)",
+      noise: "Under 45dB"
+    },
+    features: [
+      "6 speed intensity levels",
+      "4 interchangeable heads",
+      "Brushless quiet motor",
+      "Long battery life (6 hours)",
+      "Ergonomic grip design"
+    ]
+  }
 ];
 
 // DOM Elements
@@ -262,6 +397,9 @@ const returnForm = document.getElementById('returnRequestForm');
 document.addEventListener('DOMContentLoaded', function() {
     // Load products
     loadProducts();
+    
+    // Load deals (new arrivals & hot sales)
+    loadDeals();
     
     // NOTE: Cart functionality is now handled by cart-system.js
     // Disabling main.js cart initialization to avoid conflicts
@@ -283,6 +421,56 @@ function loadProducts() {
     products.forEach(product => {
         const productCard = createProductCard(product);
         productsGrid.appendChild(productCard);
+    });
+}
+
+// Load deals (new arrivals + hot sales) to the deals grid
+function loadDeals() {
+    const dealsGrid = document.getElementById('dealsGrid');
+    if (!dealsGrid) return;
+
+    dealsGrid.innerHTML = '';
+
+    // Filter: new arrivals (isNew) or on sale (isSale)
+    const deals = products.filter(p => p.isNew || p.isSale);
+
+    deals.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card deal-card';
+        card.setAttribute('data-id', product.id);
+        
+        let badges = '';
+        if (product.isNew) badges += '<span class="badge badge-new">New</span>';
+        if (product.isSale) {
+            const discount = product.discount ? Math.round(product.discount) : 0;
+            badges += `<span class="badge badge-sale">-${discount}%</span>`;
+        }
+        
+        let priceHtml = `<div class="product-price">$${product.price.toFixed(2)}</div>`;
+        if (product.isSale && product.originalPrice) {
+            priceHtml = `<div class="product-price"><span class="original-price">$${product.originalPrice.toFixed(2)}</span> $${product.price.toFixed(2)}</div>`;
+        }
+
+        card.innerHTML = `
+            <div class="product-image" onclick="viewProductDetail(${product.id})">
+                <img src="${product.images[0]}" alt="${product.name}" loading="lazy" class="product-img">
+                ${badges}
+                <div class="product-overlay">
+                    <button class="btn-quick-view" onclick="event.stopPropagation(); viewProductDetail(${product.id})">
+                        <i class="fas fa-eye"></i> Quick View
+                    </button>
+                </div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title" onclick="viewProductDetail(${product.id})">${product.name}</h3>
+                <div class="product-category">${product.category}</div>
+                ${priceHtml}
+                <button class="btn-add-to-cart" data-id="${product.id}">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+            </div>
+        `;
+        dealsGrid.appendChild(card);
     });
 }
 
