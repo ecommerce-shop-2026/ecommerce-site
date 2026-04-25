@@ -697,7 +697,8 @@ function viewProductDetail(productId) {
 // Initialize cart display
 updateCart();
 
-// Search Functionality
+// Search Functionality -- DISABLED: Now handled by search.js
+/*
 function initSearch() {
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
@@ -784,10 +785,11 @@ function initSearch() {
         searchResults.style.display = 'block';
     }
 }
+*/
 
 // Initialize search when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    initSearch();
+    // initSearch(); // Disabled - handled by search.js
     initReturnForm();
 });
 

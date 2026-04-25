@@ -279,9 +279,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化
     loadCart();
     
+    // 绑定结算按钮
+    function bindCheckoutButton() {
+        const checkoutBtns = document.querySelectorAll('.btn-checkout');
+        checkoutBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const cartData = (typeof window.cart !== 'undefined' && window.cart.items)
+                    ? window.cart : { items: [], total: 0, count: 0 };
+                if (cartData.items.length === 0) {
+                    showNotification('Your cart is empty!');
+                    return;
+                }
+                window.location.href = 'payment.html';
+            });
+        });
+        console.log(`已绑定 ${checkoutBtns.length} 个结算按钮`);
+    }
+    
     // 延迟绑定按钮，确保DOM完全加载
     setTimeout(() => {
         bindAddToCartButtons();
+        bindCheckoutButton();
         console.log('🛒 购物车系统初始化完成');
     }, 500);
     
