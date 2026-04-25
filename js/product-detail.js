@@ -118,6 +118,24 @@ function loadProductDetail(productId) {
     document.getElementById('average-rating').textContent = product.rating;
     document.getElementById('average-stars').innerHTML = createStarRating(product.rating);
     document.getElementById('total-reviews').textContent = `${product.reviews} reviews`;
+    
+    // --- Reviews System Integration ---
+    // Populate the reviews tab with dynamic reviews data
+    // Check if reviews API is available
+    if (typeof window.reviews !== 'undefined' && window.reviews.getReviews) {
+        const reviewsTab = document.getElementById('reviews');
+        if (reviewsTab) {
+            // Clear existing static content inside reviews tab
+            // but keep the tab-pane structure
+            reviewsTab.innerHTML = '';
+            
+            // Render reviews summary + list
+            window.reviews.renderReviews(productId, reviewsTab);
+            
+            // Render review form
+            window.reviews.renderReviewForm(productId, reviewsTab);
+        }
+    }
 }
 
 // Format specification key for display

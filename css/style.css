@@ -210,6 +210,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .search-result-item:hover {
@@ -235,6 +237,14 @@ body {
     font-weight: 500;
     color: #111827;
     margin-bottom: 2px;
+    line-height: 1.4;
+}
+
+.search-result-name mark {
+    background: #fef08a;
+    color: #92400e;
+    padding: 0 2px;
+    border-radius: 2px;
 }
 
 .search-result-price {
@@ -248,6 +258,21 @@ body {
     background: #f3f4f6;
     padding: 2px 6px;
     border-radius: 10px;
+}
+
+.search-highlight {
+    background: #fef08a;
+    color: #92400e;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.search-result-name .search-highlight,
+.search-result-category .search-highlight {
+    background: #fef08a;
+    color: #92400e;
+    padding: 0 2px;
+    border-radius: 2px;
 }
 
 .no-results {
