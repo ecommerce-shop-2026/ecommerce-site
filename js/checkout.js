@@ -318,8 +318,10 @@ function processPayment() {
             lastName: lastName.value,
             address: address.value,
             city: city.value,
+            state: '',
             zip: zip.value,
-            country: country.value
+            country: country.value,
+            phone: ''
         };
         
         // Build order object
@@ -331,9 +333,13 @@ function processPayment() {
             shipping: shippingCost,
             tax: tax,
             total: total,
-            status: 'Confirmed',
+            status: 'Processing',
             shippingMethod: shippingLabel,
-            customer: customer
+            customer: customer,
+            payment: {
+                method: 'Credit Card',
+                last4: cardNum ? cardNum.value.replace(/\\D/g, '').slice(-4) : '4242'
+            }
         };
         
         // 保存订单历史到 localStorage

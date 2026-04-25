@@ -45,6 +45,35 @@ function loadProductDetail(productId) {
     // Update SKU
     document.getElementById('product-sku').textContent = product.specifications?.model || `PROD-${product.id}`;
     
+    // Update wishlist button data-id
+    var wishlistBtn = document.querySelector('.btn-wishlist');
+    if (wishlistBtn) {
+        wishlistBtn.setAttribute('data-id', product.id);
+    }
+    
+    // Check if product is already in wishlist and update button state
+    if (typeof window.wishlist !== 'undefined') {
+        window.wishlist.isWishlisted(product.id);
+        // Force UI update for this button
+        setTimeout(function() {
+            if (typeof window.wishlist !== 'undefined' && window.wishlist.getAll) {
+                var allBtn = document.querySelector('.btn-wishlist[data-id="' + product.id + '"]');
+                if (allBtn) {
+                    var isFav = window.wishlist.isWishlisted(product.id);
+                    var icon = allBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = isFav ? 'fas fa-heart' : 'far fa-heart';
+                    }
+                    allBtn.classList.toggle('wishlisted', isFav);
+                    var textNode = allBtn.childNodes[allBtn.childNodes.length - 1];
+                    if (textNode && textNode.nodeType === 3) {
+                        textNode.textContent = isFav ? ' In Wishlist' : ' Add to Wishlist';
+                    }
+                }
+            }
+        }, 200);
+    }
+    
     // Update main image
     const mainImage = document.getElementById('main-product-image');
     mainImage.src = product.images[0];
