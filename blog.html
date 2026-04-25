@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - ShopEasy</title>
+    <meta name="description" content="ShopEasy Blog - Discover shopping tips, product reviews, fashion trends, tech insights, and lifestyle guides. Stay updated with the latest from ShopEasy.">
+    <meta name="keywords" content="ShopEasy blog, shopping tips, product reviews, fashion trends, tech news, lifestyle blog, ecommerce blog">
+    <meta name="author" content="ShopEasy">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Blog - ShopEasy">
+    <meta property="og:description" content="Discover shopping tips, product reviews, fashion trends, and tech insights from the ShopEasy team.">
+    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    <meta property="og:url" content="https://shop2026easy.com/blog.html">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog - ShopEasy">
+    <meta name="twitter:description" content="Discover shopping tips, product reviews, fashion trends, and tech insights from the ShopEasy team.">
+    <meta name="twitter:image" content="https://shop2026easy.com/images/twitter-card.jpg">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "ShopEasy Blog",
+        "url": "https://shop2026easy.com/blog.html",
+        "description": "Discover shopping tips, product reviews, fashion trends, and tech insights from the ShopEasy team.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "ShopEasy"
+        }
+    }
+    </script>
+    <link rel="canonical" href="https://shop2026easy.com/blog.html">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="logo-text">ShopEasy</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link active"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+                    <li class="nav-item"><a href="#cart" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+                    <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <a href="wishlist.html" class="btn-wishlist-nav">
+                    <i class="fas fa-heart"></i>
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="#cart" class="btn-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="btn-login">Sign In</button>
+                <button class="btn-register">Register</button>
+            </div>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="blog-hero">
+        <div class="container">
+            <div class="blog-hero-content">
+                <h1 class="blog-hero-title"><i class="fas fa-blog"></i> ShopEasy Blog</h1>
+                <p class="blog-hero-subtitle">Tips, trends, reviews and insights to help you shop smarter</p>
+                <div class="blog-hero-search">
+                    <div class="blog-search-wrapper">
+                        <i class="fas fa-search blog-search-icon"></i>
+                        <input type="text" id="blogSearchInput" class="blog-search-input" placeholder="Search articles...">
+                    </div>
+                    <div class="blog-category-tabs" id="blogCategoryTabs">
+                        <button class="blog-tab active" data-category="all">All</button>
+                        <button class="blog-tab" data-category="shopping-tips">Shopping Tips</button>
+                        <button class="blog-tab" data-category="product-reviews">Reviews</button>
+                        <button class="blog-tab" data-category="fashion">Fashion</button>
+                        <button class="blog-tab" data-category="tech">Tech</button>
+                        <button class="blog-tab" data-category="lifestyle">Lifestyle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts -->
+    <section class="blog-posts">
+        <div class="container">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Post 1 -->
+                <article class="blog-card" data-category="shopping-tips" data-date="2025-04-20">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop" alt="Smart Shopping Tips" loading="lazy">
+                        <span class="blog-category-badge">Shopping Tips</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 20, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-title">10 Smart Shopping Tips to Save Money in 2025</h3>
+                        <p class="blog-excerpt">Discover proven strategies to maximize your savings while shopping online. From price tracking tools to seasonal sales calendars, we've got you covered.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(0); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 2 -->
+                <article class="blog-card" data-category="product-reviews" data-date="2025-04-18">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop" alt="Wireless Headphones Review" loading="lazy">
+                        <span class="blog-category-badge">Product Reviews</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 18, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3 class="blog-title">Best Wireless Headphones Under $100: Top 5 Picks</h3>
+                        <p class="blog-excerpt">We tested 20+ wireless headphones under $100 to find the best ones for sound quality, battery life, and comfort. Here are our top recommendations.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(1); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 3 -->
+                <article class="blog-card" data-category="fashion" data-date="2025-04-15">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&h=400&fit=crop" alt="Spring Fashion Trends" loading="lazy">
+                        <span class="blog-category-badge">Fashion</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 15, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3 class="blog-title">Spring 2025 Fashion Trends: What's In This Season</h3>
+                        <p class="blog-excerpt">From pastel colors to oversized blazers, explore the top fashion trends of Spring 2025. Plus, tips on how to style them on a budget.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(2); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 4 -->
+                <article class="blog-card" data-category="tech" data-date="2025-04-12">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" alt="Smart Home Tech" loading="lazy">
+                        <span class="blog-category-badge">Tech</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 12, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 8 min read</span>
+                        </div>
+                        <h3 class="blog-title">Smart Home Gadgets That Actually Make Life Easier</h3>
+                        <p class="blog-excerpt">We've tested the latest smart home devices to find which ones are worth your money. From smart plugs to AI assistants, here's what works.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(3); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 5 -->
+                <article class="blog-card" data-category="lifestyle" data-date="2025-04-10">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop" alt="Home Office Setup" loading="lazy">
+                        <span class="blog-category-badge">Lifestyle</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 10, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-title">Ultimate Home Office Setup: Ergonomic & Affordable</h3>
+                        <p class="blog-excerpt">Create a productive and comfortable home office without breaking the bank. Our guide covers desks, chairs, lighting, and essential accessories.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(4); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 6 -->
+                <article class="blog-card" data-category="shopping-tips" data-date="2025-04-08">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop" alt="Online Shopping Safety" loading="lazy">
+                        <span class="blog-category-badge">Shopping Tips</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 8, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 4 min read</span>
+                        </div>
+                        <h3 class="blog-title">Online Shopping Safety: Protect Yourself in 2025</h3>
+                        <p class="blog-excerpt">Essential tips to keep your personal and financial information safe when shopping online. Learn about secure payment methods and red flags to watch for.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(5); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 7 -->
+                <article class="blog-card" data-category="product-reviews" data-date="2025-04-05">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop" alt="Smartwatch Review" loading="lazy">
+                        <span class="blog-category-badge">Product Reviews</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 5, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3 class="blog-title">Budget Smartwatches Compared: Which One Should You Buy?</h3>
+                        <p class="blog-excerpt">We compare the top budget smartwatches under $200. Features, battery life, fitness tracking accuracy, and value for money — all tested hands-on.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(6); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 8 -->
+                <article class="blog-card" data-category="fashion" data-date="2025-04-02">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop" alt="Capsule Wardrobe" loading="lazy">
+                        <span class="blog-category-badge">Fashion</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Apr 2, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3 class="blog-title">How to Build a Capsule Wardrobe on a Budget</h3>
+                        <p class="blog-excerpt">Simplify your closet and save money with a capsule wardrobe. We show you the 25 essential pieces and how to mix and match them for any occasion.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(7); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 9 -->
+                <article class="blog-card" data-category="tech" data-date="2025-03-30">
+                    <div class="blog-card-image">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Gadget Gift Guide" loading="lazy">
+                        <span class="blog-category-badge">Tech</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> Mar 30, 2025</span>
+                            <span class="blog-read-time"><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-title">Best Tech Gifts Under $50: Unique Ideas for Any Occasion</h3>
+                        <p class="blog-excerpt">Stuck on gift ideas? These affordable yet impressive tech gadgets under $50 are perfect for birthdays, holidays, or just because.</p>
+                        <a href="#" class="blog-read-more" onclick="openBlogPost(8); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="blog-pagination" id="blogPagination">
+                <button class="pagination-btn active" data-page="1">1</button>
+                <button class="pagination-btn" data-page="2">2</button>
+                <button class="pagination-btn" data-page="3">3</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="blog-newsletter">
+        <div class="container">
+            <div class="newsletter-card">
+                <div class="newsletter-icon"><i class="fas fa-envelope-open-text"></i></div>
+                <h2 class="newsletter-title">Stay Updated</h2>
+                <p class="newsletter-text">Get the latest posts, shopping tips, and exclusive deals delivered to your inbox.</p>
+                <form class="newsletter-form" onsubmit="return subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+                <p class="newsletter-disclaimer">No spam. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="logo-text">ShopEasy</span>
+                    </a>
+                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4 class="link-title">Shop</h4>
+                        <a href="index.html#products" class="footer-link">All Products</a>
+                        <a href="index.html#categories" class="footer-link">Categories</a>
+                        <a href="index.html#payment" class="footer-link">Payment Options</a>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4 class="link-title">Support</h4>
+                        <a href="faq.html" class="footer-link">FAQ</a>
+                        <a href="contact.html" class="footer-link">Contact Us</a>
+                        <a href="about.html" class="footer-link">About Us</a>
+                        <a href="blog.html" class="footer-link">Blog</a>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4 class="link-title">Legal</h4>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2024 ShopEasy. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Blog Detail Modal -->
+    <div class="modal-overlay" id="blogModalOverlay" style="display:none;" onclick="closeBlogModal()">
+        <div class="modal-content blog-modal-content" onclick="event.stopPropagation();">
+            <button class="modal-close" onclick="closeBlogModal()">&times;</button>
+            <div id="blogModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/cart-system.js"></script>
+    <script src="js/ux-enhancements.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>
