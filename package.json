@@ -1,0 +1,21 @@
+{
+  "name": "ecommerce-site",
+  "version": "1.0.0",
+  "description": "现代化的电子商务网站，具备完整的产品展示、购物车功能和自动化运维系统。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecommerce-shop-2026/ecommerce-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ecommerce-shop-2026/ecommerce-site/issues"
+  },
+  "homepage": "https://github.com/ecommerce-shop-2026/ecommerce-site#readme"
+}
