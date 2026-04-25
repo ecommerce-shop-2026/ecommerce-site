@@ -94,8 +94,24 @@ else
     log_warning "  curl 未安装，跳过可用性检查"
 fi
 
-# 3. 检查页面加载时间
-log_info "3. 检查页面加载时间..."
+# 3. 检查各个页面URL
+log_info "3. 检查各个页面URL..."
+
+PAGE_URLS=(
+    "/"
+    "/product-detail.html"
+    "/payment.html"
+    "/order-history.html"
+    "/wishlist.html"
+)
+
+for page in "${PAGE_URLS[@]}"; do
+    check_url "${GITHUB_URL}${page}" "${page}"
+    sleep 0.5
+done
+
+# 4. 检查页面加载时间
+log_info "4. 检查页面加载时间..."
 if command -v curl &> /dev/null; then
     for url in "$LOCAL_URL" "$GITHUB_URL"; do
         log_info "  测试 $url 加载时间..."
@@ -118,8 +134,8 @@ if command -v curl &> /dev/null; then
     done
 fi
 
-# 4. 检查资源文件
-log_info "4. 检查资源文件..."
+# 5. 检查资源文件
+log_info "5. 检查资源文件..."
 RESOURCE_FILES=(
     "css/style.css"
     "js/main.js"
@@ -139,8 +155,8 @@ for resource in "${RESOURCE_FILES[@]}"; do
     fi
 done
 
-# 5. 检查 JavaScript 错误
-log_info "5. 检查 JavaScript 错误..."
+# 6. 检查 JavaScript 错误
+log_info "6. 检查 JavaScript 错误..."
 if [ -f "js/main.js" ]; then
     # 简单的语法检查
     if command -v node &> /dev/null; then
@@ -155,8 +171,8 @@ if [ -f "js/main.js" ]; then
     fi
 fi
 
-# 6. 检查链接有效性
-log_info "6. 检查链接有效性..."
+# 7. 检查链接有效性
+log_info "7. 检查链接有效性..."
 if command -v linkchecker &> /dev/null; then
     log_info "  运行链接检查..."
     linkchecker --check-extern --no-status index.html > "$REPORT_DIR/link-check.txt" 2>&1 || true
@@ -172,8 +188,8 @@ else
     log_warning "  linkchecker 未安装，跳过链接检查"
 fi
 
-# 7. 检查文件大小
-log_info "7. 检查文件大小..."
+# 8. 检查文件大小
+log_info "8. 检查文件大小..."
 find . -name "*.html" -o -name "*.css" -o -name "*.js" | \
     head -20 | while read file; do
     SIZE=$(du -h "$file" | cut -f1)
@@ -182,8 +198,8 @@ done
 
 log_info "  文件大小检查完成"
 
-# 8. 检查 Git 状态
-log_info "8. 检查 Git 状态..."
+# 9. 检查 Git 状态
+log_info "9. 检查 Git 状态..."
 if [ -d ".git" ]; then
     git status > "$REPORT_DIR/git-status.txt"
     git log --oneline -5 > "$REPORT_DIR/git-history.txt"
@@ -200,8 +216,8 @@ else
     log_info "  不是 Git 仓库，跳过 Git 检查"
 fi
 
-# 9. 检查依赖
-log_info "9. 检查依赖..."
+# 10. 检查依赖
+log_info "10. 检查依赖..."
 if [ -f "package.json" ]; then
     if command -v npm &> /dev/null; then
         npm list --depth=0 > "$REPORT_DIR/dependencies.txt" 2>&1 || true
@@ -209,8 +225,8 @@ if [ -f "package.json" ]; then
     fi
 fi
 
-# 10. 生成监控报告
-log_info "10. 生成监控报告..."
+# 11. 生成监控报告
+log_info "11. 生成监控报告..."
 cat > "$REPORT_DIR/monitoring-report.md" << EOF
 # 网站监控报告
 
@@ -274,8 +290,8 @@ $(cat "$REPORT_DIR/git-check.txt" 2>/dev/null || echo "不是 Git 仓库")
 *监控完成于: $(date)*
 EOF
 
-# 11. 发送报警（如果发现问题）
-log_info "11. 检查是否需要发送报警..."
+# 12. 发送报警（如果发现问题）
+log_info "12. 检查是否需要发送报警..."
 
 ERRORS=0
 WARNINGS=0
@@ -327,7 +343,7 @@ else
     log_success "没有发现错误或警告"
 fi
 
-# 12. 清理（停止本地服务器）
+# 13. 清理（停止本地服务器）
 if [ ! -z "$SERVER_PID" ]; then
     log_info "停止本地服务器..."
     kill $SERVER_PID 2>/dev/null || true
