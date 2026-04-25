@@ -349,6 +349,27 @@ body {
     background: #fecaca;
     border-color: #fca5a5;
 }
+/* Language Switcher */
+.btn-lang {
+    padding: 6px 12px;
+    background: #f0f4ff;
+    color: #667eea;
+    border: 1px solid #d0d9ff;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.btn-lang:hover {
+    background: #e0e8ff;
+    border-color: #667eea;
+    transform: translateY(-1px);
+}
 
 .nav-toggle {
     display: none;

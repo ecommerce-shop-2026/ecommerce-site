@@ -134,22 +134,22 @@
             
             <div class="nav-menu">
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a href="#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
-                    <li class="nav-item"><a href="#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
-                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
-                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
-                    <li class="nav-item"><a href="#returns" class="nav-link"><i class="fas fa-exchange-alt"></i> Returns</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link"><i class="fas fa-headset"></i> Support</a></li>
-                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> View All Products</a></li>
+                    <li class="nav-item"><a href="#home" class="nav-link active"><i class="fas fa-home"></i> <span data-i18n="nav.home">Home</span></a></li>
+                    <li class="nav-item"><a href="#products" class="nav-link"><i class="fas fa-box"></i> <span data-i18n="nav.products">Products</span></a></li>
+                    <li class="nav-item"><a href="#categories" class="nav-link"><i class="fas fa-list"></i> <span data-i18n="nav.categories">Categories</span></a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> <span data-i18n="nav.blog">Blog</span></a></li>
+                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> <span data-i18n="nav.payment">Payment</span></a></li>
+                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> <span data-i18n="nav.myorders">My Orders</span></a></li>
+                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> <span data-i18n="nav.wishlist">Wishlist</span></a></li>
+                    <li class="nav-item"><a href="#returns" class="nav-link"><i class="fas fa-exchange-alt"></i> <span data-i18n="nav.returns">Returns</span></a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link"><i class="fas fa-headset"></i> <span data-i18n="nav.support">Support</span></a></li>
+                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> <span data-i18n="nav.viewall">View All Products</span></a></li>
                 </ul>
             </div>
             
             <div class="nav-actions">
                 <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search products..." data-i18n="nav.search" data-i18n-attr="placeholder">
                     <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
                     <div class="search-results" id="searchResults"></div>
                 </div>
@@ -161,11 +161,12 @@
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </a>
-                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
-                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+                <button class="btn-lang" id="langSwitcher" data-i18n-switcher title="Switch Language"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button>
+                <button class="btn-login" onclick="window.location.href='auth.html'" data-i18n="nav.signin">Sign In</button>
+                <button class="btn-register" onclick="window.location.href='auth.html'" data-i18n="nav.register">Register</button>
                 <div class="user-menu" id="userMenu" style="display:none;">
                     <span class="user-name" id="userName"></span>
-                    <button class="btn-logout" id="btnLogout">Sign Out</button>
+                    <button class="btn-logout" id="btnLogout" data-i18n="nav.signout">Sign Out</button>
                 </div>
             </div>
             
@@ -546,6 +547,8 @@
     <!-- 热卖商品数据（自动生成） -->
     <script src="js/products_data.js"></script>
     <!-- 全新购物车系统 -->
+    <!-- i18n 多语言支持 -->
+    <script src="js/i18n.js"></script>
     <script src="js/cart-system.js"></script>
     <!-- 实时搜索功能 -->
     <script src="js/search.js"></script>
@@ -553,6 +556,17 @@
     <script src="js/reviews.js"></script>
     <!-- 收藏夹功能 -->
     <script src="js/wishlist.js"></script>
+    <script>
+        // 语言切换按钮
+        document.addEventListener('DOMContentLoaded', function() {
+            var langBtn = document.getElementById('langSwitcher');
+            if (langBtn) {
+                langBtn.addEventListener('click', function() {
+                    i18n.toggle();
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 <!-- 自动更新于: 2026-04-17 18:16:29 -->
