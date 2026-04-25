@@ -8,14 +8,19 @@
 
     // Catch all runtime errors
     window.onerror = function(msg, url, line, col, error) {
-        console.log('[ERRDIAG] Global error:', {
+        var detail = {
             message: msg,
             url: url,
             line: line,
             col: col,
             stack: error ? error.stack : 'no stack',
             type: typeof msg
-        });
+        };
+        // Suppress empty-string errors from CDP/browser internals
+        if (msg === '' && !url && !line && !col && !error) {
+            return true; // Known CDP environment artifact, no action needed
+        }
+        console.log('[ERRDIAG] Global error:', detail);
         return true;
     };
 
