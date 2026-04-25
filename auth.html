@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Register - ShopEasy</title>
+    <meta name="description" content="Sign in to your ShopEasy account or create a new account to start shopping.">
+    <meta name="robots" content="noindex, follow">
+    <meta property="og:title" content="Sign In / Register - ShopEasy">
+    <meta property="og:description" content="Sign in to your ShopEasy account or create a new account.">
+    <meta property="og:url" content="https://shop2026easy.com/auth.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://shop2026easy.com/auth.html">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <script src="js/error-diagnostics.js"></script>
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+        }
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 460px;
+            padding: 40px;
+            animation: authFadeIn 0.5s ease;
+        }
+        @keyframes authFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .auth-logo a {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+        }
+        .auth-logo a i {
+            margin-right: 8px;
+        }
+        .auth-tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 30px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 14px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .auth-tab:hover { color: #667eea; }
+        .auth-tab.active {
+            color: #667eea;
+        }
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: #667eea;
+            border-radius: 3px;
+        }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .auth-form .form-group {
+            margin-bottom: 20px;
+        }
+        .auth-form label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .auth-form .input-wrapper {
+            position: relative;
+        }
+        .auth-form .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+            font-size: 1rem;
+        }
+        .auth-form input[type="text"],
+        .auth-form input[type="email"],
+        .auth-form input[type="password"] {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        .auth-form input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        .auth-form .input-error {
+            border-color: #e74c3c !important;
+        }
+        .auth-form .error-msg {
+            color: #e74c3c;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+        .auth-form .error-msg.show { display: block; }
+        .auth-form .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .auth-form .form-row label {
+            display: inline;
+            margin-bottom: 0;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .auth-form .form-row input[type="checkbox"] {
+            margin-right: 6px;
+        }
+        .auth-form .form-row a {
+            font-size: 0.85rem;
+            color: #667eea;
+            text-decoration: none;
+        }
+        .auth-form .form-row a:hover {
+            text-decoration: underline;
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+        }
+        .btn-auth:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .auth-divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
+        .auth-divider span {
+            background: white;
+            padding: 0 15px;
+            color: #999;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+        .btn-social {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .btn-social:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .btn-social i { font-size: 1.2rem; }
+        .auth-success {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .auth-success.show { display: block; }
+        .auth-success i {
+            font-size: 4rem;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        .auth-success h2 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .auth-success p {
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .auth-success .btn-continue {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .auth-success .btn-continue:hover {
+            background: #5a6fd6;
+        }
+        .password-strength {
+            margin-top: 8px;
+        }
+        .password-strength .strength-bar {
+            height: 4px;
+            border-radius: 2px;
+            background: #eee;
+            transition: all 0.3s;
+        }
+        .password-strength .strength-bar.weak { background: #e74c3c; width: 33%; }
+        .password-strength .strength-bar.medium { background: #f39c12; width: 66%; }
+        .password-strength .strength-bar.strong { background: #27ae60; width: 100%; }
+        .password-strength .strength-text {
+            font-size: 0.75rem;
+            margin-top: 3px;
+        }
+        @media (max-width: 768px) {
+            .auth-container { padding: 30px 20px; }
+            .auth-page { padding: 80px 10px 40px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="logo-text">ShopEasy</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
+                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+                </ul>
+            </div>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
+                <a href="#cart" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Auth Page -->
+    <section class="auth-page">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <a href="index.html"><i class="fas fa-shopping-bag"></i> ShopEasy</a>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" id="tabLogin">Sign In</button>
+                <button class="auth-tab" data-tab="register" id="tabRegister">Create Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form active" id="formLogin">
+                <form id="loginForm" autocomplete="off">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                        </div>
+                        <div class="error-msg" id="loginEmailError">Please enter a valid email</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        </div>
+                        <div class="error-msg" id="loginPassError">Incorrect email or password</div>
+                    </div>
+                    <div class="form-row">
+                        <label><input type="checkbox" id="rememberMe"> Remember me</label>
+                        <a href="#" id="forgotPassword">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-auth" id="btnLoginSubmit"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+                </form>
+                <div class="auth-divider"><span>or continue with</span></div>
+                <button class="btn-social" id="btnGoogleLogin"><i class="fab fa-google"></i> Google</button>
+                <button class="btn-social" id="btnGithubLogin"><i class="fab fa-github"></i> GitHub</button>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-form" id="formRegister">
+                <form id="registerForm" autocomplete="off">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="regName" placeholder="John Doe" required>
+                        </div>
+                        <div class="error-msg" id="regNameError">Name is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="regEmail" placeholder="you@example.com" required>
+                        </div>
+                        <div class="error-msg" id="regEmailError">Please enter a valid email</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="regPassword" placeholder="At least 6 characters" required minlength="6">
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar" id="strengthBar"></div>
+                            <div class="strength-text" id="strengthText"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="regConfirm" placeholder="Repeat your password" required>
+                        </div>
+                        <div class="error-msg" id="regConfirmError">Passwords do not match</div>
+                    </div>
+                    <div class="form-row">
+                        <label><input type="checkbox" id="agreeTerms" required> I agree to the <a href="#">Terms & Privacy</a></label>
+                    </div>
+                    <button type="submit" class="btn-auth" id="btnRegisterSubmit"><i class="fas fa-user-plus"></i> Create Account</button>
+                </form>
+            </div>
+
+            <!-- Success State -->
+            <div class="auth-success" id="authSuccess">
+                <i class="fas fa-check-circle"></i>
+                <h2 id="successTitle">Welcome!</h2>
+                <p id="successText">Your account has been created successfully.</p>
+                <button class="btn-continue" id="btnContinue"><i class="fas fa-arrow-right"></i> Continue Shopping</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
+                    <p>Your trusted online shopping destination.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-support">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="index.html#returns">Returns</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

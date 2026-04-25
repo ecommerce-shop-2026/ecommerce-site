@@ -317,6 +317,39 @@ body {
     color: white;
 }
 
+/* User menu - shown when logged in */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 8px;
+}
+.user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b5563;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.btn-logout {
+    padding: 6px 14px;
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+.btn-logout:hover {
+    background: #fecaca;
+    border-color: #fca5a5;
+}
+
 .nav-toggle {
     display: none;
     background: none;

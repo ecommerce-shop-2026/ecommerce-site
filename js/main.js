@@ -1266,12 +1266,73 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     console.log('所有组件初始化完成');
     
+    // 检测登录状态并更新导航 UI
+    checkAuthStatus();
+    
     // 初始化页面动画系统
     initPageAnimations();
     
     // 隐藏骨架屏
     hideSkeletonLoader();
     
+});
+
+/* ==================================================================
+   Auth UI - Login Status Detection
+   ================================================================== */
+
+/**
+ * Check if user is logged in and update nav UI accordingly
+ */
+function checkAuthStatus() {
+    var sessionKey = 'shopeasy_session';
+    var session = null;
+    try {
+        session = JSON.parse(sessionStorage.getItem(sessionKey)) ||
+                  JSON.parse(localStorage.getItem(sessionKey));
+    } catch(e) { /* no session */ }
+    
+    var loginBtn = document.querySelector('.btn-login');
+    var registerBtn = document.querySelector('.btn-register');
+    var userMenu = document.getElementById('userMenu');
+    var userName = document.getElementById('userName');
+    
+    if (!loginBtn || !userMenu) return;
+    
+    if (session && session.name) {
+        // Logged in
+        loginBtn.style.display = 'none';
+        registerBtn.style.display = 'none';
+        userMenu.style.display = 'flex';
+        if (userName) userName.textContent = session.name;
+    } else {
+        // Not logged in
+        loginBtn.style.display = '';
+        registerBtn.style.display = '';
+        userMenu.style.display = 'none';
+    }
+    
+    // Logout handler
+    var logoutBtn = document.getElementById('btnLogout');
+    if (logoutBtn) {
+        // Remove old listener to avoid duplicates
+        var newBtn = logoutBtn.cloneNode(true);
+        logoutBtn.parentNode.replaceChild(newBtn, logoutBtn);
+        newBtn.addEventListener('click', function() {
+            sessionStorage.removeItem(sessionKey);
+            localStorage.removeItem(sessionKey);
+            localStorage.setItem('shopeasy_auth_event', Date.now().toString());
+            // Reload to reflect UI change
+            window.location.reload();
+        });
+    }
+}
+
+// Listen for auth state changes from other tabs
+window.addEventListener('storage', function(e) {
+    if (e.key === 'shopeasy_auth_event') {
+        checkAuthStatus();
+    }
 });
 
 /* ==================================================================

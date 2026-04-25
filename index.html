@@ -161,8 +161,12 @@
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </a>
-                <button class="btn-login">Sign In</button>
-                <button class="btn-register">Register</button>
+                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
+                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+                <div class="user-menu" id="userMenu" style="display:none;">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn-logout" id="btnLogout">Sign Out</button>
+                </div>
             </div>
             
             <button class="nav-toggle" id="navToggle">
