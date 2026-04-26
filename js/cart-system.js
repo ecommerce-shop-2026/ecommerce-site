@@ -10,20 +10,21 @@ window.cart = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🛒 初始化购物车系统...');
     
-    // 产品数据
-    const products = [
-        { id: 1, name: "Wireless Bluetooth Headphones", price: 89.99, category: "Electronics" },
-        { id: 2, name: "Smart Watch Series 5", price: 249.99, category: "Electronics" },
-        { id: 3, name: "Premium Cotton T-Shirt", price: 29.99, category: "Fashion" },
-        { id: 4, name: "Ceramic Coffee Mug Set", price: 34.99, category: "Home & Living" },
-        { id: 5, name: "Organic Face Cream", price: 49.99, category: "Health & Beauty" },
-        { id: 6, name: "Fitness Tracker Band", price: 79.99, category: "Health & Beauty" },
-        { id: 7, name: "Leather Wallet", price: 45.99, category: "Fashion" },
-        { id: 8, name: "Desk Lamp with USB Ports", price: 39.99, category: "Home & Living" }
-    ];
-    
-    // 保存到全局
-    window.products = products;
+    // 使用 main.js 的全局 products 数组（已在 main.js 中定义，包含 id 1-12）
+    // main.js 的 const products 在 script 标签顶层作用域中，所有后续脚本均可访问
+    // 如果 products 未定义（极少情况），回退到静态默认数据
+    const products = (typeof products !== 'undefined' && products.length > 0) 
+        ? products 
+        : [
+            { id: 1, name: "Wireless Bluetooth Headphones", price: 89.99, category: "Electronics" },
+            { id: 2, name: "Smart Watch Series 5", price: 249.99, category: "Electronics" },
+            { id: 3, name: "Premium Cotton T-Shirt", price: 29.99, category: "Fashion" },
+            { id: 4, name: "Ceramic Coffee Mug Set", price: 34.99, category: "Home & Living" },
+            { id: 5, name: "Organic Face Cream", price: 49.99, category: "Health & Beauty" },
+            { id: 6, name: "Fitness Tracker Band", price: 79.99, category: "Health & Beauty" },
+            { id: 7, name: "Leather Wallet", price: 45.99, category: "Fashion" },
+            { id: 8, name: "Desk Lamp with USB Ports", price: 39.99, category: "Home & Living" }
+        ];
     
     // 从localStorage加载购物车
     function loadCart() {
