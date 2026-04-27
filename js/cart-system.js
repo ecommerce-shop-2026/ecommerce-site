@@ -7,8 +7,7 @@ window.cart = {
     count: 0
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🛒 初始化购物车系统...');
+console.log('🛒 初始化购物车系统...');
     
     // 使用 main.js 的全局 products 数组（已在 main.js 中定义，包含 id 1-12）
     // 不需要声明本地 const products —— 直接用全局作用域中的 products 变量即可
@@ -301,7 +300,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 添加CSS样式
     addCartStyles();
-});
 
 // 添加购物车相关样式
 function addCartStyles() {
