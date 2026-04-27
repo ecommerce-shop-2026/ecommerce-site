@@ -212,8 +212,8 @@ function getCartData() {
     return cartData;
 }
 
-// Process payment
-function processPayment() {
+// Process payment — tries Stripe first, falls back to local simulation
+async function processPayment() {
     // Validate all form fields
     const email = document.getElementById('email');
     const firstName = document.getElementById('firstName');
@@ -301,7 +301,34 @@ function processPayment() {
     const tax = subtotal * 0.08;
     const total = subtotal + shippingCost + tax;
     
-    // Simulate payment processing
+    // Build customer info
+    const customer = {
+        email: email.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        address: address.value,
+        city: city.value,
+        state: '',
+        zip: zip.value,
+        country: country.value,
+        phone: ''
+    };
+    
+    // === TRY STRIPE PAYMENT FIRST (if configured) ===
+    if (typeof processStripePayment === 'function') {
+        const stripeResult = await processStripePayment(cartData, customer);
+        
+        // If Stripe redirects (Checkout Session or Payment Link), the user leaves this page
+        // The function returns { method: 'stripe' | 'payment_link' } before redirect
+        if (stripeResult.success) {
+            return; // User is being redirected to Stripe — nothing more to do here
+        }
+        
+        // Stripe fell back to local (not configured or error) — continue below
+        console.log('Stripe indicated fallback to local payment:', stripeResult.method);
+    }
+    
+    // === LOCAL SIMULATION (Stripe not configured / fallback) ===
     setTimeout(function() {
         // Payment successful — 生成订单号
         const now = new Date();
@@ -310,19 +337,6 @@ function processPayment() {
             String(now.getDate()).padStart(2, '0');
         const randomStr = String(Math.floor(Math.random() * 999999)).padStart(6, '0');
         const orderId = 'ORD-' + dateStr + '-' + randomStr;
-        
-        // Build customer info
-        const customer = {
-            email: email.value,
-            firstName: firstName.value,
-            lastName: lastName.value,
-            address: address.value,
-            city: city.value,
-            state: '',
-            zip: zip.value,
-            country: country.value,
-            phone: ''
-        };
         
         // Build order object
         const order = {
@@ -338,7 +352,7 @@ function processPayment() {
             customer: customer,
             payment: {
                 method: 'Credit Card',
-                last4: cardNum ? cardNum.value.replace(/\\D/g, '').slice(-4) : '4242'
+                last4: cardNum ? cardNum.value.replace(/\D/g, '').slice(-4) : '4242'
             }
         };
         
@@ -361,7 +375,7 @@ function processPayment() {
         // Reload order summary
         loadOrderSummary();
         
-        // Show order confirmation弹窗 — 替换简单的alert
+        // Show order confirmation弹窗
         showOrderConfirmation(order);
         
         // Also show the notification

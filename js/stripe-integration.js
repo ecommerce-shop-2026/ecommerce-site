@@ -1,62 +1,59 @@
 /**
  * Stripe Payment Integration for ShopEasy
  * 
- * This handles real payment processing using Stripe Checkout.
+ * Handles real payment processing using Stripe Checkout Sessions.
  * 
- * SETUP INSTRUCTIONS:
- * 1. Create a Stripe account at https://dashboard.stripe.com/register
- * 2. Get your Publishable Key (pk_live_...) from Stripe Dashboard
- * 3. Create a Price ID for each product in Stripe Dashboard (Products > Add Product)
- * 4. Update the STRIPE_CONFIG.PRICE_MAP below with your actual Price IDs
- * 5. For the backend: deploy the api/create-checkout-session.js to your server
+ * ===== SETUP INSTRUCTIONS =====
+ * 1. Create a Stripe account: https://dashboard.stripe.com/register
+ * 2. Get your keys from: https://dashboard.stripe.com/apikeys
+ * 3. Deploy api/create-checkout-session.js to Cloudflare Pages:
+ *    - Place in /functions/api/create-checkout-session.js
+ *    - Set env var STRIPE_SECRET_KEY = sk_live_...
+ * 4. Set STRIPE_CONFIG.PUBLISHABLE_KEY below
+ * 5. Set STRIPE_CONFIG.API_ENDPOINT to your deployed function URL
  * 
- * ALTERNATIVE: For test mode, create a Payment Link in Stripe Dashboard
- * and update STRIPE_CONFIG.PAYMENT_LINK below.
+ * ===== TEST MODE =====
+ * Use test keys (see Stripe docs) to test without real charges.
+ * Test card: 4242 4242 4242 4242 (any expiry/CVC)
  */
 
 const STRIPE_CONFIG = {
-    // === REPLACE THESE WITH YOUR ACTUAL STRIPE KEYS ===
-    // Get from https://dashboard.stripe.com/test/apikeys (test mode)
-    // or https://dashboard.stripe.com/apikeys (live mode)
-    PUBLISHABLE_KEY: 'pk_test_YOUR_PUBLISHABLE_KEY_HERE',
-    
-    // === OPTION A: Stripe Payment Link (Easiest - no backend needed) ===
-    // Create at https://dashboard.stripe.com/payment-links
-    // After creating a payment link for your main product, paste the URL here
-    PAYMENT_LINK: null, // e.g. 'https://buy.stripe.com/test_XXXXXXXX'
-    
-    // === OPTION B: Price IDs (needs a small backend) ===
-    // Map your product IDs to Stripe Price IDs
-    // Create at: https://dashboard.stripe.com/test/products
-    PRICE_MAP: {
-        // 'local_product_id': 'price_stripe_id'
-        // Example:
-        // 1: 'price_1ABC123DEF456',
-        // 2: 'price_1ABC789GHI012',
-    },
-    
-    // Backend endpoint for creating checkout sessions
-    // Deploy api/create-checkout-session.js to your server
+    // === STEP 1: Replace with your Stripe Publishable Key ===
+    // Test: replace with your publishable key (starts with pk_)
+    PUBLISHABLE_KEY: null, // <--- Replace with your Stripe publishable key
+
+    // === STEP 2: Set your deployed API endpoint ===
+    // Cloudflare Pages: '/api/create-checkout-session' (same domain, auto)
+    // After deploying to your custom domain, just leave this as-is
     API_ENDPOINT: '/api/create-checkout-session',
-    
+
+    // === OPTIONAL: Stripe Payment Link (backup method, no backend needed) ===
+    // Create at: https://dashboard.stripe.com/payment-links
+    // If set AND the API endpoint fails, this will be used as fallback
+    PAYMENT_LINK: null, // e.g. 'https://buy.stripe.com/test_XXXXXXXX'
+
     // Currency
     CURRENCY: 'usd',
-    
-    // Success & Cancel URLs (auto-detected from current page)
+
+    // URLs
     SUCCESS_URL: window.location.origin + '/payment.html?payment=success',
     CANCEL_URL: window.location.origin + '/payment.html?payment=cancelled'
 };
 
-// Check if Stripe is loaded
+/**
+ * Check if the Stripe.js SDK is loaded
+ */
 function isStripeReady() {
     return typeof Stripe !== 'undefined';
 }
 
-// Initialize Stripe
+/**
+ * Initialize Stripe instance
+ */
 function initStripe() {
-    if (!STRIPE_CONFIG.PUBLISHABLE_KEY || 
-        STRIPE_CONFIG.PUBLISHABLE_KEY.includes('YOUR_PUBLISHABLE_KEY')) {
-        console.warn('⚠️ Stripe not configured. Update STRIPE_CONFIG.PUBLISHABLE_KEY in stripe-integration.js');
+    if (!STRIPE_CONFIG.PUBLISHABLE_KEY ||
+        typeof STRIPE_CONFIG.PUBLISHABLE_KEY !== 'string') {
+        console.warn('⚠️ Stripe not configured. Set PUBLISHABLE_KEY in stripe-integration.js');
         return null;
     }
     try {
@@ -68,42 +65,44 @@ function initStripe() {
 }
 
 /**
- * Process payment with Stripe
+ * Is Stripe properly configured?
+ */
+function isStripeConfigured() {
+    return STRIPE_CONFIG.PUBLISHABLE_KEY &&
+        typeof STRIPE_CONFIG.PUBLISHABLE_KEY === 'string';
+}
+
+/**
+ * Process payment via Stripe Checkout Session
  * @param {Object} cartData - { items: [{id, name, price, quantity}], total, count }
  * @param {Object} customerInfo - { email, firstName, lastName, address, city, zip, country }
- * @returns {Promise<boolean>} - true if redirected to Stripe
+ * @returns {Promise<Object>} - { success, method } — method is 'stripe', 'payment_link', or 'local'
  */
 async function processStripePayment(cartData, customerInfo) {
-    // Check configuration
-    if (!STRIPE_CONFIG.PUBLISHABLE_KEY || 
-        STRIPE_CONFIG.PUBLISHABLE_KEY.includes('YOUR_PUBLISHABLE_KEY')) {
-        console.log('Stripe not configured, falling back to local payment');
-        return false;
+    if (!isStripeConfigured()) {
+        console.log('Stripe not configured, falling back to local demo payment');
+        return { success: false, method: 'local' };
     }
-    
-    // Option A: Use Payment Link (simplest)
+
+    // Option A: Payment Link (simplest, no backend needed)
     if (STRIPE_CONFIG.PAYMENT_LINK) {
-        // Store cart data in sessionStorage for order creation after redirect
         sessionStorage.setItem('shopEasyPendingOrder', JSON.stringify({
             cart: cartData,
             customer: customerInfo,
             timestamp: Date.now()
         }));
         window.location.href = STRIPE_CONFIG.PAYMENT_LINK;
-        return true;
+        return { success: true, method: 'payment_link' };
     }
-    
-    // Option B: Create Checkout Session via backend
+
+    // Option B: Checkout Session via backend API
     try {
         const stripe = initStripe();
-        if (!stripe) return false;
-        
-        // Call our backend to create a Stripe Checkout Session
+        if (!stripe) return { success: false, method: 'local' };
+
         const response = await fetch(STRIPE_CONFIG.API_ENDPOINT, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 items: cartData.items.map(item => ({
                     id: item.id,
@@ -113,52 +112,52 @@ async function processStripePayment(cartData, customerInfo) {
                 })),
                 customer: customerInfo,
                 success_url: window.location.origin + '/payment.html?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url: window.location.origin + '/payment.html?payment=cancelled'
+                cancel_url: STRIPE_CONFIG.CANCEL_URL
             })
         });
-        
+
         if (!response.ok) {
-            throw new Error('Failed to create checkout session');
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || `HTTP ${response.status}`);
         }
-        
+
         const session = await response.json();
-        
-        // Redirect to Stripe Checkout
+
         const result = await stripe.redirectToCheckout({
             sessionId: session.id
         });
-        
+
         if (result.error) {
             throw new Error(result.error.message);
         }
-        
-        return true;
+
+        return { success: true, method: 'stripe' };
     } catch (e) {
         console.error('Stripe payment failed:', e);
-        showCheckoutNotification('Payment system error. Please try again.', 'error');
-        return false;
+        return { success: false, method: 'local', error: e.message };
     }
 }
 
-// Handle Stripe redirect back (payment success)
+/**
+ * Handle Stripe redirect back (payment success or cancelled)
+ * Called on payment.html load — checks URL params
+ */
 function handleStripeReturn() {
     const urlParams = new URLSearchParams(window.location.search);
-    
+
     // Payment success
     if (urlParams.get('payment') === 'success' || urlParams.get('session_id')) {
-        // Restore pending order data
         const pendingData = sessionStorage.getItem('shopEasyPendingOrder');
         if (pendingData) {
             try {
                 const data = JSON.parse(pendingData);
-                // Create local order record
                 const now = new Date();
                 const dateStr = now.getFullYear().toString() +
                     String(now.getMonth() + 1).padStart(2, '0') +
                     String(now.getDate()).padStart(2, '0');
                 const randomStr = String(Math.floor(Math.random() * 999999)).padStart(6, '0');
                 const orderId = 'ORD-' + dateStr + '-' + randomStr;
-                
+
                 const order = {
                     id: orderId,
                     date: now.toISOString(),
@@ -175,45 +174,38 @@ function handleStripeReturn() {
                         status: 'completed'
                     }
                 };
-                
-                // Save order
+
                 if (typeof saveOrder === 'function') {
                     saveOrder(order);
                 } else {
-                    // Fallback save
                     try {
                         let orders = JSON.parse(localStorage.getItem('shopEasyOrders') || '[]');
                         if (!Array.isArray(orders)) orders = [];
                         orders.unshift(order);
                         localStorage.setItem('shopEasyOrders', JSON.stringify(orders));
-                    } catch(e) {}
+                    } catch (e) { /* ignore */ }
                 }
-                
-                // Clear cart
-                if (typeof clearCart === 'function') clearCart();
-                
-                // Show confirmation
+
+                if (typeof window.clearCart === 'function') window.clearCart();
                 if (typeof showOrderConfirmation === 'function') {
                     showOrderConfirmation(order);
                 }
-                
-                // Clean up
+
                 sessionStorage.removeItem('shopEasyPendingOrder');
-                
-                // Clean URL
                 window.history.replaceState({}, document.title, window.location.pathname);
-                
-            } catch(e) {
+
+            } catch (e) {
                 console.error('Failed to process Stripe return:', e);
             }
         }
     }
-    
+
     // Payment cancelled
     if (urlParams.get('payment') === 'cancelled') {
-        showCheckoutNotification('Payment was cancelled.', 'error');
+        if (typeof showCheckoutNotification === 'function') {
+            showCheckoutNotification('Payment was cancelled.', 'error');
+        }
         window.history.replaceState({}, document.title, window.location.pathname);
-        // Re-enable pay button
         const payButton = document.getElementById('payButton');
         if (payButton) {
             payButton.disabled = false;
@@ -222,7 +214,6 @@ function handleStripeReturn() {
     }
 }
 
-// Run on page load
-document.addEventListener('DOMContentLoaded', function() {
-    handleStripeReturn();
-});
+// Run on script load (not DOMContentLoaded — same pattern as cart-system.js)
+// Stripe return handling reads URL params, which are available immediately
+handleStripeReturn();
