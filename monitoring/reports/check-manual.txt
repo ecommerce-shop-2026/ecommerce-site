@@ -1,5 +1,0 @@
-监控报告 Mon Apr 20 14:25:02     2026
-=================
-available: true
-content: ok
-product_detail: ok

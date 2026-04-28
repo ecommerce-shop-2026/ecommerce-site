@@ -1,8 +1,0 @@
-timestamp=2026-04-22 09:39:32
-main_available=true
-content_ok=true
-product_available=true
-js_cart=true
-js_search=true
-js_return=true
-response_time=0
