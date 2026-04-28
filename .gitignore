@@ -1,0 +1,44 @@
+# Python
+*.py
+*.pyc
+__pycache__/
+venv/
+*.egg-info/
+
+# PHP
+*.php
+
+# Shell scripts - only project scripts (not needed in root)
+*.sh
+
+# Nginx config
+*.conf
+
+# Lock files
+*.lock
+
+# Hermes temp / debug
+hermes-*.txt
+hermes-*.sh
+fix_cwd.py
+fix_cwd.sh
+hosts-append.txt
+test_*.py
+test_*.sh
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated / auto
+.shopeasy-github/
