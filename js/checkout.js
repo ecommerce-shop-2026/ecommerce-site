@@ -329,6 +329,12 @@ async function processPayment() {
     }
     
     // === LOCAL SIMULATION (Stripe not configured / fallback) ===
+    // Show processing state
+    if (payButton) {
+        payButton.disabled = true;
+        payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing (Demo)...';
+    }
+    
     setTimeout(function() {
         // Payment successful — 生成订单号
         const now = new Date();

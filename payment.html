@@ -49,6 +49,43 @@
     <!-- Error Diagnostics -->
     <script src="js/error-diagnostics.js"></script>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- Demo mode badge for Stripe-not-configured -->
+    <style>
+        .demo-badge {
+            display: none;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-size: 13px;
+            color: #FFD700;
+        }
+        .demo-badge i {
+            margin-right: 6px;
+        }
+        .demo-badge a {
+            color: #87CEEB;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .demo-badge a:hover {
+            color: #FFD700;
+        }
+        .btn-pay.demo-mode {
+            background: linear-gradient(135deg, #555, #777) !important;
+        }
+        .btn-pay.demo-mode:hover {
+            background: linear-gradient(135deg, #666, #888) !important;
+        }
+        .payment-mode-tag {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-left: 4px;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -163,7 +200,11 @@
                     </div>
 
                     <div class="form-section">
-                        <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+                        <h2><i class="fas fa-credit-card"></i> Payment Method <span class="payment-mode-tag" id="paymentModeTag"></span></h2>
+                        <div id="demoBadge" class="demo-badge">
+                            <i class="fas fa-flask"></i> Demo Mode — Stripe not configured.
+                            <a onclick="showStripeGuide()">Set up live payments →</a>
+                        </div>
                         <div class="payment-methods">
                             <label class="payment-option active">
                                 <input type="radio" name="payment" value="card" checked>
@@ -353,6 +394,29 @@
     </footer>
 
     <!-- JavaScript -->
+    <script>
+    // Show demo badge if Stripe is not configured (runs before stripe-integration.js)
+    // This runs synchronously before the Stripe SDK loads
+    window._checkStripeConfig = function() {
+        var badge = document.getElementById('demoBadge');
+        var tag = document.getElementById('paymentModeTag');
+        if (badge && tag) {
+            badge.style.display = 'block';
+            tag.textContent = '⚡ Demo';
+            // Also style the pay button
+            var btn = document.getElementById('payButton');
+            if (btn) btn.classList.add('demo-mode');
+        }
+    };
+    // Delay check until stripe-integration.js has loaded
+    setTimeout(function check() {
+        if (typeof STRIPE_CONFIG !== 'undefined') {
+            if (!STRIPE_CONFIG.PUBLISHABLE_KEY) window._checkStripeConfig();
+        } else {
+            setTimeout(check, 200);
+        }
+    }, 100);
+    </script>
     <!-- Stripe.js SDK -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="js/ux-enhancements.js"></script>
