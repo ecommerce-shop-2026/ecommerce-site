@@ -404,6 +404,29 @@ function saveOrder(order) {
         orders.unshift(order); // 最新订单在最前面
         localStorage.setItem('shopEasyOrders', JSON.stringify(orders));
         console.log('订单已保存:', order.id);
+
+        // 发送订单通知到邮箱（静默发送，不影响用户体验）
+        // 使用 Formspree 免费表单服务
+        // 如需更换通知邮箱，去 https://formspree.io 注册免费账号
+        try {
+            fetch('https://formspree.io/f/xeojpvdr', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    subject: '新订单通知 - ' + order.id,
+                    orderId: order.id,
+                    orderDate: order.date,
+                    customer: order.customer ? (order.customer.email || '') : '',
+                    total: order.total || 0,
+                    items: (order.items || []).map(function(i) {
+                        return i.name + ' x' + (i.quantity || 1) + ' = $' + ((i.price || 0) * (i.quantity || 1)).toFixed(2);
+                    }).join(', '),
+                    paymentMethod: (order.payment && order.payment.method) || 'Unknown',
+                    _gotcha: '',
+                })
+            }).catch(function() {});
+        } catch(e) {}
+
     } catch(e) {
         console.log('无法保存订单到localStorage');
     }
