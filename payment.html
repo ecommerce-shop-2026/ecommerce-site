@@ -415,15 +415,19 @@
             return;
         }
         
-        if (STRIPE_CONFIG.PUBLISHABLE_KEY) {
-            // Has publishable key but no backend — show "partial" demo
-            badge.style.display = 'block';
-            badge.innerHTML = '<i class="fas fa-flask"></i> Demo Mode — Checkout backend not deployed. ' +
-                '<a onclick="showStripeGuide()">Deploy payment backend →</a>';
-            tag.textContent = '⚡ Test';
-            var btn = document.getElementById('payButton');
-            if (btn) btn.classList.add('demo-mode');
-        } else {
+                        if (STRIPE_CONFIG.PUBLISHABLE_KEY) {
+                            // Has publishable key but no backend — show "partial" demo
+                            badge.style.display = 'block';
+                            badge.innerHTML = '<i class="fas fa-flask"></i> Demo Mode — Checkout backend not deployed. ' +
+                                '<a onclick="showStripeGuide()">Deploy payment backend →</a>';
+                            tag.textContent = '⚡ Test';
+                            var btn = document.getElementById('payButton');
+                            if (btn) btn.classList.add('demo-mode');
+                        } else if (isPayPalConfigured && isPayPalConfigured()) {
+                            // PayPal is configured — hide demo badge, pay via PayPal
+                            badge.style.display = 'none';
+                            tag.textContent = 'PayPal';
+                        } else {
             // No key at all
             badge.style.display = 'block';
             tag.textContent = '⚡ Demo';
