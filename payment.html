@@ -202,8 +202,8 @@
                     <div class="form-section">
                         <h2><i class="fas fa-credit-card"></i> Payment Method <span class="payment-mode-tag" id="paymentModeTag"></span></h2>
                         <div id="demoBadge" class="demo-badge">
-                            <i class="fas fa-flask"></i> Demo Mode — Stripe not configured.
-                            <a onclick="showStripeGuide()">Set up live payments →</a>
+                            <i class="fas fa-flask"></i> Demo Mode — Checkout backend not deployed.
+                            <a onclick="showStripeGuide()">Deploy payment backend →</a>
                         </div>
                         <div class="payment-methods">
                             <label class="payment-option active">
@@ -272,6 +272,15 @@
                                 </div>
                                 <span class="shipping-price">$19.99</span>
                             </label>
+                        </div>
+                    </div>
+
+                    <!-- PayPal Smart Buttons (shown when configured) -->
+                    <div id="paypal-section" class="form-section" style="display:none;">
+                        <h2><i class="fab fa-paypal"></i> PayPal</h2>
+                        <div id="paypal-button-container"></div>
+                        <div id="paypal-config-hint" style="margin-top:8px;font-size:12px;color:#888;text-align:center;">
+                            💡 Replace <code>CLIENT_ID: null</code> in <code>js/paypal-integration.js</code> to enable
                         </div>
                     </div>
 
@@ -430,6 +439,8 @@
     <script src="js/main.js"></script>
     <script src="js/cart-system.js"></script>
     <script src="js/stripe-integration.js"></script>
+    <!-- PayPal -->
+    <script src="js/paypal-integration.js"></script>
     <script src="js/checkout.js"></script>
 </body>
 </html>
