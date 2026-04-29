@@ -15,7 +15,7 @@
 
 const PAYPAL_CONFIG = {
     // === STEP 1: Replace with your PayPal Client ID ===
-    CLIENT_ID: 'EGio8dplZepKFlO-dHw3xMrGx9eKu9VI2u9hbJ4UNsRalbiUvzUF7B1zsyE-kWlbz-LH6TV28F3dmPvD',
+    CLIENT_ID: null, // PASTE YOUR LIVE CLIENT_ID HERE
 
     CURRENCY: 'USD',
     STYLE: {
