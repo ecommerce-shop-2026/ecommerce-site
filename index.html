@@ -75,6 +75,9 @@
     <script src="js/error-diagnostics.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -112,6 +115,8 @@
       ]
     }
     </script>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
 </head>
 <body>
     <!-- Skeleton Loading Screen -->
@@ -566,6 +571,15 @@
                 });
             }
         });
+    </script>
+
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
     </script>
 </body>
 </html>

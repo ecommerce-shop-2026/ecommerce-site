@@ -147,7 +147,7 @@
             // Build image if available
             var imageHtml = '';
             if (product.images && product.images.length > 0) {
-                imageHtml = '<img src="' + product.images[0] + '" alt="' + escapeHtml(product.name) + '" class="search-result-image">';
+                imageHtml = '<img src="' + product.images[0] + '" alt="' + escapeHtml(product.name) + '" loading="lazy" class="search-result-image">';
             } else {
                 imageHtml = '<div class="search-result-image" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#f3f4f6;border-radius:4px;"><i class="' + product.icon + '" style="color:#9ca3af;"></i></div>';
             }

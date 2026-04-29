@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - ShopEasy</title>
+    <meta name="description" content="The page you are looking for does not exist. ShopEasy - Your online shopping destination.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://shop2026easy.com/404.html">
+    <meta property="og:title" content="Page Not Found - ShopEasy">
+    <meta property="og:description" content="The page you are looking for does not exist.">
+    <meta property="og:image" content="https://shop2026easy.com/images/favicon.ico">
+    <meta property="og:url" content="https://shop2026easy.com/404.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Page Not Found - ShopEasy">
+    <meta name="twitter:description" content="The page you are looking for does not exist.">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #1a1a2e;
+            color: #FFF8DC;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .error-container {
+            max-width: 500px;
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            color: #FFD700;
+            line-height: 1;
+            margin-bottom: 10px;
+            text-shadow: 0 0 40px rgba(255,215,0,0.3);
+        }
+        .error-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .error-desc {
+            font-size: 15px;
+            color: #B8860B;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-404 {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary-404 {
+            background: #FFD700;
+            color: #1a1a2e;
+        }
+        .btn-primary-404:hover {
+            background: #FFC000;
+            transform: translateY(-1px);
+        }
+        .btn-secondary-404 {
+            background: transparent;
+            color: #FFD700;
+            border: 1px solid #FFD700;
+        }
+        .btn-secondary-404:hover {
+            background: rgba(255,215,0,0.1);
+            transform: translateY(-1px);
+        }
+        .error-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+    </style>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">🔍</div>
+        <div class="error-code">404</div>
+        <div class="error-title">Page Not Found</div>
+        <div class="error-desc">
+            The page you're looking for doesn't exist or has been moved.<br>
+            Let's get you back on track.
+        </div>
+        <div class="error-actions">
+            <a href="/" class="btn-404 btn-primary-404">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/products/" class="btn-404 btn-secondary-404">
+                <i class="fas fa-box"></i> Browse Products
+            </a>
+            <a href="/contact.html" class="btn-404 btn-secondary-404">
+                <i class="fas fa-envelope"></i> Contact Us
+            </a>
+        </div>
+    </div>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
+    </script>
+</body>
+</html>

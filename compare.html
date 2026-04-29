@@ -7,10 +7,23 @@
     <meta name="description" content="Compare products side-by-side to find the best deal on ShopEasy.">
     <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://shop2026easy.com/compare.html">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Compare Products - ShopEasy">
+    <meta property="og:description" content="Compare products side-by-side to find the best deal on ShopEasy.">
+    <meta property="og:image" content="https://shop2026easy.com/images/favicon.ico">
+    <meta property="og:url" content="https://shop2026easy.com/compare.html">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Compare Products - ShopEasy">
+    <meta name="twitter:description" content="Compare products side-by-side to find the best deal on ShopEasy.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+
     <script src="js/error-diagnostics.js"></script>
     <style>
         .compare-page {
@@ -279,6 +292,8 @@
             .compare-table td { min-width: 160px; }
         }
     </style>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
 </head>
 <body>
     <nav class="navbar">
@@ -631,6 +646,15 @@
                 init();
             }
         })();
+    </script>
+
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
     </script>
 </body>
 </html>

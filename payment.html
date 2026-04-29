@@ -49,6 +49,9 @@
     <!-- Error Diagnostics -->
     <script src="js/error-diagnostics.js"></script>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+
     
     <!-- Demo mode badge for Stripe-not-configured -->
     <style>
@@ -86,6 +89,8 @@
             margin-left: 4px;
         }
     </style>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -446,5 +451,14 @@
     <!-- PayPal -->
     <script src="js/paypal-integration.js"></script>
     <script src="js/checkout.js"></script>
+
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
+    </script>
 </body>
 </html>

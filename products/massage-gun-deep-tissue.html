@@ -19,6 +19,8 @@
     <meta name="twitter:title" content="Massage Gun Deep Tissue - ShopEasy">
     <meta name="twitter:description" content="Massage Gun Deep Tissue 是一款优质的Health & Beauty产品。具有出色的性能和可靠性，受到423位客户的好评。">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=600&fit=crop">
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -324,6 +326,15 @@
             // 简单的消息显示
             alert(text);
         }
+    </script>
+
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
     </script>
 </body>
 </html>

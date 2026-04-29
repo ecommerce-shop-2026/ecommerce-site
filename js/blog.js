@@ -372,7 +372,7 @@
 
         body.innerHTML =
             '<div class="blog-modal-header">' +
-                '<img src="' + article.image + '" alt="' + escapeHtml(article.title) + '" class="blog-modal-image">' +
+                '<img src="' + article.image + '" alt="' + escapeHtml(article.title) + '" loading="lazy" class="blog-modal-image">' +
                 '<span class="blog-category-badge">' + escapeHtml(catLabel) + '</span>' +
                 '<div class="blog-modal-meta">' +
                     '<span><i class="far fa-calendar-alt"></i> ' + article.date + '</span>' +

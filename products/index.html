@@ -240,6 +240,8 @@
             }
         }
     </style>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -633,5 +635,14 @@
     <!-- 产品对比功能 -->
     <script src="../js/compare.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
+    </script>
 </body>
 </html>

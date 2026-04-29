@@ -19,6 +19,8 @@
     <meta name="twitter:title" content="Smart Home Security Camera 360° - ShopEasy">
     <meta name="twitter:description" content="360° panoramic security camera with night vision, two-way audio, and AI motion detection.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=600&h=600&fit=crop">
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -329,6 +331,15 @@
             // 简单的消息显示
             alert(text);
         }
+    </script>
+
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
     </script>
 </body>
 </html>
