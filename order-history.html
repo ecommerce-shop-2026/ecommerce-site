@@ -341,7 +341,7 @@
                 <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
                 <a href="#cart" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
                 <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
-                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
                 <div class="user-menu" id="userMenu" style="display:none;">
                     <span class="user-name" id="userName"></span>
                     <button class="btn-logout" id="btnLogout">Sign Out</button>
@@ -699,6 +699,7 @@
             }
         })();
     </script>
+    <script src="js/i18n.js"></script>
     <script src="js/main.js"></script>
 
     <!-- PWA -->

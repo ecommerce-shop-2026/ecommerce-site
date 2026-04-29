@@ -94,7 +94,7 @@
                     <span class="cart-count">0</span>
                 </a>
                 <button class="btn-login">Sign In</button>
-                <button class="btn-register">Register</button>
+                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register">Register</button>
             </div>
             
             <button class="nav-toggle" id="navToggle">
@@ -368,6 +368,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="js/i18n.js"></script>
     <script src="js/main.js"></script>
     <script src="js/cart-system.js"></script>
     <script src="js/ux-enhancements.js"></script>
