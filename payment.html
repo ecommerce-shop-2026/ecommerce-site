@@ -395,27 +395,34 @@
 
     <!-- JavaScript -->
     <script>
-    // Show demo badge if Stripe is not configured (runs before stripe-integration.js)
-    // This runs synchronously before the Stripe SDK loads
+    // Check payment mode and show appropriate badge
     window._checkStripeConfig = function() {
         var badge = document.getElementById('demoBadge');
         var tag = document.getElementById('paymentModeTag');
-        if (badge && tag) {
+        if (!badge || !tag) return;
+        
+        if (typeof STRIPE_CONFIG === 'undefined') {
+            setTimeout(window._checkStripeConfig, 200);
+            return;
+        }
+        
+        if (STRIPE_CONFIG.PUBLISHABLE_KEY) {
+            // Has publishable key but no backend — show "partial" demo
+            badge.style.display = 'block';
+            badge.innerHTML = '<i class="fas fa-flask"></i> Demo Mode — Checkout backend not deployed. ' +
+                '<a onclick="showStripeGuide()">Deploy payment backend →</a>';
+            tag.textContent = '⚡ Test';
+            var btn = document.getElementById('payButton');
+            if (btn) btn.classList.add('demo-mode');
+        } else {
+            // No key at all
             badge.style.display = 'block';
             tag.textContent = '⚡ Demo';
-            // Also style the pay button
             var btn = document.getElementById('payButton');
             if (btn) btn.classList.add('demo-mode');
         }
     };
-    // Delay check until stripe-integration.js has loaded
-    setTimeout(function check() {
-        if (typeof STRIPE_CONFIG !== 'undefined') {
-            if (!STRIPE_CONFIG.PUBLISHABLE_KEY) window._checkStripeConfig();
-        } else {
-            setTimeout(check, 200);
-        }
-    }, 100);
+    setTimeout(window._checkStripeConfig, 100);
     </script>
     <!-- Stripe.js SDK -->
     <script src="https://js.stripe.com/v3/"></script>
