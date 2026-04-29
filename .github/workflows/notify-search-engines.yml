@@ -1,0 +1,32 @@
+name: Notify Search Engines
+
+on:
+  push:
+    branches: [main]
+  page_build:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Google
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://shop2026easy.com/sitemap.xml" -o /dev/null -w "Google: %{http_code}\n" --connect-timeout 10 || echo "Google: unreachable"
+
+      - name: Ping Bing
+        run: |
+          curl -s "https://www.bing.com/ping?sitemap=https://shop2026easy.com/sitemap.xml" -o /dev/null -w "Bing: %{http_code}\n" --connect-timeout 10 || echo "Bing: unreachable"
+
+      - name: Ping IndexNow (Bing/Yandex/Naver)
+        run: |
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "host": "shop2026easy.com",
+              "key": "notify-search-engines",
+              "keyLocation": "https://shop2026easy.com/notify-search-engines.txt",
+              "urlList": [
+                "https://shop2026easy.com/",
+                "https://shop2026easy.com/sitemap.xml"
+              ]
+            }' -o /dev/null -w "IndexNow: %{http_code}\n" --connect-timeout 10 || echo "IndexNow: unreachable"
