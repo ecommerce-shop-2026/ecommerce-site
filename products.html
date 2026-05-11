@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - ShopEasy</title>
+    <meta name="description" content="Browse all products at ShopEasy - Electronics, Fashion, Home & Living, Health & Beauty. Best prices and fast shipping.">
+    <meta name="keywords" content="online shopping, electronics, fashion, home decor, beauty products, all products, ShopEasy">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="All Products - ShopEasy">
+    <meta property="og:description" content="Browse all products at ShopEasy - best prices and fast shipping">
+    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    <meta property="og:url" content="https://shop2026easy.com/products.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="All Products - ShopEasy">
+    <meta name="twitter:description" content="Browse all products at ShopEasy">
+    <link rel="canonical" href="https://shop2026easy.com/products.html">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    <script src="js/error-diagnostics.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "All Products - ShopEasy",
+        "url": "https://shop2026easy.com/products.html",
+        "description": "Browse all products at ShopEasy"
+    }
+    </script>
+    <style>
+        .catalog-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+        .catalog-header h1 { font-size: 2.2rem; margin-bottom: 10px; color: white; }
+        .catalog-header p { font-size: 1.1rem; opacity: 0.9; }
+        .catalog-filters {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .catalog-filters .container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .catalog-filters select, .catalog-filters input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .catalog-filters input { flex: 1; min-width: 200px; }
+        .catalog-filters select { min-width: 150px; }
+        .catalog-filters .result-count {
+            margin-left: auto;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 40px 0;
+        }
+        .catalog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .catalog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .catalog-card .card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 2;
+            display: flex;
+            gap: 8px;
+        }
+        .catalog-card .badge-new, .catalog-card .badge-sale {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .catalog-card .badge-new { background: #4caf50; color: white; }
+        .catalog-card .badge-sale { background: #ff4757; color: white; }
+        .catalog-card .card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .catalog-card .card-body { padding: 18px; }
+        .catalog-card .card-category {
+            font-size: 0.8rem;
+            color: #667eea;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .catalog-card .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 6px 0;
+            color: #333;
+            line-height: 1.4;
+        }
+        .catalog-card .card-rating { color: #ffc107; font-size: 0.85rem; margin-bottom: 8px; }
+        .catalog-card .card-rating span { color: #888; margin-left: 5px; }
+        .catalog-card .card-price { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .catalog-card .current-price { font-size: 1.3rem; font-weight: 700; color: #e74c3c; }
+        .catalog-card .original-price { font-size: 0.95rem; color: #999; text-decoration: line-through; }
+        .catalog-card .card-actions { display: flex; gap: 10px; }
+        .catalog-card .btn-details {
+            flex: 1; padding: 10px; border: 2px solid #667eea; background: transparent;
+            color: #667eea; border-radius: 8px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; text-align: center; text-decoration: none; font-size: 0.9rem;
+        }
+        .catalog-card .btn-details:hover { background: #667eea; color: white; }
+        .catalog-card .btn-cart {
+            padding: 10px 16px; background: #667eea; color: white; border: none;
+            border-radius: 8px; cursor: pointer; transition: background 0.3s; font-size: 0.9rem;
+        }
+        .catalog-card .btn-cart:hover { background: #5a6fd6; }
+        @media (max-width: 768px) {
+            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; padding: 20px 10px; }
+            .catalog-header { padding: 40px 20px 30px; }
+            .catalog-header h1 { font-size: 1.6rem; }
+            .catalog-filters .container { flex-direction: column; align-items: stretch; }
+            .catalog-filters .result-count { margin-left: 0; text-align: center; }
+        }
+    </style>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25...5c60"}'></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="logo-text">ShopEasy</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a href="products.html" class="nav-link active"><i class="fas fa-box"></i> Products</a></li>
+                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
+                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="btn-wishlist-nav">
+                    <i class="fas fa-heart"></i>
+                    <span class="wishlist-count" id="wishlistCount">0</span>
+                </a>
+                <a href="cart.html" class="btn-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button>
+                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
+                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Catalog Header -->
+    <section class="catalog-header">
+        <div class="container">
+            <h1><i class="fas fa-store"></i> All Products</h1>
+            <p>Browse our complete product catalog — best prices, fast shipping</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="catalog-filters">
+        <div class="container">
+            <input type="text" id="searchInput" placeholder="Search products..." />
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Home & Living">Home & Living</option>
+                <option value="Health & Beauty">Health & Beauty</option>
+            </select>
+            <select id="sortFilter">
+                <option value="default">Sort: Default</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Rating</option>
+            </select>
+            <div class="result-count" id="resultCount">12 products</div>
+        </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="section">
+        <div class="container">
+            <div class="catalog-grid" id="catalogGrid"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="logo-text">ShopEasy</span>
+                    </a>
+                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4 class="link-title">Shop</h4>
+                        <a href="products.html" class="footer-link">All Products</a>
+                        <a href="index.html#categories" class="footer-link">Categories</a>
+                        <a href="payment.html" class="footer-link">Payment Options</a>
+                    </div>
+                    <div class="link-group">
+                        <h4 class="link-title">Support</h4>
+                        <a href="contact.html" class="footer-link">Contact Us</a>
+                        <a href="about.html" class="footer-link">About Us</a>
+                        <a href="order-history.html" class="footer-link">My Orders</a>
+                    </div>
+                    <div class="link-group">
+                        <h4 class="link-title">Account</h4>
+                        <a href="auth.html" class="footer-link">Sign In</a>
+                        <a href="wishlist.html" class="footer-link">Wishlist</a>
+                        <a href="cart.html" class="footer-link">Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 ShopEasy. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script>
+    // ----- Product Data (12 products matching main.js) -----
+    const catalogProducts = [
+        { id: 1, name: "Wireless Bluetooth Headphones - Ultra Edition", price: 129.99, category: "Electronics", rating: 4.5, reviews: 3666, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop", slug: "product-detail.html?id=1", isNew: false, isSale: false },
+        { id: 2, name: "Wireless Bluetooth Headphones - Edition 2", price: 149.99, category: "Electronics", rating: 4.7, reviews: 2843, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop", slug: "product-detail.html?id=2", isNew: false, isSale: false },
+        { id: 3, name: "Wireless Bluetooth Headphones - Premium", price: 199.99, category: "Electronics", rating: 4.8, reviews: 1956, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop", slug: "product-detail.html?id=3", isNew: false, isSale: true, originalPrice: 259.99, discount: 23 },
+        { id: 4, name: "Smart Fitness Watch", price: 179.99, category: "Fashion", rating: 4.3, reviews: 1523, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop", slug: "product-detail.html?id=4", isNew: false, isSale: false },
+        { id: 5, name: "Smart Fitness Watch - Deluxe Edition", price: 249.99, category: "Fashion", rating: 4.6, reviews: 2108, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop", slug: "product-detail.html?id=5", isNew: true, isSale: false },
+        { id: 6, name: "LED Desk Lamp", price: 49.99, category: "Home & Living", rating: 4.4, reviews: 1245, image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=600&h=600&fit=crop", slug: "product-detail.html?id=6", isNew: false, isSale: false },
+        { id: 7, name: "Ergonomic Office Chair", price: 299.99, category: "Home & Living", rating: 4.7, reviews: 892, image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&h=600&fit=crop", slug: "product-detail.html?id=7", isNew: false, isSale: false },
+        { id: 8, name: "Organic Skincare Set", price: 79.99, category: "Health & Beauty", rating: 4.6, reviews: 2105, image: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=600&fit=crop", slug: "product-detail.html?id=8", isNew: false, isSale: false },
+        { id: 9, name: "4K Ultra HD Drone with Camera", price: 399.99, category: "Electronics", rating: 4.7, reviews: 312, image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=600&h=600&fit=crop", slug: "product-detail.html?id=9", isNew: true, isSale: true, originalPrice: 549.99, discount: 27 },
+        { id: 10, name: "Smart Home Security Camera 360°", price: 79.99, category: "Electronics", rating: 4.5, reviews: 189, image: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=600&h=600&fit=crop", slug: "product-detail.html?id=10", isNew: true, isSale: false },
+        { id: 11, name: "Portable Blender USB-C Rechargeable", price: 34.99, category: "Home & Living", rating: 4.5, reviews: 267, image: "https://images.unsplash.com/photo-1622484211816-c35a14c1fef2?w=600&h=600&fit=crop", slug: "product-detail.html?id=11", isNew: true, isSale: true, originalPrice: 49.99, discount: 30 },
+        { id: 12, name: "Massage Gun Deep Tissue", price: 89.99, category: "Health & Beauty", rating: 4.8, reviews: 423, image: "https://images.unsplash.com/photo-1622056385579-e2ec1db1b290?w=600&h=600&fit=crop", slug: "product-detail.html?id=12", isNew: false, isSale: true, originalPrice: 129.99, discount: 31 }
+    ];
+
+    // ----- Render -----
+    function renderProducts(data) {
+        const grid = document.getElementById('catalogGrid');
+        const countEl = document.getElementById('resultCount');
+        if (!grid) return;
+        if (data.length === 0) {
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#999"><i class="fas fa-search" style="font-size:3rem;display:block;margin-bottom:15px"></i>No products found</div>';
+            countEl.textContent = '0 products';
+            return;
+        }
+        grid.innerHTML = data.map(p => {
+            const badges = [];
+            if (p.isNew) badges.push('<span class="badge-new">NEW</span>');
+            if (p.isSale && p.discount) badges.push('<span class="badge-sale">-' + p.discount + '%</span>');
+            const badgeHtml = badges.length ? '<div class="card-badge">' + badges.join('') + '</div>' : '';
+            const stars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '');
+            const priceHtml = p.isSale && p.originalPrice
+                ? '<span class="current-price">$' + p.price.toFixed(2) + '</span><span class="original-price">$' + p.originalPrice.toFixed(2) + '</span>'
+                : '<span class="current-price">$' + p.price.toFixed(2) + '</span>';
+            return '<div class="catalog-card" data-id="' + p.id + '">'
+                + badgeHtml
+                + '<img class="card-image" src="' + p.image + '" alt="' + p.name + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/600x600?text=ShopEasy\'">'
+                + '<div class="card-body">'
+                + '<div class="card-category">' + p.category + '</div>'
+                + '<div class="card-title">' + p.name + '</div>'
+                + '<div class="card-rating">' + stars + ' <span>(' + p.reviews + ' reviews)</span></div>'
+                + '<div class="card-price">' + priceHtml + '</div>'
+                + '<div class="card-actions">'
+                + '<a class="btn-details" href="' + p.slug + '"><i class="fas fa-eye"></i> View Details</a>'
+                + '<button class="btn-cart" onclick="addToCart(' + p.id + ',\'' + p.name.replace(/'/g, "\\'") + '\',' + p.price + ')"><i class="fas fa-shopping-cart"></i></button>'
+                + '</div></div></div>';
+        }).join('');
+        countEl.textContent = data.length + ' products';
+    }
+
+    // ----- Add to Cart -----
+    function addToCart(id, name, price) {
+        try {
+            let cart = JSON.parse(localStorage.getItem('shopEasyCart') || '{"items":[],"total":0,"count":0}');
+            if (!cart.items) cart = { items: [], total: 0, count: 0 };
+            const existing = cart.items.findIndex(i => i.id === id);
+            if (existing > -1) {
+                cart.items[existing].quantity = (cart.items[existing].quantity || 1) + 1;
+            } else {
+                cart.items.push({ id: id, name: name, price: price, quantity: 1, category: '' });
+            }
+            cart.count = cart.items.reduce((s, i) => s + (i.quantity || 1), 0);
+            cart.total = cart.items.reduce((s, i) => s + (i.price || 0) * (i.quantity || 1), 0);
+            localStorage.setItem('shopEasyCart', JSON.stringify(cart));
+            updateCartBadge(cart.count);
+            showToast(name + ' added to cart!');
+        } catch(e) { console.warn('addToCart error:', e); }
+    }
+
+    function updateCartBadge(count) {
+        document.querySelectorAll('.cart-count').forEach(el => { el.textContent = count; });
+    }
+
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#28a745;color:#fff;padding:12px 20px;border-radius:8px;z-index:99999;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.15);transform:translateY(100px);transition:transform 0.3s ease;';
+        toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.transform = 'translateY(0)'; }, 50);
+        setTimeout(() => { toast.style.transform = 'translateY(100px)'; setTimeout(() => toast.remove(), 300); }, 2500);
+    }
+
+    // ----- Filter & Sort -----
+    function filterAndRender() {
+        const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+        const category = document.getElementById('categoryFilter').value;
+        const sort = document.getElementById('sortFilter').value;
+        let filtered = catalogProducts.filter(p => {
+            if (category !== 'all' && p.category !== category) return false;
+            if (search && !p.name.toLowerCase().includes(search)) return false;
+            return true;
+        });
+        switch (sort) {
+            case 'price-asc': filtered.sort((a, b) => a.price - b.price); break;
+            case 'price-desc': filtered.sort((a, b) => b.price - a.price); break;
+            case 'rating': filtered.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews); break;
+        }
+        renderProducts(filtered);
+    }
+
+    // ----- Init -----
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const cart = JSON.parse(localStorage.getItem('shopEasyCart') || '{"items":[],"total":0,"count":0}');
+            updateCartBadge(cart.count || 0);
+        } catch(e) {}
+        renderProducts(catalogProducts);
+        document.getElementById('searchInput').addEventListener('input', filterAndRender);
+        document.getElementById('categoryFilter').addEventListener('change', filterAndRender);
+        document.getElementById('sortFilter').addEventListener('change', filterAndRender);
+    });
+    </script>
+    <script src="js/i18n.js"></script>
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
+    </script>
+</body>
+</html>

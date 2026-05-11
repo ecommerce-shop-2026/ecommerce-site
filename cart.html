@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - ShopEasy</title>
+    <meta name="description" content="View and manage your shopping cart at ShopEasy. Secure checkout with PayPal.">
+    <meta name="robots" content="noindex, follow">
+    <meta property="og:title" content="Shopping Cart - ShopEasy">
+    <meta property="og:description" content="Your shopping cart at ShopEasy">
+    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    <meta property="og:url" content="https://shop2026easy.com/cart.html">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://shop2026easy.com/cart.html">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    <script src="js/error-diagnostics.js"></script>
+    <style>
+        .cart-page-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        .cart-page-title { font-size: 1.8rem; margin-bottom: 30px; color: #333; }
+        .cart-page-title i { color: #FFD700; margin-right: 10px; }
+        .cart-items-wrapper { background: #fff; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.08); overflow: hidden; }
+        .cart-item-row {
+            display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #eee;
+            gap: 15px; transition: background 0.2s;
+        }
+        .cart-item-row:last-child { border-bottom: none; }
+        .cart-item-row:hover { background: #f8f9fa; }
+        .cart-item-info { flex: 1; }
+        .cart-item-name { font-size: 1.05rem; font-weight: 600; color: #333; margin-bottom: 4px; }
+        .cart-item-category { font-size: 0.8rem; color: #888; }
+        .cart-item-price { font-size: 1rem; font-weight: 700; color: #e74c3c; min-width: 80px; }
+        .cart-item-qty { display: flex; align-items: center; gap: 8px; }
+        .cart-item-qty button {
+            width: 32px; height: 32px; border: 1px solid #ddd; background: #fff;
+            border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .cart-item-qty button:hover { background: #667eea; color: #fff; border-color: #667eea; }
+        .cart-item-qty input {
+            width: 50px; height: 32px; text-align: center; border: 1px solid #ddd;
+            border-radius: 6px; font-size: 0.95rem;
+        }
+        .cart-item-remove {
+            width: 36px; height: 36px; border: none; background: #fee;
+            color: #e74c3c; border-radius: 8px; cursor: pointer; font-size: 1rem;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .cart-item-remove:hover { background: #e74c3c; color: #fff; }
+        .cart-item-total { font-size: 1.1rem; font-weight: 700; color: #333; min-width: 90px; text-align: right; }
+        .empty-cart-display {
+            text-align: center; padding: 80px 20px; color: #999;
+        }
+        .empty-cart-display i { font-size: 4rem; color: #ddd; margin-bottom: 20px; display: block; }
+        .empty-cart-display h3 { font-size: 1.4rem; color: #555; margin-bottom: 10px; }
+        .empty-cart-display a { display: inline-block; margin-top: 20px; padding: 12px 30px; background: #667eea; color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .empty-cart-display a:hover { background: #5a6fd6; }
+        .cart-summary-panel {
+            background: #fff; border-radius: 12px; box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            padding: 25px; margin-top: 25px;
+        }
+        .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 1rem; color: #555; }
+        .summary-row.total { font-size: 1.3rem; font-weight: 700; color: #333; border-top: 2px solid #eee; padding-top: 15px; margin-top: 10px; }
+        .btn-checkout-lg {
+            display: block; width: 100%; padding: 14px; background: #28a745; color: #fff;
+            border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            margin-top: 20px; transition: background 0.3s; text-align: center; text-decoration: none;
+        }
+        .btn-checkout-lg:hover { background: #218838; }
+        .btn-continue-shopping {
+            display: block; text-align: center; margin-top: 12px; color: #667eea;
+            text-decoration: none; font-size: 0.95rem;
+        }
+        .btn-continue-shopping:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            .cart-item-row { flex-wrap: wrap; }
+            .cart-item-total { min-width: auto; }
+            .cart-page-container { margin: 20px auto; }
+        }
+    </style>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25...5c60"}'></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="logo-text">ShopEasy</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a href="products.html" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
+                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav-actions">
+                <a href="wishlist.html" class="btn-wishlist-nav">
+                    <i class="fas fa-heart"></i>
+                    <span class="wishlist-count" id="wishlistCount">0</span>
+                </a>
+                <a href="cart.html" class="btn-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button>
+                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
+                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cart Content -->
+    <div class="cart-page-container">
+        <h1 class="cart-page-title"><i class="fas fa-shopping-cart"></i> Shopping Cart</h1>
+        <div class="cart-items-wrapper" id="cartItemsWrapper"></div>
+        <div class="cart-summary-panel" id="cartSummary">
+            <div class="summary-row"><span>Subtotal</span><span class="subtotal" id="subtotalDisplay">$0.00</span></div>
+            <div class="summary-row"><span>Shipping</span><span>Calculated at checkout</span></div>
+            <div class="summary-row total"><span>Total</span><span class="total" id="totalDisplay">$0.00</span></div>
+            <a href="payment.html" class="btn-checkout-lg" id="checkoutBtn"><i class="fas fa-lock"></i> Proceed to Checkout</a>
+            <a href="products.html" class="btn-continue-shopping"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="logo-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="logo-text">ShopEasy</span>
+                    </a>
+                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4 class="link-title">Shop</h4>
+                        <a href="products.html" class="footer-link">All Products</a>
+                        <a href="index.html#categories" class="footer-link">Categories</a>
+                        <a href="payment.html" class="footer-link">Payment Options</a>
+                    </div>
+                    <div class="link-group">
+                        <h4 class="link-title">Support</h4>
+                        <a href="contact.html" class="footer-link">Contact Us</a>
+                        <a href="about.html" class="footer-link">About Us</a>
+                        <a href="order-history.html" class="footer-link">My Orders</a>
+                    </div>
+                    <div class="link-group">
+                        <h4 class="link-title">Account</h4>
+                        <a href="auth.html" class="footer-link">Sign In</a>
+                        <a href="wishlist.html" class="footer-link">Wishlist</a>
+                        <a href="cart.html" class="footer-link">Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 ShopEasy. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script>
+    // ----- Cart Functions -----
+    function getCart() {
+        try {
+            const saved = localStorage.getItem('shopEasyCart');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) {
+                    return {
+                        items: parsed,
+                        total: parsed.reduce((s, i) => s + (i.price || 0) * (i.quantity || 1), 0),
+                        count: parsed.reduce((s, i) => s + (i.quantity || 1), 0)
+                    };
+                }
+                return parsed;
+            }
+        } catch(e) {}
+        return { items: [], total: 0, count: 0 };
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('shopEasyCart', JSON.stringify(cart));
+        // Sync nav badges
+        document.querySelectorAll('.cart-count').forEach(el => { el.textContent = cart.count || 0; });
+    }
+
+    function renderCart() {
+        const cart = getCart();
+        const wrapper = document.getElementById('cartItemsWrapper');
+        const subtotalEl = document.getElementById('subtotalDisplay');
+        const totalEl = document.getElementById('totalDisplay');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        if (cart.items.length === 0) {
+            wrapper.innerHTML = '<div class="empty-cart-display"><i class="fas fa-shopping-cart"></i><h3>Your cart is empty</h3><p>Looks like you haven\'t added anything yet.</p><a href="products.html">Start Shopping</a></div>';
+            subtotalEl.textContent = '$0.00';
+            totalEl.textContent = '$0.00';
+            if (checkoutBtn) checkoutBtn.style.pointerEvents = 'none';
+            return;
+        }
+
+        let html = '';
+        cart.items.forEach(item => {
+            const itemTotal = (item.price || 0) * (item.quantity || 1);
+            html += '<div class="cart-item-row" data-id="' + item.id + '">'
+                + '<div class="cart-item-info">'
+                + '<div class="cart-item-name">' + item.name + '</div>'
+                + '<div class="cart-item-category">' + (item.category || 'General') + '</div>'
+                + '</div>'
+                + '<div class="cart-item-qty">'
+                + '<button onclick="updateQty(' + item.id + ',' + (item.quantity - 1) + ')">-</button>'
+                + '<input type="number" value="' + item.quantity + '" min="1" onchange="updateQty(' + item.id + ',this.value)">'
+                + '<button onclick="updateQty(' + item.id + ',' + (item.quantity + 1) + ')">+</button>'
+                + '</div>'
+                + '<div class="cart-item-total">$' + itemTotal.toFixed(2) + '</div>'
+                + '<button class="cart-item-remove" onclick="removeItem(' + item.id + ')" title="Remove"><i class="fas fa-trash"></i></button>'
+                + '</div>';
+        });
+        wrapper.innerHTML = html;
+
+        const subtotal = cart.items.reduce((s, i) => s + (i.price || 0) * (i.quantity || 1), 0);
+        subtotalEl.textContent = '$' + subtotal.toFixed(2);
+        totalEl.textContent = '$' + subtotal.toFixed(2);
+        if (checkoutBtn) checkoutBtn.style.pointerEvents = 'auto';
+    }
+
+    window.updateQty = function(id, qty) {
+        qty = parseInt(qty);
+        if (isNaN(qty) || qty <= 0) { removeItem(id); return; }
+        const cart = getCart();
+        const item = cart.items.find(i => i.id === id);
+        if (item) {
+            item.quantity = qty;
+            cart.total = cart.items.reduce((s, i) => s + (i.price || 0) * (i.quantity || 1), 0);
+            cart.count = cart.items.reduce((s, i) => s + (i.quantity || 1), 0);
+            saveCart(cart);
+            renderCart();
+        }
+    };
+
+    window.removeItem = function(id) {
+        const cart = getCart();
+        cart.items = cart.items.filter(i => i.id !== id);
+        cart.total = cart.items.reduce((s, i) => s + (i.price || 0) * (i.quantity || 1), 0);
+        cart.count = cart.items.reduce((s, i) => s + (i.quantity || 1), 0);
+        saveCart(cart);
+        renderCart();
+    };
+
+    // Init
+    document.addEventListener('DOMContentLoaded', function() {
+        const cart = getCart();
+        document.querySelectorAll('.cart-count').forEach(el => { el.textContent = cart.count || 0; });
+        renderCart();
+    });
+    </script>
+    <!-- PWA -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
+    </script>
+</body>
+</html>

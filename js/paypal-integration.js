@@ -94,42 +94,21 @@ function renderPayPalButtons() {
                     };
                 });
 
-                return fetch('/api/paypal/create-order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        items: cartData.items,
-                        total: total,
-                    }),
-                }).then(function(res) {
-                    if (!res.ok) throw new Error('No backend');
-                    return res.json();
-                }).then(function(data) {
-                    return data.id;
-                }).catch(function() {
-                    // Static site fallback: use client-side order creation
-                    // PayPal SDK's client-side orders API requires merchant ID
-                    // For static sites, we create a mock order to test the flow
-                    var mockId = 'order_' + Date.now();
-                    return paypal.order ? paypal.order.create({
-                        purchase_units: [{
-                            amount: {
-                                currency_code: PAYPAL_CONFIG.CURRENCY,
-                                value: total.toFixed(2),
-                                breakdown: {
-                                    item_total: {
-                                        currency_code: PAYPAL_CONFIG.CURRENCY,
-                                        value: total.toFixed(2)
-                                    }
+                // Static site (GitHub Pages): create order client-side
+                return paypal.Buttons().createOrder({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: PAYPAL_CONFIG.CURRENCY,
+                            value: total.toFixed(2),
+                            breakdown: {
+                                item_total: {
+                                    currency_code: PAYPAL_CONFIG.CURRENCY,
+                                    value: total.toFixed(2)
                                 }
-                            },
-                            items: items
-                        }]
-                    }).catch(function() {
-                        // If paypal.order.create also fails (sandbox issue),
-                        // return mock ID so the approve flow still works for demo
-                        return mockId;
-                    }) : mockId;
+                            }
+                        },
+                        items: items
+                    }]
                 });
             },
 
