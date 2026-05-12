@@ -129,7 +129,6 @@ function loadOrderSummary() {
     let shippingCost = 0;
     if (selectedShipping) {
         shippingMethod = selectedShipping.value;
-        // 配送费用计算: standard=free, express=$9.99, overnight=$19.99
         switch(shippingMethod) {
             case 'express': shippingCost = 9.99; break;
             case 'overnight': shippingCost = 19.99; break;
@@ -277,22 +276,22 @@ async function processPayment() {
     // Get shipping method and costs
     const selectedShipping = document.querySelector('input[name="shipping"]:checked');
     let shippingMethod = 'standard';
-    let shippingLabel = 'Standard Shipping';
+    let shippingLabel = 'Standard Shipping (China Post)';
     let shippingCost = 0;
     if (selectedShipping) {
         shippingMethod = selectedShipping.value;
         switch(shippingMethod) {
             case 'express':
                 shippingCost = 9.99;
-                shippingLabel = 'Express Shipping';
+                shippingLabel = 'Express Shipping (DHL/UPS)';
                 break;
             case 'overnight':
                 shippingCost = 19.99;
-                shippingLabel = 'Overnight Shipping';
+                shippingLabel = 'Priority Shipping';
                 break;
             default:
                 shippingCost = 0;
-                shippingLabel = 'Standard Shipping';
+                shippingLabel = 'Standard Shipping (China Post)';
         }
     }
     
