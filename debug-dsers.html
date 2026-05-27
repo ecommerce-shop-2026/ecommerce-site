@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSers Connection Debugger - AeroPet Modern</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 40px; }
+        .debug-card { background: white; max-width: 600px; margin: 0 auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .status-box { padding: 15px; border-radius: 6px; margin-bottom: 20px; font-weight: 500; }
+        .status-pending { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .status-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 0.85em; }
+        .btn-test { background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 1em; }
+        .btn-test:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="debug-card">
+        <h2>📦 DSers Sync Debugger</h2>
+        <p>Use this tool to verify if your order synchronization logic is working correctly.</p>
+
+        <div id="status" class="status-box status-pending">
+            Ready to test connection...
+        </div>
+
+        <div class="form-group">
+            <label>Mock Order ID</label>
+            <input type="text" id="orderId" value="TEST-ORD-123456" readonly style="background: #eee;">
+        </div>
+
+        <button id="runTest" class="btn-test">Simulate Sync Request</button>
+
+        <h4 style="margin-top:20px;">Raw Response:</h4>
+        <pre id="log">No data yet.</pre>
+
+        <div style="margin-top: 20px; font-size: 0.9em; color: #666;">
+            <p><strong>Note:</strong> This test hits <code>/api/sync-order-dsers</code>. If you are running this locally without a real Cloudflare/Netlify backend, it will fail with a 404/500, which is normal. It is intended to be tested after deployment.</p>
+        </div>
+    </div>
+
+    <script src="js/dsers-integration.js"></script>
+    <script>
+        document.getElementById('runTest').addEventListener('click', async () => {
+            const status = document.getElementById('status');
+            const log = document.getElementById('log');
+            
+            status.className = 'status-box status-pending';
+            status.innerText = 'Syncing...';
+            log.innerText = 'Sending request to /api/sync-order-dsers...';
+
+            // Mock Data
+            const mockOrder = {
+                id: document.getElementById('orderId').value,
+                customer: {
+                    firstName: "Test",
+                    lastName: "User",
+                    email: "test@example.com",
+                    address: "123 Main St",
+                    city: "San Francisco",
+                    zip: "94105",
+                    country: "US"
+                },
+                items: [
+                    { id: "ap_001", name: "AeroFlow Fountain", quantity: 1, price: 34.99 }
+                ],
+                payment: { method: "Manual Test", status: "COMPLETED" }
+            };
+
+            const result = await window.dsersIntegration.syncOrder(mockOrder);
+
+            if (result.success) {
+                status.className = 'status-box status-success';
+                status.innerText = '✅ Connection Flow OK!';
+                log.innerText = JSON.stringify(result, null, 2);
+            } else {
+                status.className = 'status-box status-error';
+                status.innerText = '❌ Sync Failed (See Log)';
+                log.innerText = `Error: ${result.error}\n\nThis is expected if:\n1. Site is not deployed yet.\n2. DSERS_API_TOKEN is missing in Environment Variables.`;
+            }
+        });
+    </script>
+</body>
+</html>

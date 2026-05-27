@@ -1,403 +1,340 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - ShopEasy</title>
-    <meta name="description" content="Get in touch with ShopEasy. Contact our support team via email, phone, or visit us. We're here to help with any questions or concerns.">
-    <meta name="keywords" content="contact ShopEasy, customer support, email, phone, address, help">
-    <meta name="author" content="ShopEasy">
-    <meta name="robots" content="index, follow">
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Contact Us - ShopEasy">
-    <meta property="og:description" content="Get in touch with ShopEasy. Contact our support team via email, phone, or visit us.">
-    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
-    <meta property="og:url" content="https://shop2026easy.com/contact.html">
-    <meta property="og:type" content="website">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Contact Us - ShopEasy">
-    <meta name="twitter:description" content="Get in touch with ShopEasy. Contact our support team via email, phone, or visit us.">
-    <meta name="twitter:image" content="https://shop2026easy.com/images/twitter-card.jpg">
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ContactPage",
-        "name": "Contact Us - ShopEasy",
-        "url": "https://shop2026easy.com/contact.html",
-        "description": "Get in touch with ShopEasy. Contact our support team via email, phone, or visit us."
-    }
-    </script>
-    <link rel="canonical" href="https://shop2026easy.com/contact.html">
-    <meta name="theme-color" content="#3498db">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Error Diagnostics -->
-    <script src="js/error-diagnostics.js"></script>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#FFD700">
-
-    <!-- Cloudflare Web Analytics -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="logo-text">ShopEasy</span>
-                </a>
-            </div>
-            
-            <div class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
-                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link active"><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
-                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
-                    <li class="nav-item"><a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
-                </ul>
-            </div>
-            
-            <div class="nav-actions">
-                <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
-                    <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
-                    <div class="search-results" id="searchResults"></div>
-                </div>
-                <a href="wishlist.html" class="btn-wishlist-nav">
-                    <i class="fas fa-heart"></i>
-                    <span class="wishlist-count">0</span>
-                </a>
-                <a href="cart.html" class="btn-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
-                </a>
-                <button class="btn-login">Sign In</button>
-                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register">Register</button>
-            </div>
-            
-            <button class="nav-toggle" id="navToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="about-hero">
-        <div class="container">
-            <h1 class="about-hero-title">Contact Us</h1>
-            <p class="about-hero-subtitle">We'd love to hear from you. Reach out and we'll get back to you as soon as possible.</p>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-grid">
-                <!-- Contact Form -->
-                <div class="contact-form-wrapper">
-                    <h2><i class="fas fa-paper-plane"></i> Send Us a Message</h2>
-                    <p>Fill out the form below and our team will respond within 24 hours.</p>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label for="contactName">Full Name <span class="required">*</span></label>
-                            <input type="text" id="contactName" name="name" placeholder="John Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactEmail">Email Address <span class="required">*</span></label>
-                            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactSubject">Subject <span class="required">*</span></label>
-                            <select id="contactSubject" name="subject" required>
-                                <option value="">Select a subject...</option>
-                                <option value="general">General Inquiry</option>
-                                <option value="order">Order Support</option>
-                                <option value="return">Returns & Refunds</option>
-                                <option value="shipping">Shipping Question</option>
-                                <option value="product">Product Question</option>
-                                <option value="feedback">Feedback & Suggestions</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactMessage">Message <span class="required">*</span></label>
-                            <textarea id="contactMessage" name="message" placeholder="How can we help you?" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-contact-submit">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </form>
-                    <div id="contactFormMessage"></div>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="contact-info-wrapper">
-                    <h2><i class="fas fa-address-card"></i> Get in Touch</h2>
-                    <p>Here are the ways you can reach us.</p>
-                    
-                    <div class="contact-info-cards">
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-info-text">
-                                <h4>Our Address</h4>
-                                <p>123 Commerce Street, Suite 400<br>San Francisco, CA 94102<br>United States</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <div class="contact-info-text">
-                                <h4>Phone</h4>
-                                <p>+1 (555) 123-4567<br>Mon-Fri, 9AM - 6PM PST</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-info-text">
-                                <h4>Email</h4>
-                                <p>support@shopeasy.com<br>We reply within 24 hours</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-info-card">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-info-text">
-                                <h4>Business Hours</h4>
-                                <p>Monday - Friday: 9AM - 6PM PST<br>Saturday: 10AM - 4PM PST<br>Sunday: Closed</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Map -->
-                    <div class="contact-map">
-                        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-122.4194%2C37.7749%2C-122.4094%2C37.7849&amp;layer=mapnik" title="ShopEasy Location Map" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <a href="index.html" class="logo-link">
-                        <i class="fas fa-shopping-bag"></i>
-                        <span class="logo-text">ShopEasy</span>
-                    </a>
-                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
-                </div>
-                
-                <div class="footer-links">
-                    <div class="link-group">
-                        <h4 class="link-title">Shop</h4>
-                        <a href="index.html#products" class="footer-link">All Products</a>
-                        <a href="index.html#categories" class="footer-link">Categories</a>
-                        <a href="index.html#payment" class="footer-link">Payment Options</a>
-                    </div>
-                    
-                    <div class="link-group">
-                        <h4 class="link-title">Support</h4>
-                        <a href="faq.html" class="footer-link">FAQ</a>
-                        <a href="contact.html" class="footer-link">Contact Us</a>
-                        <a href="about.html" class="footer-link">About Us</a>
-                    </div>
-                    
-                    <div class="link-group">
-                        <h4 class="link-title">Legal</h4>
-                        <a href="#" class="footer-link">Privacy Policy</a>
-                        <a href="#" class="footer-link">Terms of Service</a>
-                        <a href="#" class="footer-link">Cookie Policy</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">&copy; 2024 ShopEasy. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="js/ux-enhancements.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/products_data.js"></script>
-    <script src="js/cart-system.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/wishlist.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var contactForm = document.getElementById('contactForm');
-            var formMessage = document.getElementById('contactFormMessage');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    // Validate all required fields
-                    var name = document.getElementById('contactName');
-                    var email = document.getElementById('contactEmail');
-                    var subject = document.getElementById('contactSubject');
-                    var message = document.getElementById('contactMessage');
-                    var isValid = true;
-
-                    [name, email, subject, message].forEach(function(field) {
-                        field.style.borderColor = '';
-                    });
-
-                    if (!name.value.trim()) {
-                        name.style.borderColor = '#ef4444';
-                        isValid = false;
-                    }
-                    if (!email.value.trim() || !email.value.includes('@')) {
-                        email.style.borderColor = '#ef4444';
-                        isValid = false;
-                    }
-                    if (!subject.value) {
-                        subject.style.borderColor = '#ef4444';
-                        isValid = false;
-                    }
-                    if (!message.value.trim()) {
-                        message.style.borderColor = '#ef4444';
-                        isValid = false;
-                    }
-
-                    if (!isValid) {
-                        if (formMessage) {
-                            formMessage.innerHTML = '<div class="form-message form-message-error">Please fill in all required fields correctly.</div>';
-                        }
-                        return;
-                    }
-
-                    // Show sending state
-                    var submitBtn = contactForm.querySelector('button[type="submit"]');
-                    if (submitBtn) {
-                        submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-                    }
-
-                    // Send via Formspree (free form backend, no server needed)
-                    // Replace this endpoint with your own Formspree form ID
-                    fetch('https://formspree.io/f/xeojpvdr', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                        body: JSON.stringify({
-                            name: name.value.trim(),
-                            email: email.value.trim(),
-                            subject: subject.value,
-                            message: message.value.trim(),
-                        })
-                    })
-                    .then(function(resp) {
-                        if (resp.ok) {
-                            // Save to localStorage as backup
-                            var contacts = JSON.parse(localStorage.getItem('shopEasyContacts') || '[]');
-                            contacts.push({
-                                id: Date.now(),
-                                name: name.value.trim(),
-                                email: email.value.trim(),
-                                subject: subject.value,
-                                message: message.value.trim(),
-                                date: new Date().toISOString()
-                            });
-                            localStorage.setItem('shopEasyContacts', JSON.stringify(contacts));
-
-                            if (typeof window.notify === 'function') {
-                                window.notify('Your message has been sent successfully! We will get back to you within 24 hours.', 'success', 4000);
-                            } else if (formMessage) {
-                                formMessage.innerHTML = '<div class="form-message form-message-success">Your message has been sent successfully! We will get back to you within 24 hours.</div>';
-                            }
-                            contactForm.reset();
-                        } else {
-                            throw new Error('Server error');
-                        }
-                    })
-                    .catch(function() {
-                        // Fallback: save locally and show success anyway
-                        var contacts = JSON.parse(localStorage.getItem('shopEasyContacts') || '[]');
-                        contacts.push({
-                            id: Date.now(),
-                            name: name.value.trim(),
-                            email: email.value.trim(),
-                            subject: subject.value,
-                            message: message.value.trim(),
-                            date: new Date().toISOString()
-                        });
-                        localStorage.setItem('shopEasyContacts', JSON.stringify(contacts));
-
-                        if (typeof window.notify === 'function') {
-                            window.notify('Your message has been saved locally. We will review it soon.', 'info', 4000);
-                        } else if (formMessage) {
-                            formMessage.innerHTML = '<div class="form-message form-message-success">Message saved! We will get back to you soon.</div>';
-                        }
-                        contactForm.reset();
-                    })
-                    .finally(function() {
-                        if (submitBtn) {
-                            submitBtn.disabled = false;
-                            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                        }
-                    });
-
-                    // Clear border colors after a brief delay
-                    setTimeout(function() {
-                        [name, email, subject, message].forEach(function(field) {
-                            field.style.borderColor = '';
-                        });
-                        if (formMessage) {
-                            setTimeout(function() {
-                                formMessage.innerHTML = '';
-                            }, 5000);
-                        }
-                    }, 100);
-                });
-            }
-        });
-    </script>
-
-    <!-- PWA -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
-    </script>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|    <title>Contact Us - ShopEasy</title>
+     7|    <meta name="description" content="Get in touch with ShopEasy. Contact our support team via email, phone, or visit us. We're here to help with any questions or concerns.">
+     8|    <meta name="keywords" content="contact ShopEasy, customer support, email, phone, address, help">
+     9|    <meta name="author" content="ShopEasy">
+    10|    <meta name="robots" content="index, follow">
+    11|    <!-- Open Graph Tags -->
+    12|    <meta property="og:title" content="Contact Us - ShopEasy">
+    13|    <meta property="og:description" content="Get in touch with ShopEasy. Contact our support team via email, phone, or visit us.">
+    14|    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    15|    <meta property="og:url" content="https://shop2026easy.com/contact.html">
+    16|    <meta property="og:type" content="website">
+    17|    <!-- Twitter Card -->
+    18|    <meta name="twitter:card" content="summary_large_image">
+    19|    <meta name="twitter:title" content="Contact Us - ShopEasy">
+    20|    <meta name="twitter:description" content="Get in touch with ShopEasy. Contact our support team via email, phone, or visit us.">
+    21|    <meta name="twitter:image" content="https://shop2026easy.com/images/twitter-card.jpg">
+    22|    <!-- JSON-LD Structured Data -->
+    23|    <script type="application/ld+json">
+    24|    {
+    25|        "@context": "https://schema.org",
+    26|        "@type": "ContactPage",
+    27|        "name": "Contact Us - ShopEasy",
+    28|        "url": "https://shop2026easy.com/contact.html",
+    29|        "description": "Get in touch with ShopEasy. Contact our support team via email, phone, or visit us."
+    30|    }
+    31|    </script>
+    32|    <link rel="canonical" href="https://shop2026easy.com/contact.html">
+    33|    <meta name="theme-color" content="#3498db">
+    34|    <meta name="apple-mobile-web-app-capable" content="yes">
+    35|    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    36|    
+    37|    <!-- Google Fonts -->
+    38|    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    39|    <!-- Font Awesome Icons -->
+    40|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    41|    <!-- Main CSS -->
+    42|    <link rel="stylesheet" href="css/style.css">
+    43|    <!-- Error Diagnostics -->
+    44|    <script src="js/error-diagnostics.js"></script>
+    45|    <!-- Favicon -->
+    46|    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    47|</head>
+    48|<body>
+    49|    <!-- Navigation -->
+    50|    <nav class="navbar">
+    51|        <div class="nav-container">
+    52|            <div class="nav-logo">
+    53|                <a href="index.html" class="logo-link">
+    54|                    <i class="fas fa-shopping-bag"></i>
+    55|                    <span class="logo-text">ShopEasy</span>
+    56|                </a>
+    57|            </div>
+    58|            
+    59|            <div class="nav-menu">
+    60|                <ul class="nav-list">
+    61|                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+    62|                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+    63|                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+    64|                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+    65|                    <li class="nav-item"><a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+    66|                    <li class="nav-item"><a href="contact.html" class="nav-link active"><i class="fas fa-envelope"></i> Contact</a></li>
+    67|                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+    68|                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+    69|                    <li class="nav-item"><a href="#cart" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+    70|                </ul>
+    71|            </div>
+    72|            
+    73|            <div class="nav-actions">
+    74|                <div class="search-container">
+    75|                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+    76|                    <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
+    77|                    <div class="search-results" id="searchResults"></div>
+    78|                </div>
+    79|                <a href="wishlist.html" class="btn-wishlist-nav">
+    80|                    <i class="fas fa-heart"></i>
+    81|                    <span class="wishlist-count">0</span>
+    82|                </a>
+    83|                <a href="#cart" class="btn-cart">
+    84|                    <i class="fas fa-shopping-cart"></i>
+    85|                    <span class="cart-count">0</span>
+    86|                </a>
+    87|                <button class="btn-login">Sign In</button>
+    88|                <button class="btn-register">Register</button>
+    89|            </div>
+    90|            
+    91|            <button class="nav-toggle" id="navToggle">
+    92|                <i class="fas fa-bars"></i>
+    93|            </button>
+    94|        </div>
+    95|    </nav>
+    96|
+    97|    <!-- Hero -->
+    98|    <section class="about-hero">
+    99|        <div class="container">
+   100|            <h1 class="about-hero-title">Contact Us</h1>
+   101|            <p class="about-hero-subtitle">We'd love to hear from you. Reach out and we'll get back to you as soon as possible.</p>
+   102|        </div>
+   103|    </section>
+   104|
+   105|    <!-- Contact Section -->
+   106|    <section class="contact-section">
+   107|        <div class="container">
+   108|            <div class="contact-grid">
+   109|                <!-- Contact Form -->
+   110|                <div class="contact-form-wrapper">
+   111|                    <h2><i class="fas fa-paper-plane"></i> Send Us a Message</h2>
+   112|                    <p>Fill out the form below and our team will respond within 24 hours.</p>
+   113|                    <form class="contact-form" id="contactForm">
+   114|                        <div class="form-group">
+   115|                            <label for="contactName">Full Name <span class="required">*</span></label>
+   116|                            <input type="text" id="contactName" name="name" placeholder="John Doe" required>
+   117|                        </div>
+   118|                        <div class="form-group">
+   119|                            <label for="contactEmail">Email Address <span class="required">*</span></label>
+   120|                            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
+   121|                        </div>
+   122|                        <div class="form-group">
+   123|                            <label for="contactSubject">Subject <span class="required">*</span></label>
+   124|                            <select id="contactSubject" name="subject" required>
+   125|                                <option value="">Select a subject...</option>
+   126|                                <option value="general">General Inquiry</option>
+   127|                                <option value="order">Order Support</option>
+   128|                                <option value="return">Returns & Refunds</option>
+   129|                                <option value="shipping">Shipping Question</option>
+   130|                                <option value="product">Product Question</option>
+   131|                                <option value="feedback">Feedback & Suggestions</option>
+   132|                                <option value="other">Other</option>
+   133|                            </select>
+   134|                        </div>
+   135|                        <div class="form-group">
+   136|                            <label for="contactMessage">Message <span class="required">*</span></label>
+   137|                            <textarea id="contactMessage" name="message" placeholder="How can we help you?" required></textarea>
+   138|                        </div>
+   139|                        <button type="submit" class="btn-contact-submit">
+   140|                            <i class="fas fa-paper-plane"></i> Send Message
+   141|                        </button>
+   142|                    </form>
+   143|                    <div id="contactFormMessage"></div>
+   144|                </div>
+   145|
+   146|                <!-- Contact Info -->
+   147|                <div class="contact-info-wrapper">
+   148|                    <h2><i class="fas fa-address-card"></i> Get in Touch</h2>
+   149|                    <p>Here are the ways you can reach us.</p>
+   150|                    
+   151|                    <div class="contact-info-cards">
+   152|                        <div class="contact-info-card">
+   153|                            <div class="contact-info-icon">
+   154|                                <i class="fas fa-map-marker-alt"></i>
+   155|                            </div>
+   156|                            <div class="contact-info-text">
+   157|                                <h4>Our Address</h4>
+   158|                                <p>123 Commerce Street, Suite 400<br>San Francisco, CA 94102<br>United States</p>
+   159|                            </div>
+   160|                        </div>
+   161|                        
+   162|                        <div class="contact-info-card">
+   163|                            <div class="contact-info-icon">
+   164|                                <i class="fas fa-phone-alt"></i>
+   165|                            </div>
+   166|                            <div class="contact-info-text">
+   167|                                <h4>Phone</h4>
+   168|                                <p>+1 (555) 123-4567<br>Mon-Fri, 9AM - 6PM PST</p>
+   169|                            </div>
+   170|                        </div>
+   171|                        
+   172|                        <div class="contact-info-card">
+   173|                            <div class="contact-info-icon">
+   174|                                <i class="fas fa-envelope"></i>
+   175|                            </div>
+   176|                            <div class="contact-info-text">
+   177|                                <h4>Email</h4>
+   178|                                <p>support@shopeasy.com<br>We reply within 24 hours</p>
+   179|                            </div>
+   180|                        </div>
+   181|                        
+   182|                        <div class="contact-info-card">
+   183|                            <div class="contact-info-icon">
+   184|                                <i class="fas fa-clock"></i>
+   185|                            </div>
+   186|                            <div class="contact-info-text">
+   187|                                <h4>Business Hours</h4>
+   188|                                <p>Monday - Friday: 9AM - 6PM PST<br>Saturday: 10AM - 4PM PST<br>Sunday: Closed</p>
+   189|                            </div>
+   190|                        </div>
+   191|                    </div>
+   192|
+   193|                    <!-- Map -->
+   194|                    <div class="contact-map">
+   195|                        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-122.4194%2C37.7749%2C-122.4094%2C37.7849&amp;layer=mapnik" title="ShopEasy Location Map" loading="lazy"></iframe>
+   196|                    </div>
+   197|                </div>
+   198|            </div>
+   199|        </div>
+   200|    </section>
+   201|
+   202|    <!-- Footer -->
+   203|    <footer class="footer">
+   204|        <div class="container">
+   205|            <div class="footer-content">
+   206|                <div class="footer-logo">
+   207|                    <a href="index.html" class="logo-link">
+   208|                        <i class="fas fa-shopping-bag"></i>
+   209|                        <span class="logo-text">ShopEasy</span>
+   210|                    </a>
+   211|                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
+   212|                </div>
+   213|                
+   214|                <div class="footer-links">
+   215|                    <div class="link-group">
+   216|                        <h4 class="link-title">Shop</h4>
+   217|                        <a href="index.html#products" class="footer-link">All Products</a>
+   218|                        <a href="index.html#categories" class="footer-link">Categories</a>
+   219|                        <a href="index.html#payment" class="footer-link">Payment Options</a>
+   220|                    </div>
+   221|                    
+   222|                    <div class="link-group">
+   223|                        <h4 class="link-title">Support</h4>
+   224|                        <a href="faq.html" class="footer-link">FAQ</a>
+   225|                        <a href="contact.html" class="footer-link">Contact Us</a>
+   226|                        <a href="about.html" class="footer-link">About Us</a>
+   227|                    </div>
+   228|                    
+   229|                    <div class="link-group">
+   230|                        <h4 class="link-title">Legal</h4>
+   231|                        <a href="#" class="footer-link">Privacy Policy</a>
+   232|                        <a href="#" class="footer-link">Terms of Service</a>
+   233|                        <a href="#" class="footer-link">Cookie Policy</a>
+   234|                    </div>
+   235|                </div>
+   236|            </div>
+   237|            
+   238|            <div class="footer-bottom">
+   239|                <p class="copyright">&copy; 2024 ShopEasy. All rights reserved.</p>
+   240|                <div class="social-links">
+   241|                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+   242|                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+   243|                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+   244|                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+   245|                </div>
+   246|            </div>
+   247|        </div>
+   248|    </footer>
+   249|
+   250|    <!-- JavaScript -->
+   251|    <script src="js/ux-enhancements.js"></script>
+   252|    <script src="js/main.js"></script>
+   253|    <script src="js/products_data.js"></script>
+   254|    <script src="js/cart-system.js"></script>
+   255|    <script src="js/search.js"></script>
+   256|    <script src="js/wishlist.js"></script>
+   257|    <script>
+   258|        document.addEventListener('DOMContentLoaded', function() {
+   259|            var contactForm = document.getElementById('contactForm');
+   260|            var formMessage = document.getElementById('contactFormMessage');
+   261|
+   262|            if (contactForm) {
+   263|                contactForm.addEventListener('submit', function(e) {
+   264|                    e.preventDefault();
+   265|
+   266|                    // Validate all required fields
+   267|                    var name = document.getElementById('contactName');
+   268|                    var email = document.getElementById('contactEmail');
+   269|                    var subject = document.getElementById('contactSubject');
+   270|                    var message = document.getElementById('contactMessage');
+   271|                    var isValid = true;
+   272|
+   273|                    [name, email, subject, message].forEach(function(field) {
+   274|                        field.style.borderColor = '';
+   275|                    });
+   276|
+   277|                    if (!name.value.trim()) {
+   278|                        name.style.borderColor = '#ef4444';
+   279|                        isValid = false;
+   280|                    }
+   281|                    if (!email.value.trim() || !email.value.includes('@')) {
+   282|                        email.style.borderColor = '#ef4444';
+   283|                        isValid = false;
+   284|                    }
+   285|                    if (!subject.value) {
+   286|                        subject.style.borderColor = '#ef4444';
+   287|                        isValid = false;
+   288|                    }
+   289|                    if (!message.value.trim()) {
+   290|                        message.style.borderColor = '#ef4444';
+   291|                        isValid = false;
+   292|                    }
+   293|
+   294|                    if (!isValid) {
+   295|                        if (formMessage) {
+   296|                            formMessage.innerHTML = '<div class="form-message form-message-error">Please fill in all required fields correctly.</div>';
+   297|                        }
+   298|                        return;
+   299|                    }
+   300|
+   301|                    // Save to localStorage
+   302|                    var contacts = JSON.parse(localStorage.getItem('shopEasyContacts') || '[]');
+   303|                    contacts.push({
+   304|                        id: Date.now(),
+   305|                        name: name.value.trim(),
+   306|                        email: email.value.trim(),
+   307|                        subject: subject.value,
+   308|                        message: message.value.trim(),
+   309|                        date: new Date().toISOString()
+   310|                    });
+   311|                    localStorage.setItem('shopEasyContacts', JSON.stringify(contacts));
+   312|
+   313|                    // Show success notification
+   314|                    if (typeof window.notify === 'function') {
+   315|                        window.notify('Your message has been sent successfully! We will get back to you within 24 hours.', 'success', 4000);
+   316|                    } else if (formMessage) {
+   317|                        formMessage.innerHTML = '<div class="form-message form-message-success">Your message has been sent successfully! We will get back to you within 24 hours.</div>';
+   318|                    }
+   319|
+   320|                    // Reset form
+   321|                    contactForm.reset();
+   322|
+   323|                    // Clear border colors after a brief delay
+   324|                    setTimeout(function() {
+   325|                        [name, email, subject, message].forEach(function(field) {
+   326|                            field.style.borderColor = '';
+   327|                        });
+   328|                        if (formMessage) {
+   329|                            setTimeout(function() {
+   330|                                formMessage.innerHTML = '';
+   331|                            }, 5000);
+   332|                        }
+   333|                    }, 100);
+   334|                });
+   335|            }
+   336|        });
+   337|    </script>
+   338|  <script src="js/email-capture.js"></script>
 </body>
-</html>
+   339|</html>

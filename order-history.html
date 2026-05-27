@@ -1,715 +1,691 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders - ShopEasy</title>
-    <meta name="description" content="View your order history and track shipments on ShopEasy.">
-    <meta name="robots" content="noindex, follow">
-    <link rel="canonical" href="https://shop2026easy.com/order-history.html">
-    <!-- Open Graph -->
-    <meta property="og:title" content="My Orders - ShopEasy">
-    <meta property="og:description" content="View your order history and track shipments on ShopEasy.">
-    <meta property="og:image" content="https://shop2026easy.com/images/favicon.ico">
-    <meta property="og:url" content="https://shop2026easy.com/order-history.html">
-    <meta property="og:type" content="website">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="My Orders - ShopEasy">
-    <meta name="twitter:description" content="View your order history and track shipments on ShopEasy.">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#FFD700">
-
-    <script src="js/error-diagnostics.js"></script>
-    <style>
-        .orders-page {
-            min-height: 100vh;
-            background: #f8f9fa;
-            padding: 120px 20px 60px;
-        }
-        .orders-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .orders-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .orders-header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-        }
-        .orders-header h1 i {
-            color: #667eea;
-            margin-right: 10px;
-        }
-        .orders-header .btn-shop {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .orders-header .btn-shop:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
-        }
-
-        /* Filters */
-        .orders-filters {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        .filter-btn {
-            padding: 8px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            background: white;
-            color: #666;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .filter-btn:hover { border-color: #667eea; color: #667eea; }
-        .filter-btn.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-color: transparent;
-        }
-
-        /* Search */
-        .orders-search {
-            margin-bottom: 25px;
-            position: relative;
-        }
-        .orders-search input {
-            width: 100%;
-            padding: 12px 16px 12px 44px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-        }
-        .orders-search input:focus { border-color: #667eea; }
-        .orders-search i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #aaa;
-        }
-
-        /* Order Cards */
-        .order-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            margin-bottom: 20px;
-            overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .order-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-        .order-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 24px;
-            background: #fafafa;
-            border-bottom: 1px solid #f0f0f0;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .order-id {
-            font-weight: 700;
-            color: #333;
-            font-family: monospace;
-            font-size: 0.95rem;
-        }
-        .order-date {
-            color: #999;
-            font-size: 0.85rem;
-        }
-        .order-status {
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        .status-processing { background: #fff3cd; color: #856404; }
-        .status-shipped { background: #cce5ff; color: #004085; }
-        .status-delivered { background: #d4edda; color: #155724; }
-        .status-cancelled { background: #f8d7da; color: #721c24; }
-
-        .order-card-body {
-            padding: 16px 24px;
-        }
-        .order-item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f5f5f5;
-        }
-        .order-item-row:last-child { border-bottom: none; }
-        .order-item-name {
-            font-weight: 500;
-            color: #333;
-        }
-        .order-item-meta {
-            color: #999;
-            font-size: 0.85rem;
-        }
-        .order-item-price {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .order-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 24px;
-            border-top: 1px solid #f0f0f0;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .order-total-label {
-            font-size: 0.9rem;
-            color: #888;
-        }
-        .order-total-amount {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #27ae60;
-        }
-        .order-actions {
-            display: flex;
-            gap: 10px;
-        }
-        .order-actions .btn-sm {
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-view-details {
-            background: #667eea;
-            color: white;
-            border: none;
-        }
-        .btn-view-details:hover { background: #5566d0; }
-        .btn-reorder {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-        .btn-reorder:hover { background: #f0f4ff; }
-
-        /* Empty State */
-        .empty-orders {
-            text-align: center;
-            padding: 80px 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
-        .empty-orders i {
-            font-size: 4rem;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-        .empty-orders h2 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .empty-orders p {
-            color: #999;
-            margin-bottom: 25px;
-        }
-        .empty-orders .btn-primary {
-            padding: 14px 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        /* Skeleton */
-        .skeleton-orders .skeleton-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
-        }
-        .skeleton-line {
-            height: 14px;
-            background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 6px;
-            margin-bottom: 12px;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Auth required overlay */
-        .auth-required {
-            text-align: center;
-            padding: 80px 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
-        .auth-required i {
-            font-size: 3.5rem;
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-        .auth-required h2 { color: #333; margin-bottom: 10px; }
-        .auth-required p { color: #888; margin-bottom: 25px; }
-        .auth-required .btn-auth {
-            padding: 14px 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        @media (max-width: 768px) {
-            .order-card-header, .order-card-footer { flex-direction: column; align-items: flex-start; }
-            .orders-header { flex-direction: column; align-items: flex-start; }
-        }
-    </style>
-    <!-- Cloudflare Web Analytics -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-link"><i class="fas fa-shopping-bag"></i><span class="logo-text">ShopEasy</span></a>
-            </div>
-            <div class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
-                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> View All Products</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li class="nav-item"><a href="order-history.html" class="nav-link active"><i class="fas fa-history"></i> My Orders</a></li>
-                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
-                </ul>
-            </div>
-            <div class="nav-actions">
-                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
-                <a href="cart.html" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
-                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
-                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
-                <div class="user-menu" id="userMenu" style="display:none;">
-                    <span class="user-name" id="userName"></span>
-                    <button class="btn-logout" id="btnLogout">Sign Out</button>
-                </div>
-            </div>
-            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
-        </div>
-    </nav>
-
-    <section class="orders-page">
-        <div class="orders-container">
-            <div class="orders-header">
-                <h1><i class="fas fa-history"></i> My Orders</h1>
-                <a href="products/" class="btn-shop"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
-            </div>
-
-            <!-- Skeleton loading -->
-            <div class="skeleton-orders" id="skeletonOrders">
-                <div class="skeleton-card">
-                    <div class="skeleton-line" style="width: 40%;"></div>
-                    <div class="skeleton-line" style="width: 70%;"></div>
-                    <div class="skeleton-line" style="width: 30%;"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-line" style="width: 40%;"></div>
-                    <div class="skeleton-line" style="width: 70%;"></div>
-                    <div class="skeleton-line" style="width: 30%;"></div>
-                </div>
-            </div>
-
-            <!-- Auth required (hidden by default) -->
-            <div class="auth-required" id="authRequired" style="display:none;">
-                <i class="fas fa-user-lock"></i>
-                <h2>Sign in to View Orders</h2>
-                <p>Please sign in to view your order history.</p>
-                <a href="auth.html" class="btn-auth"><i class="fas fa-sign-in-alt"></i> Sign In / Register</a>
-            </div>
-
-            <!-- Orders content -->
-            <div id="ordersContent" style="display:none;">
-                <!-- Filters -->
-                <div class="orders-filters">
-                    <button class="filter-btn active" data-filter="all">All Orders</button>
-                    <button class="filter-btn" data-filter="Processing">Processing</button>
-                    <button class="filter-btn" data-filter="Shipped">Shipped</button>
-                    <button class="filter-btn" data-filter="Delivered">Delivered</button>
-                    <button class="filter-btn" data-filter="Cancelled">Cancelled</button>
-                </div>
-
-                <!-- Search -->
-                <div class="orders-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="orderSearch" placeholder="Search by order ID or product name...">
-                </div>
-
-                <!-- Order list -->
-                <div id="orderList"></div>
-
-                <!-- Empty state (hidden by default) -->
-                <div class="empty-orders" id="emptyOrders" style="display:none;">
-                    <i class="fas fa-box-open"></i>
-                    <h2>No orders found</h2>
-                    <p>You haven't placed any orders yet. Start shopping today!</p>
-                    <a href="products/" class="btn-primary"><i class="fas fa-shopping-bag"></i> Browse Products</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
-                    <p>Your trusted online shopping destination.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products/">Products</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-support">
-                    <h4>Help</h4>
-                    <ul>
-                        <li><a href="index.html#returns">Returns</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        (function() {
-            'use strict';
-            var ORDER_KEY = 'shopEasyOrders';
-            var currentFilter = 'all';
-            var searchTerm = '';
-
-            function checkAuth() {
-                try {
-                    var session = JSON.parse(sessionStorage.getItem('shopeasy_session')) ||
-                                  JSON.parse(localStorage.getItem('shopeasy_session'));
-                    return session && session.name;
-                } catch(e) { return null; }
-            }
-
-            function init() {
-                var skeleton = document.getElementById('skeletonOrders');
-                var authRequired = document.getElementById('authRequired');
-                var content = document.getElementById('ordersContent');
-
-                // Simulate brief loading
-                setTimeout(function() {
-                    skeleton.style.display = 'none';
-
-                    var user = checkAuth();
-                    if (!user) {
-                        authRequired.style.display = 'block';
-                        content.style.display = 'none';
-                        return;
-                    }
-
-                    authRequired.style.display = 'none';
-                    content.style.display = 'block';
-                    loadOrders();
-                }, 600);
-
-                // Filter buttons
-                document.querySelectorAll('.filter-btn').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-                        this.classList.add('active');
-                        currentFilter = this.getAttribute('data-filter');
-                        renderOrders();
-                    });
-                });
-
-                // Search
-                var searchInput = document.getElementById('orderSearch');
-                searchInput.addEventListener('input', function() {
-                    searchTerm = this.value.toLowerCase().trim();
-                    renderOrders();
-                });
-            }
-
-            function loadOrders() {
-                try {
-                    var saved = localStorage.getItem(ORDER_KEY);
-                    if (!saved) {
-                        document.getElementById('emptyOrders').style.display = 'block';
-                        document.getElementById('orderList').innerHTML = '';
-                        return;
-                    }
-                    var orders = JSON.parse(saved);
-                    if (!Array.isArray(orders) || orders.length === 0) {
-                        document.getElementById('emptyOrders').style.display = 'block';
-                        document.getElementById('orderList').innerHTML = '';
-                        return;
-                    }
-                    window._allOrders = orders;
-                    renderOrders();
-                } catch(e) {
-                    console.log('Failed to load orders');
-                    document.getElementById('emptyOrders').style.display = 'block';
-                }
-            }
-
-            function getStatusClass(status) {
-                var s = (status || 'Processing').toLowerCase();
-                if (s.indexOf('process') > -1 || s.indexOf('pend') > -1) return 'status-processing';
-                if (s.indexOf('ship') > -1) return 'status-shipped';
-                if (s.indexOf('deliver') > -1 || s.indexOf('complete') > -1) return 'status-delivered';
-                if (s.indexOf('cancel') > -1) return 'status-cancelled';
-                return 'status-processing';
-            }
-
-            function formatDate(isoString) {
-                try {
-                    var d = new Date(isoString);
-                    return d.toLocaleDateString('en-US', {
-                        year: 'numeric', month: 'short', day: 'numeric',
-                        hour: '2-digit', minute: '2-digit'
-                    });
-                } catch(e) { return isoString; }
-            }
-
-            function renderOrders() {
-                var orders = window._allOrders || [];
-                var list = document.getElementById('orderList');
-                var emptyEl = document.getElementById('emptyOrders');
-
-                // Filter
-                var filtered = orders;
-                if (currentFilter !== 'all') {
-                    filtered = orders.filter(function(o) {
-                        var s = (o.status || 'Processing').toLowerCase();
-                        var f = currentFilter.toLowerCase();
-                        return s.indexOf(f) > -1;
-                    });
-                }
-
-                // Search
-                if (searchTerm) {
-                    filtered = filtered.filter(function(o) {
-                        var id = (o.id || '').toLowerCase();
-                        var items = (o.items || []).map(function(i) { return (i.name || '').toLowerCase(); }).join(' ');
-                        return id.indexOf(searchTerm) > -1 || items.indexOf(searchTerm) > -1;
-                    });
-                }
-
-                if (filtered.length === 0) {
-                    list.innerHTML = '';
-                    emptyEl.style.display = 'block';
-                    return;
-                }
-
-                emptyEl.style.display = 'none';
-
-                var html = '';
-                filtered.forEach(function(order) {
-                    var statusClass = getStatusClass(order.status);
-                    var itemsHtml = '';
-                    var itemCount = 0;
-                    if (order.items && order.items.length) {
-                        order.items.forEach(function(item) {
-                            itemCount += item.quantity || 1;
-                            var price = item.price || 0;
-                            if (typeof price === 'number') {
-                                price = '$' + price.toFixed(2);
-                            }
-                            itemsHtml += '<div class="order-item-row">' +
-                                '<div><div class="order-item-name">' + (item.name || 'Product') + '</div>' +
-                                '<div class="order-item-meta">Qty: ' + (item.quantity || 1) + '</div></div>' +
-                                '<span class="order-item-price">' + price + '</span>' +
-                                '</div>';
-                        });
-                    } else {
-                        itemsHtml = '<div class="order-item-row"><div class="order-item-name">Order items</div></div>';
-                    }
-
-                    var totalDisplay = order.total;
-                    if (typeof order.total === 'number') {
-                        totalDisplay = '$' + order.total.toFixed(2);
-                    }
-
-                    html += '<div class="order-card">' +
-                        '<div class="order-card-header">' +
-                        '<div><span class="order-id">' + (order.id || 'ORD-UNKNOWN') + '</span>' +
-                        '<span class="order-date"> &middot; ' + formatDate(order.date) + '</span></div>' +
-                        '<span class="order-status ' + statusClass + '">' + (order.status || 'Processing') + '</span>' +
-                        '</div>' +
-                        '<div class="order-card-body">' + itemsHtml + '</div>' +
-                        '<div class="order-card-footer">' +
-                        '<div><span class="order-total-label">Total: </span><span class="order-total-amount">' + totalDisplay + '</span></div>' +
-                        '<div class="order-actions">' +
-                        '<button class="btn-sm btn-view-details" data-order-id="' + (order.id || '') + '"><i class="fas fa-eye"></i> Details</button>' +
-                        '<button class="btn-sm btn-reorder"><i class="fas fa-redo"></i> Reorder</button>' +
-                        '</div></div></div>';
-                });
-
-                list.innerHTML = html;
-
-                // Detail buttons
-                list.querySelectorAll('.btn-view-details').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                        var orderId = this.getAttribute('data-order-id');
-                        showOrderDetails(orderId);
-                    });
-                });
-
-                // Reorder buttons
-                list.querySelectorAll('.btn-reorder').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                        var card = this.closest('.order-card');
-                        var idEl = card ? card.querySelector('.order-id') : null;
-                        if (idEl && typeof window.showToast === 'function') {
-                            window.showToast('Items added to cart!', 'success');
-                        } else {
-                            alert('Items added to cart!');
-                        }
-                    });
-                });
-            }
-
-            function showOrderDetails(orderId) {
-                var orders = window._allOrders || [];
-                var order = null;
-                for (var i = 0; i < orders.length; i++) {
-                    if (orders[i].id === orderId) { order = orders[i]; break; }
-                }
-                if (!order) return;
-
-                var overlay = document.createElement('div');
-                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:99999;opacity:0;transition:opacity 0.3s;';
-
-                var itemsHtml = '';
-                if (order.items) {
-                    order.items.forEach(function(item) {
-                        var price = item.price || 0;
-                        if (typeof price === 'number') price = '$' + price.toFixed(2);
-                        itemsHtml += '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;">' +
-                            '<span>' + (item.name || 'Product') + ' x' + (item.quantity || 1) + '</span>' +
-                            '<span style="font-weight:600;">' + price + '</span></div>';
-                    });
-                }
-
-                var totalDisplay = order.total;
-                if (typeof order.total === 'number') totalDisplay = '$' + order.total.toFixed(2);
-
-                var customer = order.customer || {};
-                var shipInfo = '';
-                if (customer.firstName || customer.lastName) {
-                    shipInfo = '<p><strong>' + (customer.firstName || '') + ' ' + (customer.lastName || '') + '</strong></p>';
-                }
-                if (customer.address) shipInfo += '<p>' + customer.address + '</p>';
-                if (customer.city) shipInfo += '<p>' + customer.city + ' ' + (customer.zip || '') + '</p>';
-
-                overlay.innerHTML = '<div style="background:white;border-radius:16px;padding:35px;max-width:520px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);transform:scale(0.8);transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">' +
-                    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">' +
-                    '<h2 style="margin:0;font-size:1.3rem;"><i class="fas fa-receipt" style="color:#667eea;"></i> Order Details</h2>' +
-                    '<button onclick="this.closest(\'div[style*=\\\'position:fixed\\\']\').remove()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#999;">&times;</button></div>' +
-                    '<p style="color:#667eea;font-weight:700;font-family:monospace;font-size:1.1rem;margin-bottom:20px;">' + (order.id || '') + '</p>' +
-                    '<div style="background:#f8f9fa;border-radius:10px;padding:16px;margin-bottom:16px;">' +
-                    '<h3 style="font-size:0.9rem;color:#888;margin:0 0 10px;"><i class="fas fa-box"></i> Items</h3>' + itemsHtml +
-                    '<div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:1.1rem;font-weight:700;border-top:2px solid #e0e0e0;margin-top:8px;">' +
-                    '<span>Total</span><span style="color:#27ae60;">' + totalDisplay + '</span></div></div>' +
-                    (shipInfo ? '<div style="background:#f8f9fa;border-radius:10px;padding:16px;margin-bottom:16px;">' +
-                    '<h3 style="font-size:0.9rem;color:#888;margin:0 0 10px;"><i class="fas fa-truck"></i> Shipping</h3>' + shipInfo + '</div>' : '') +
-                    '<p style="color:#888;font-size:0.85rem;"><i class="fas fa-calendar"></i> ' + formatDate(order.date) + '</p>' +
-                    '<button onclick="this.closest(\'div[style*=\\\'position:fixed\\\']\').remove()" style="width:100%;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;margin-top:10px;">Close</button></div>';
-
-                document.body.appendChild(overlay);
-                setTimeout(function() {
-                    overlay.style.opacity = '1';
-                    var modal = overlay.querySelector('div[style*="transform:scale"]');
-                    if (modal) modal.style.transform = 'scale(1)';
-                }, 50);
-
-                overlay.addEventListener('click', function(e) {
-                    if (e.target === overlay) overlay.remove();
-                });
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
-        })();
-    </script>
-    <script src="js/i18n.js"></script>
-    <script src="js/main.js"></script>
-
-    <!-- PWA -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
-    </script>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|    <title>My Orders - ShopEasy</title>
+     7|    <meta name="description" content="View your order history and track shipments on ShopEasy.">
+     8|    <meta name="robots" content="noindex, follow">
+     9|    <link rel="canonical" href="https://shop2026easy.com/order-history.html">
+    10|    <link rel="stylesheet" href="css/style.css">
+    11|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    12|    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    13|    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    14|    <script src="js/error-diagnostics.js"></script>
+    15|    <style>
+    16|        .orders-page {
+    17|            min-height: 100vh;
+    18|            background: #f8f9fa;
+    19|            padding: 120px 20px 60px;
+    20|        }
+    21|        .orders-container {
+    22|            max-width: 900px;
+    23|            margin: 0 auto;
+    24|        }
+    25|        .orders-header {
+    26|            display: flex;
+    27|            justify-content: space-between;
+    28|            align-items: center;
+    29|            margin-bottom: 30px;
+    30|            flex-wrap: wrap;
+    31|            gap: 15px;
+    32|        }
+    33|        .orders-header h1 {
+    34|            font-size: 1.8rem;
+    35|            font-weight: 700;
+    36|            color: #333;
+    37|            margin: 0;
+    38|        }
+    39|        .orders-header h1 i {
+    40|            color: #667eea;
+    41|            margin-right: 10px;
+    42|        }
+    43|        .orders-header .btn-shop {
+    44|            padding: 12px 24px;
+    45|            background: linear-gradient(135deg, #667eea, #764ba2);
+    46|            color: white;
+    47|            border: none;
+    48|            border-radius: 10px;
+    49|            font-weight: 600;
+    50|            cursor: pointer;
+    51|            text-decoration: none;
+    52|            display: inline-flex;
+    53|            align-items: center;
+    54|            gap: 8px;
+    55|            transition: transform 0.2s, box-shadow 0.2s;
+    56|        }
+    57|        .orders-header .btn-shop:hover {
+    58|            transform: translateY(-2px);
+    59|            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+    60|        }
+    61|
+    62|        /* Filters */
+    63|        .orders-filters {
+    64|            display: flex;
+    65|            gap: 10px;
+    66|            margin-bottom: 25px;
+    67|            flex-wrap: wrap;
+    68|        }
+    69|        .filter-btn {
+    70|            padding: 8px 20px;
+    71|            border: 2px solid #e0e0e0;
+    72|            border-radius: 20px;
+    73|            background: white;
+    74|            color: #666;
+    75|            font-size: 0.9rem;
+    76|            font-weight: 500;
+    77|            cursor: pointer;
+    78|            transition: all 0.3s;
+    79|        }
+    80|        .filter-btn:hover { border-color: #667eea; color: #667eea; }
+    81|        .filter-btn.active {
+    82|            background: linear-gradient(135deg, #667eea, #764ba2);
+    83|            color: white;
+    84|            border-color: transparent;
+    85|        }
+    86|
+    87|        /* Search */
+    88|        .orders-search {
+    89|            margin-bottom: 25px;
+    90|            position: relative;
+    91|        }
+    92|        .orders-search input {
+    93|            width: 100%;
+    94|            padding: 12px 16px 12px 44px;
+    95|            border: 2px solid #e0e0e0;
+    96|            border-radius: 12px;
+    97|            font-size: 1rem;
+    98|            outline: none;
+    99|            transition: border-color 0.3s;
+   100|            box-sizing: border-box;
+   101|        }
+   102|        .orders-search input:focus { border-color: #667eea; }
+   103|        .orders-search i {
+   104|            position: absolute;
+   105|            left: 16px;
+   106|            top: 50%;
+   107|            transform: translateY(-50%);
+   108|            color: #aaa;
+   109|        }
+   110|
+   111|        /* Order Cards */
+   112|        .order-card {
+   113|            background: white;
+   114|            border-radius: 16px;
+   115|            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+   116|            margin-bottom: 20px;
+   117|            overflow: hidden;
+   118|            transition: transform 0.2s, box-shadow 0.2s;
+   119|        }
+   120|        .order-card:hover {
+   121|            transform: translateY(-2px);
+   122|            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+   123|        }
+   124|        .order-card-header {
+   125|            display: flex;
+   126|            justify-content: space-between;
+   127|            align-items: center;
+   128|            padding: 16px 24px;
+   129|            background: #fafafa;
+   130|            border-bottom: 1px solid #f0f0f0;
+   131|            flex-wrap: wrap;
+   132|            gap: 10px;
+   133|        }
+   134|        .order-id {
+   135|            font-weight: 700;
+   136|            color: #333;
+   137|            font-family: monospace;
+   138|            font-size: 0.95rem;
+   139|        }
+   140|        .order-date {
+   141|            color: #999;
+   142|            font-size: 0.85rem;
+   143|        }
+   144|        .order-status {
+   145|            padding: 4px 14px;
+   146|            border-radius: 20px;
+   147|            font-size: 0.8rem;
+   148|            font-weight: 600;
+   149|        }
+   150|        .status-processing { background: #fff3cd; color: #856404; }
+   151|        .status-shipped { background: #cce5ff; color: #004085; }
+   152|        .status-delivered { background: #d4edda; color: #155724; }
+   153|        .status-cancelled { background: #f8d7da; color: #721c24; }
+   154|
+   155|        .order-card-body {
+   156|            padding: 16px 24px;
+   157|        }
+   158|        .order-item-row {
+   159|            display: flex;
+   160|            justify-content: space-between;
+   161|            align-items: center;
+   162|            padding: 8px 0;
+   163|            border-bottom: 1px solid #f5f5f5;
+   164|        }
+   165|        .order-item-row:last-child { border-bottom: none; }
+   166|        .order-item-name {
+   167|            font-weight: 500;
+   168|            color: #333;
+   169|        }
+   170|        .order-item-meta {
+   171|            color: #999;
+   172|            font-size: 0.85rem;
+   173|        }
+   174|        .order-item-price {
+   175|            font-weight: 600;
+   176|            color: #333;
+   177|        }
+   178|
+   179|        .order-card-footer {
+   180|            display: flex;
+   181|            justify-content: space-between;
+   182|            align-items: center;
+   183|            padding: 12px 24px;
+   184|            border-top: 1px solid #f0f0f0;
+   185|            flex-wrap: wrap;
+   186|            gap: 10px;
+   187|        }
+   188|        .order-total-label {
+   189|            font-size: 0.9rem;
+   190|            color: #888;
+   191|        }
+   192|        .order-total-amount {
+   193|            font-size: 1.2rem;
+   194|            font-weight: 700;
+   195|            color: #27ae60;
+   196|        }
+   197|        .order-actions {
+   198|            display: flex;
+   199|            gap: 10px;
+   200|        }
+   201|        .order-actions .btn-sm {
+   202|            padding: 8px 16px;
+   203|            border-radius: 8px;
+   204|            font-size: 0.85rem;
+   205|            font-weight: 600;
+   206|            cursor: pointer;
+   207|            text-decoration: none;
+   208|            transition: all 0.2s;
+   209|        }
+   210|        .btn-view-details {
+   211|            background: #667eea;
+   212|            color: white;
+   213|            border: none;
+   214|        }
+   215|        .btn-view-details:hover { background: #5566d0; }
+   216|        .btn-reorder {
+   217|            background: white;
+   218|            color: #667eea;
+   219|            border: 2px solid #667eea;
+   220|        }
+   221|        .btn-reorder:hover { background: #f0f4ff; }
+   222|
+   223|        /* Empty State */
+   224|        .empty-orders {
+   225|            text-align: center;
+   226|            padding: 80px 20px;
+   227|            background: white;
+   228|            border-radius: 20px;
+   229|            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+   230|        }
+   231|        .empty-orders i {
+   232|            font-size: 4rem;
+   233|            color: #ddd;
+   234|            margin-bottom: 20px;
+   235|        }
+   236|        .empty-orders h2 {
+   237|            color: #333;
+   238|            margin-bottom: 10px;
+   239|        }
+   240|        .empty-orders p {
+   241|            color: #999;
+   242|            margin-bottom: 25px;
+   243|        }
+   244|        .empty-orders .btn-primary {
+   245|            padding: 14px 30px;
+   246|            background: linear-gradient(135deg, #667eea, #764ba2);
+   247|            color: white;
+   248|            border: none;
+   249|            border-radius: 10px;
+   250|            font-weight: 600;
+   251|            cursor: pointer;
+   252|            text-decoration: none;
+   253|            display: inline-block;
+   254|        }
+   255|
+   256|        /* Skeleton */
+   257|        .skeleton-orders .skeleton-card {
+   258|            background: white;
+   259|            border-radius: 16px;
+   260|            padding: 24px;
+   261|            margin-bottom: 20px;
+   262|        }
+   263|        .skeleton-line {
+   264|            height: 14px;
+   265|            background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+   266|            background-size: 200% 100%;
+   267|            animation: shimmer 1.5s infinite;
+   268|            border-radius: 6px;
+   269|            margin-bottom: 12px;
+   270|        }
+   271|        @keyframes shimmer {
+   272|            0% { background-position: 200% 0; }
+   273|            100% { background-position: -200% 0; }
+   274|        }
+   275|
+   276|        /* Auth required overlay */
+   277|        .auth-required {
+   278|            text-align: center;
+   279|            padding: 80px 20px;
+   280|            background: white;
+   281|            border-radius: 20px;
+   282|            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+   283|        }
+   284|        .auth-required i {
+   285|            font-size: 3.5rem;
+   286|            color: #667eea;
+   287|            margin-bottom: 20px;
+   288|        }
+   289|        .auth-required h2 { color: #333; margin-bottom: 10px; }
+   290|        .auth-required p { color: #888; margin-bottom: 25px; }
+   291|        .auth-required .btn-auth {
+   292|            padding: 14px 30px;
+   293|            background: linear-gradient(135deg, #667eea, #764ba2);
+   294|            color: white;
+   295|            border: none;
+   296|            border-radius: 10px;
+   297|            font-weight: 600;
+   298|            cursor: pointer;
+   299|            text-decoration: none;
+   300|            display: inline-block;
+   301|        }
+   302|
+   303|        @media (max-width: 768px) {
+   304|            .order-card-header, .order-card-footer { flex-direction: column; align-items: flex-start; }
+   305|            .orders-header { flex-direction: column; align-items: flex-start; }
+   306|        }
+   307|    </style>
+   308|</head>
+   309|<body>
+   310|    <nav class="navbar">
+   311|        <div class="nav-container">
+   312|            <div class="nav-logo">
+   313|                <a href="index.html" class="logo-link"><i class="fas fa-shopping-bag"></i><span class="logo-text">ShopEasy</span></a>
+   314|            </div>
+   315|            <div class="nav-menu">
+   316|                <ul class="nav-list">
+   317|                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+   318|                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+   319|                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> View All Products</a></li>
+   320|                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+   321|                    <li class="nav-item"><a href="order-history.html" class="nav-link active"><i class="fas fa-history"></i> My Orders</a></li>
+   322|                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+   323|                </ul>
+   324|            </div>
+   325|            <div class="nav-actions">
+   326|                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
+   327|                <a href="#cart" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+   328|                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
+   329|                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+   330|                <div class="user-menu" id="userMenu" style="display:none;">
+   331|                    <span class="user-name" id="userName"></span>
+   332|                    <button class="btn-logout" id="btnLogout">Sign Out</button>
+   333|                </div>
+   334|            </div>
+   335|            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+   336|        </div>
+   337|    </nav>
+   338|
+   339|    <section class="orders-page">
+   340|        <div class="orders-container">
+   341|            <div class="orders-header">
+   342|                <h1><i class="fas fa-history"></i> My Orders</h1>
+   343|                <a href="products/" class="btn-shop"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
+   344|            </div>
+   345|
+   346|            <!-- Skeleton loading -->
+   347|            <div class="skeleton-orders" id="skeletonOrders">
+   348|                <div class="skeleton-card">
+   349|                    <div class="skeleton-line" style="width: 40%;"></div>
+   350|                    <div class="skeleton-line" style="width: 70%;"></div>
+   351|                    <div class="skeleton-line" style="width: 30%;"></div>
+   352|                </div>
+   353|                <div class="skeleton-card">
+   354|                    <div class="skeleton-line" style="width: 40%;"></div>
+   355|                    <div class="skeleton-line" style="width: 70%;"></div>
+   356|                    <div class="skeleton-line" style="width: 30%;"></div>
+   357|                </div>
+   358|            </div>
+   359|
+   360|            <!-- Auth required (hidden by default) -->
+   361|            <div class="auth-required" id="authRequired" style="display:none;">
+   362|                <i class="fas fa-user-lock"></i>
+   363|                <h2>Sign in to View Orders</h2>
+   364|                <p>Please sign in to view your order history.</p>
+   365|                <a href="auth.html" class="btn-auth"><i class="fas fa-sign-in-alt"></i> Sign In / Register</a>
+   366|            </div>
+   367|
+   368|            <!-- Orders content -->
+   369|            <div id="ordersContent" style="display:none;">
+   370|                <!-- Filters -->
+   371|                <div class="orders-filters">
+   372|                    <button class="filter-btn active" data-filter="all">All Orders</button>
+   373|                    <button class="filter-btn" data-filter="Processing">Processing</button>
+   374|                    <button class="filter-btn" data-filter="Shipped">Shipped</button>
+   375|                    <button class="filter-btn" data-filter="Delivered">Delivered</button>
+   376|                    <button class="filter-btn" data-filter="Cancelled">Cancelled</button>
+   377|                </div>
+   378|
+   379|                <!-- Search -->
+   380|                <div class="orders-search">
+   381|                    <i class="fas fa-search"></i>
+   382|                    <input type="text" id="orderSearch" placeholder="Search by order ID or product name...">
+   383|                </div>
+   384|
+   385|                <!-- Order list -->
+   386|                <div id="orderList"></div>
+   387|
+   388|                <!-- Empty state (hidden by default) -->
+   389|                <div class="empty-orders" id="emptyOrders" style="display:none;">
+   390|                    <i class="fas fa-box-open"></i>
+   391|                    <h2>No orders found</h2>
+   392|                    <p>You haven't placed any orders yet. Start shopping today!</p>
+   393|                    <a href="products/" class="btn-primary"><i class="fas fa-shopping-bag"></i> Browse Products</a>
+   394|                </div>
+   395|            </div>
+   396|        </div>
+   397|    </section>
+   398|
+   399|    <footer class="footer">
+   400|        <div class="container">
+   401|            <div class="footer-content">
+   402|                <div class="footer-logo">
+   403|                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
+   404|                    <p>Your trusted online shopping destination.</p>
+   405|                </div>
+   406|                <div class="footer-links">
+   407|                    <h4>Quick Links</h4>
+   408|                    <ul>
+   409|                        <li><a href="index.html">Home</a></li>
+   410|                        <li><a href="products/">Products</a></li>
+   411|                        <li><a href="blog.html">Blog</a></li>
+   412|                    </ul>
+   413|                </div>
+   414|                <div class="footer-support">
+   415|                    <h4>Help</h4>
+   416|                    <ul>
+   417|                        <li><a href="index.html#returns">Returns</a></li>
+   418|                        <li><a href="contact.html">Contact</a></li>
+   419|                    </ul>
+   420|                </div>
+   421|            </div>
+   422|            <div class="footer-bottom">
+   423|                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
+   424|            </div>
+   425|        </div>
+   426|    </footer>
+   427|
+   428|    <script>
+   429|        (function() {
+   430|            'use strict';
+   431|            var ORDER_KEY = 'shopEasyOrders';
+   432|            var currentFilter = 'all';
+   433|            var searchTerm = '';
+   434|
+   435|            function checkAuth() {
+   436|                try {
+   437|                    var session = JSON.parse(sessionStorage.getItem('shopeasy_session')) ||
+   438|                                  JSON.parse(localStorage.getItem('shopeasy_session'));
+   439|                    return session && session.name;
+   440|                } catch(e) { return null; }
+   441|            }
+   442|
+   443|            function init() {
+   444|                var skeleton = document.getElementById('skeletonOrders');
+   445|                var authRequired = document.getElementById('authRequired');
+   446|                var content = document.getElementById('ordersContent');
+   447|
+   448|                // Simulate brief loading
+   449|                setTimeout(function() {
+   450|                    skeleton.style.display = 'none';
+   451|
+   452|                    var user = checkAuth();
+   453|                    if (!user) {
+   454|                        authRequired.style.display = 'block';
+   455|                        content.style.display = 'none';
+   456|                        return;
+   457|                    }
+   458|
+   459|                    authRequired.style.display = 'none';
+   460|                    content.style.display = 'block';
+   461|                    loadOrders();
+   462|                }, 600);
+   463|
+   464|                // Filter buttons
+   465|                document.querySelectorAll('.filter-btn').forEach(function(btn) {
+   466|                    btn.addEventListener('click', function() {
+   467|                        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+   468|                        this.classList.add('active');
+   469|                        currentFilter = this.getAttribute('data-filter');
+   470|                        renderOrders();
+   471|                    });
+   472|                });
+   473|
+   474|                // Search
+   475|                var searchInput = document.getElementById('orderSearch');
+   476|                searchInput.addEventListener('input', function() {
+   477|                    searchTerm = this.value.toLowerCase().trim();
+   478|                    renderOrders();
+   479|                });
+   480|            }
+   481|
+   482|            function loadOrders() {
+   483|                try {
+   484|                    var saved = localStorage.getItem(ORDER_KEY);
+   485|                    if (!saved) {
+   486|                        document.getElementById('emptyOrders').style.display = 'block';
+   487|                        document.getElementById('orderList').innerHTML = '';
+   488|                        return;
+   489|                    }
+   490|                    var orders = JSON.parse(saved);
+   491|                    if (!Array.isArray(orders) || orders.length === 0) {
+   492|                        document.getElementById('emptyOrders').style.display = 'block';
+   493|                        document.getElementById('orderList').innerHTML = '';
+   494|                        return;
+   495|                    }
+   496|                    window._allOrders = orders;
+   497|                    renderOrders();
+   498|                } catch(e) {
+   499|                    console.log('Failed to load orders');
+   500|                    document.getElementById('emptyOrders').style.display = 'block';
+   501|                }
+   502|            }
+   503|
+   504|            function getStatusClass(status) {
+   505|                var s = (status || 'Processing').toLowerCase();
+   506|                if (s.indexOf('process') > -1 || s.indexOf('pend') > -1) return 'status-processing';
+   507|                if (s.indexOf('ship') > -1) return 'status-shipped';
+   508|                if (s.indexOf('deliver') > -1 || s.indexOf('complete') > -1) return 'status-delivered';
+   509|                if (s.indexOf('cancel') > -1) return 'status-cancelled';
+   510|                return 'status-processing';
+   511|            }
+   512|
+   513|            function formatDate(isoString) {
+   514|                try {
+   515|                    var d = new Date(isoString);
+   516|                    return d.toLocaleDateString('en-US', {
+   517|                        year: 'numeric', month: 'short', day: 'numeric',
+   518|                        hour: '2-digit', minute: '2-digit'
+   519|                    });
+   520|                } catch(e) { return isoString; }
+   521|            }
+   522|
+   523|            function renderOrders() {
+   524|                var orders = window._allOrders || [];
+   525|                var list = document.getElementById('orderList');
+   526|                var emptyEl = document.getElementById('emptyOrders');
+   527|
+   528|                // Filter
+   529|                var filtered = orders;
+   530|                if (currentFilter !== 'all') {
+   531|                    filtered = orders.filter(function(o) {
+   532|                        var s = (o.status || 'Processing').toLowerCase();
+   533|                        var f = currentFilter.toLowerCase();
+   534|                        return s.indexOf(f) > -1;
+   535|                    });
+   536|                }
+   537|
+   538|                // Search
+   539|                if (searchTerm) {
+   540|                    filtered = filtered.filter(function(o) {
+   541|                        var id = (o.id || '').toLowerCase();
+   542|                        var items = (o.items || []).map(function(i) { return (i.name || '').toLowerCase(); }).join(' ');
+   543|                        return id.indexOf(searchTerm) > -1 || items.indexOf(searchTerm) > -1;
+   544|                    });
+   545|                }
+   546|
+   547|                if (filtered.length === 0) {
+   548|                    list.innerHTML = '';
+   549|                    emptyEl.style.display = 'block';
+   550|                    return;
+   551|                }
+   552|
+   553|                emptyEl.style.display = 'none';
+   554|
+   555|                var html = '';
+   556|                filtered.forEach(function(order) {
+   557|                    var statusClass = getStatusClass(order.status);
+   558|                    var itemsHtml = '';
+   559|                    var itemCount = 0;
+   560|                    if (order.items && order.items.length) {
+   561|                        order.items.forEach(function(item) {
+   562|                            itemCount += item.quantity || 1;
+   563|                            var price = item.price || 0;
+   564|                            if (typeof price === 'number') {
+   565|                                price = '$' + price.toFixed(2);
+   566|                            }
+   567|                            itemsHtml += '<div class="order-item-row">' +
+   568|                                '<div><div class="order-item-name">' + (item.name || 'Product') + '</div>' +
+   569|                                '<div class="order-item-meta">Qty: ' + (item.quantity || 1) + '</div></div>' +
+   570|                                '<span class="order-item-price">' + price + '</span>' +
+   571|                                '</div>';
+   572|                        });
+   573|                    } else {
+   574|                        itemsHtml = '<div class="order-item-row"><div class="order-item-name">Order items</div></div>';
+   575|                    }
+   576|
+   577|                    var totalDisplay = order.total;
+   578|                    if (typeof order.total === 'number') {
+   579|                        totalDisplay = '$' + order.total.toFixed(2);
+   580|                    }
+   581|
+   582|                    html += '<div class="order-card">' +
+   583|                        '<div class="order-card-header">' +
+   584|                        '<div><span class="order-id">' + (order.id || 'ORD-UNKNOWN') + '</span>' +
+   585|                        '<span class="order-date"> &middot; ' + formatDate(order.date) + '</span></div>' +
+   586|                        '<span class="order-status ' + statusClass + '">' + (order.status || 'Processing') + '</span>' +
+   587|                        '</div>' +
+   588|                        '<div class="order-card-body">' + itemsHtml + '</div>' +
+   589|                        '<div class="order-card-footer">' +
+   590|                        '<div><span class="order-total-label">Total: </span><span class="order-total-amount">' + totalDisplay + '</span></div>' +
+   591|                        '<div class="order-actions">' +
+   592|                        '<button class="btn-sm btn-view-details" data-order-id="' + (order.id || '') + '"><i class="fas fa-eye"></i> Details</button>' +
+   593|                        '<button class="btn-sm btn-reorder"><i class="fas fa-redo"></i> Reorder</button>' +
+   594|                        '</div></div></div>';
+   595|                });
+   596|
+   597|                list.innerHTML = html;
+   598|
+   599|                // Detail buttons
+   600|                list.querySelectorAll('.btn-view-details').forEach(function(btn) {
+   601|                    btn.addEventListener('click', function() {
+   602|                        var orderId = this.getAttribute('data-order-id');
+   603|                        showOrderDetails(orderId);
+   604|                    });
+   605|                });
+   606|
+   607|                // Reorder buttons
+   608|                list.querySelectorAll('.btn-reorder').forEach(function(btn) {
+   609|                    btn.addEventListener('click', function() {
+   610|                        var card = this.closest('.order-card');
+   611|                        var idEl = card ? card.querySelector('.order-id') : null;
+   612|                        if (idEl && typeof window.showToast === 'function') {
+   613|                            window.showToast('Items added to cart!', 'success');
+   614|                        } else {
+   615|                            alert('Items added to cart!');
+   616|                        }
+   617|                    });
+   618|                });
+   619|            }
+   620|
+   621|            function showOrderDetails(orderId) {
+   622|                var orders = window._allOrders || [];
+   623|                var order = null;
+   624|                for (var i = 0; i < orders.length; i++) {
+   625|                    if (orders[i].id === orderId) { order = orders[i]; break; }
+   626|                }
+   627|                if (!order) return;
+   628|
+   629|                var overlay = document.createElement('div');
+   630|                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:99999;opacity:0;transition:opacity 0.3s;';
+   631|
+   632|                var itemsHtml = '';
+   633|                if (order.items) {
+   634|                    order.items.forEach(function(item) {
+   635|                        var price = item.price || 0;
+   636|                        if (typeof price === 'number') price = '$' + price.toFixed(2);
+   637|                        itemsHtml += '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;">' +
+   638|                            '<span>' + (item.name || 'Product') + ' x' + (item.quantity || 1) + '</span>' +
+   639|                            '<span style="font-weight:600;">' + price + '</span></div>';
+   640|                    });
+   641|                }
+   642|
+   643|                var totalDisplay = order.total;
+   644|                if (typeof order.total === 'number') totalDisplay = '$' + order.total.toFixed(2);
+   645|
+   646|                var customer = order.customer || {};
+   647|                var shipInfo = '';
+   648|                if (customer.firstName || customer.lastName) {
+   649|                    shipInfo = '<p><strong>' + (customer.firstName || '') + ' ' + (customer.lastName || '') + '</strong></p>';
+   650|                }
+   651|                if (customer.address) shipInfo += '<p>' + customer.address + '</p>';
+   652|                if (customer.city) shipInfo += '<p>' + customer.city + ' ' + (customer.zip || '') + '</p>';
+   653|
+   654|                overlay.innerHTML = '<div style="background:white;border-radius:16px;padding:35px;max-width:520px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);transform:scale(0.8);transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);">' +
+   655|                    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">' +
+   656|                    '<h2 style="margin:0;font-size:1.3rem;"><i class="fas fa-receipt" style="color:#667eea;"></i> Order Details</h2>' +
+   657|                    '<button onclick="this.closest(\'div[style*=\\\'position:fixed\\\']\').remove()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#999;">&times;</button></div>' +
+   658|                    '<p style="color:#667eea;font-weight:700;font-family:monospace;font-size:1.1rem;margin-bottom:20px;">' + (order.id || '') + '</p>' +
+   659|                    '<div style="background:#f8f9fa;border-radius:10px;padding:16px;margin-bottom:16px;">' +
+   660|                    '<h3 style="font-size:0.9rem;color:#888;margin:0 0 10px;"><i class="fas fa-box"></i> Items</h3>' + itemsHtml +
+   661|                    '<div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:1.1rem;font-weight:700;border-top:2px solid #e0e0e0;margin-top:8px;">' +
+   662|                    '<span>Total</span><span style="color:#27ae60;">' + totalDisplay + '</span></div></div>' +
+   663|                    (shipInfo ? '<div style="background:#f8f9fa;border-radius:10px;padding:16px;margin-bottom:16px;">' +
+   664|                    '<h3 style="font-size:0.9rem;color:#888;margin:0 0 10px;"><i class="fas fa-truck"></i> Shipping</h3>' + shipInfo + '</div>' : '') +
+   665|                    '<p style="color:#888;font-size:0.85rem;"><i class="fas fa-calendar"></i> ' + formatDate(order.date) + '</p>' +
+   666|                    '<button onclick="this.closest(\'div[style*=\\\'position:fixed\\\']\').remove()" style="width:100%;padding:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;margin-top:10px;">Close</button></div>';
+   667|
+   668|                document.body.appendChild(overlay);
+   669|                setTimeout(function() {
+   670|                    overlay.style.opacity = '1';
+   671|                    var modal = overlay.querySelector('div[style*="transform:scale"]');
+   672|                    if (modal) modal.style.transform = 'scale(1)';
+   673|                }, 50);
+   674|
+   675|                overlay.addEventListener('click', function(e) {
+   676|                    if (e.target === overlay) overlay.remove();
+   677|                });
+   678|            }
+   679|
+   680|            if (document.readyState === 'loading') {
+   681|                document.addEventListener('DOMContentLoaded', init);
+   682|            } else {
+   683|                init();
+   684|            }
+   685|        })();
+   686|    </script>
+   687|    <script src="js/main.js"></script>
+   688|  <script src="js/email-capture.js"></script>
 </body>
-</html>
+   689|</html>
+   690|

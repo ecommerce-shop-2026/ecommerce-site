@@ -1,649 +1,639 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-        <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>所有产品 - ShopEasy</title>
-    <meta name="description" content="ShopEasy - 浏览我们所有的产品，包括电子产品、家居生活、健康美容等。发现最新促销和新品上市。">
-    <meta name="keywords" content="online shopping, electronics, fashion, home decor, beauty products, all products, ShopEasy catalog">
-    <meta name="author" content="ShopEasy">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="所有产品 - ShopEasy">
-    <meta property="og:description" content="浏览 ShopEasy 所有产品，最新促销和新品上市等你发现">
-    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
-    <meta property="og:url" content="https://shop2026easy.com/products/">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="所有产品 - ShopEasy">
-    <meta name="twitter:description" content="浏览 ShopEasy 所有产品，最新促销和新品上市等你发现">
-    <link rel="canonical" href="https://shop2026easy.com/products/">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "所有产品 - ShopEasy",
-        "url": "https://shop2026easy.com/products/",
-        "description": "浏览 ShopEasy 所有产品目录",
-        "mainEntity": {
-            "@type": "ItemList",
-            "itemListElement": [
-                {"@type": "ListItem", "position": 1, "url": "https://shop2026easy.com/products/wireless-bluetooth-headphones-1-ultra-edition.html"},
-                {"@type": "ListItem", "position": 2, "url": "https://shop2026easy.com/products/wireless-bluetooth-headphones-2-ultra-edition.html"},
-                {"@type": "ListItem", "position": 3, "url": "https://shop2026easy.com/products/wireless-bluetooth-headphones-3-premium-edition.html"},
-                {"@type": "ListItem", "position": 4, "url": "https://shop2026easy.com/products/smart-fitness-watch-2-ultra-edition.html"},
-                {"@type": "ListItem", "position": 5, "url": "https://shop2026easy.com/products/smart-fitness-watch-3-deluxe-edition.html"},
-                {"@type": "ListItem", "position": 6, "url": "https://shop2026easy.com/products/4k-ultra-hd-drone-with-camera.html"},
-                {"@type": "ListItem", "position": 7, "url": "https://shop2026easy.com/products/smart-home-security-camera-360.html"},
-                {"@type": "ListItem", "position": 8, "url": "https://shop2026easy.com/products/portable-blender-usb-c-rechargeable.html"},
-                {"@type": "ListItem", "position": 9, "url": "https://shop2026easy.com/products/massage-gun-deep-tissue.html"}
-            ]
-        }
-    }
-    </script>
-    <style>
-        .products-catalog-page {
-            background: #f8f9fa;
-        }
-        .catalog-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 0 40px;
-            text-align: center;
-        }
-        .catalog-header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: white;
-        }
-        .catalog-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        .catalog-filters {
-            background: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .catalog-filters .container {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .catalog-filters select, .catalog-filters input {
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.95rem;
-        }
-        .catalog-filters input {
-            flex: 1;
-            min-width: 200px;
-        }
-        .catalog-filters select {
-            min-width: 150px;
-        }
-        .catalog-filters .result-count {
-            margin-left: auto;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 40px 0;
-        }
-        .catalog-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-        }
-        .catalog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-        }
-        .catalog-card .card-badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            z-index: 2;
-            display: flex;
-            gap: 8px;
-        }
-        .catalog-card .badge-new, .catalog-card .badge-sale {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .catalog-card .badge-new {
-            background: #4caf50;
-            color: white;
-        }
-        .catalog-card .badge-sale {
-            background: #ff4757;
-            color: white;
-        }
-        .catalog-card .card-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-        }
-        .catalog-card .card-body {
-            padding: 18px;
-        }
-        .catalog-card .card-category {
-            font-size: 0.8rem;
-            color: #667eea;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .catalog-card .card-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin: 6px 0;
-            color: #333;
-            line-height: 1.4;
-        }
-        .catalog-card .card-rating {
-            color: #ffc107;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-        }
-        .catalog-card .card-rating span {
-            color: #888;
-            margin-left: 5px;
-        }
-        .catalog-card .card-price {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .catalog-card .current-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #e74c3c;
-        }
-        .catalog-card .original-price {
-            font-size: 0.95rem;
-            color: #999;
-            text-decoration: line-through;
-        }
-        .catalog-card .card-actions {
-            display: flex;
-            gap: 10px;
-        }
-        .catalog-card .btn-details {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #667eea;
-            background: transparent;
-            color: #667eea;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .catalog-card .btn-details:hover {
-            background: #667eea;
-            color: white;
-        }
-        .catalog-card .btn-cart {
-            padding: 10px 16px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-size: 0.9rem;
-        }
-        .catalog-card .btn-cart:hover {
-            background: #5a6fd6;
-        }
-        @media (max-width: 768px) {
-            .catalog-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 15px;
-                padding: 20px 10px;
-            }
-            .catalog-header {
-                padding: 40px 20px 30px;
-            }
-            .catalog-header h1 {
-                font-size: 1.6rem;
-            }
-            .catalog-filters .container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .catalog-filters .result-count {
-                margin-left: 0;
-                text-align: center;
-            }
-        }
-    </style>
-    <!-- Cloudflare Web Analytics -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="../index.html" class="logo-link">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="logo-text">ShopEasy</span>
-                </a>
-            </div>
-            
-            <div class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a href="../index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
-                    <li class="nav-item"><a href="../index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
-                    <li class="nav-item"><a href="../blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li class="nav-item"><a href="../payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
-                    <li class="nav-item"><a href="../order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
-                    <li class="nav-item"><a href="../wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
-                    <li class="nav-item"><a href="../index.html#returns" class="nav-link"><i class="fas fa-exchange-alt"></i> Returns</a></li>
-                    <li class="nav-item"><a href="../index.html#contact" class="nav-link"><i class="fas fa-headset"></i> Support</a></li>
-                </ul>
-            </div>
-            
-            <div class="nav-actions">
-                <a href="../wishlist.html" class="nav-icon-link" title="Wishlist">
-                    <i class="fas fa-heart"></i>
-                    <span class="badge" id="wishlistBadge">0</span>
-                </a>
-                <a href="#" class="nav-icon-link cart-icon" id="cartIcon" title="Cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="badge" id="cartCount">0</span>
-                </a>
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Catalog Header -->
-    <section class="catalog-header">
-        <div class="container">
-            <h1><i class="fas fa-store"></i> 所有产品</h1>
-            <p>浏览我们的全部产品目录，发现最新促销和新品上市</p>
-        </div>
-    </section>
-
-    <!-- Filters -->
-    <section class="catalog-filters">
-        <div class="container">
-            <input type="text" id="searchInput" placeholder="搜索产品名称..." />
-            <select id="categoryFilter">
-                <option value="all">全部分类</option>
-                <option value="Electronics">电子产品</option>
-                <option value="Fashion">时尚</option>
-                <option value="Home & Living">家居生活</option>
-                <option value="Health & Beauty">健康美容</option>
-            </select>
-            <select id="sortFilter">
-                <option value="default">默认排序</option>
-                <option value="price-asc">价格从低到高</option>
-                <option value="price-desc">价格从高到低</option>
-                <option value="rating">评分最高</option>
-            </select>
-            <div class="result-count" id="resultCount">共 12 件产品</div>
-        </div>
-    </section>
-
-    <!-- Product Grid -->
-    <section class="products-catalog-page">
-        <div class="container">
-            <div class="catalog-grid" id="catalogGrid"></div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section about">
-                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
-                    <p>Your trusted online shopping destination. Quality products, secure payments, and fast delivery.</p>
-                </div>
-                <div class="footer-section links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="../index.html#products">Products</a></li>
-                        <li><a href="../blog.html">Blog</a></li>
-                        <li><a href="../payment.html">Payment</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section support">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="../index.html#returns">Returns & Refunds</a></li>
-                        <li><a href="../index.html#contact">Contact Us</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section social">
-                    <h4>Follow Us</h4>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-    // ----- 产品数据 (完整12个) -----
-    const products = [
-        {
-            id: 1,
-            name: "Wireless Bluetooth Headphones - Ultra Edition",
-            price: 129.99,
-            category: "Electronics",
-            rating: 4.5,
-            reviews: 3666,
-            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop",
-            slug: "wireless-bluetooth-headphones-1-ultra-edition",
-            isNew: false,
-            isSale: false
-        },
-        {
-            id: 2,
-            name: "Wireless Bluetooth Headphones - Ultra Edition 2",
-            price: 149.99,
-            category: "Electronics",
-            rating: 4.7,
-            reviews: 2843,
-            image: "https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=600&h=600&fit=crop",
-            slug: "wireless-bluetooth-headphones-2-ultra-edition",
-            isNew: false,
-            isSale: false
-        },
-        {
-            id: 3,
-            name: "Wireless Bluetooth Headphones - Premium Edition",
-            price: 199.99,
-            category: "Electronics",
-            rating: 4.8,
-            reviews: 1956,
-            image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&h=600&fit=crop",
-            slug: "wireless-bluetooth-headphones-3-premium-edition",
-            isNew: false,
-            isSale: false
-        },
-        {
-            id: 4,
-            name: "Smart Fitness Watch",
-            price: 179.99,
-            category: "Fashion",
-            rating: 4.3,
-            reviews: 1523,
-            image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop",
-            slug: "smart-fitness-watch-2-ultra-edition",
-            isNew: false,
-            isSale: false
-        },
-        {
-            id: 5,
-            name: "Smart Fitness Watch - Deluxe Edition",
-            price: 249.99,
-            category: "Fashion",
-            rating: 4.6,
-            reviews: 2108,
-            image: "https://images.unsplash.com/photo-1533139502658-0198f920d47e?w=600&h=600&fit=crop",
-            slug: "smart-fitness-watch-3-deluxe-edition",
-            isNew: false,
-            isSale: false
-        },
-        {
-            id: 6,
-            name: "LED Desk Lamp",
-            price: 49.99,
-            category: "Home & Living",
-            rating: 4.4,
-            reviews: 1245,
-            image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=600&h=600&fit=crop",
-            slug: "led-desk-lamp",
-            isNew: false,
-            isSale: false,
-            originalPrice: null,
-            discount: null
-        },
-        {
-            id: 7,
-            name: "Ergonomic Office Chair",
-            price: 299.99,
-            category: "Home & Living",
-            rating: 4.7,
-            reviews: 892,
-            image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&h=600&fit=crop",
-            slug: "ergonomic-office-chair",
-            isNew: false,
-            isSale: false,
-            originalPrice: null,
-            discount: null
-        },
-        {
-            id: 8,
-            name: "Organic Skincare Set",
-            price: 79.99,
-            category: "Health & Beauty",
-            rating: 4.6,
-            reviews: 2105,
-            image: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=600&fit=crop",
-            slug: "organic-skincare-set",
-            isNew: false,
-            isSale: false,
-            originalPrice: null,
-            discount: null
-        },
-        {
-            id: 9,
-            name: "4K Ultra HD Drone with Camera",
-            price: 399.99,
-            category: "Electronics",
-            rating: 4.7,
-            reviews: 312,
-            image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=600&h=600&fit=crop",
-            slug: "4k-ultra-hd-drone-with-camera",
-            isNew: true,
-            isSale: true,
-            originalPrice: 549.99,
-            discount: 27
-        },
-        {
-            id: 10,
-            name: "Smart Home Security Camera 360°",
-            price: 79.99,
-            category: "Electronics",
-            rating: 4.5,
-            reviews: 189,
-            image: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=600&h=600&fit=crop",
-            slug: "smart-home-security-camera-360",
-            isNew: true,
-            isSale: false,
-            originalPrice: null,
-            discount: null
-        },
-        {
-            id: 11,
-            name: "Portable Blender USB-C Rechargeable",
-            price: 34.99,
-            category: "Home & Living",
-            rating: 4.5,
-            reviews: 267,
-            image: "https://images.unsplash.com/photo-1622484211816-c35a14c1fef2?w=600&h=600&fit=crop",
-            slug: "portable-blender-usb-c-rechargeable",
-            isNew: true,
-            isSale: true,
-            originalPrice: 49.99,
-            discount: 30
-        },
-        {
-            id: 12,
-            name: "Massage Gun Deep Tissue",
-            price: 89.99,
-            category: "Health & Beauty",
-            rating: 4.8,
-            reviews: 423,
-            image: "https://images.unsplash.com/photo-1622056385579-e2ec1db1b290?w=600&h=600&fit=crop",
-            slug: "massage-gun-deep-tissue",
-            isNew: false,
-            isSale: true,
-            originalPrice: 129.99,
-            discount: 31
-        }
-    ];
-
-    // ----- 渲染函数 -----
-    function renderProducts(data) {
-        const grid = document.getElementById('catalogGrid');
-        const countEl = document.getElementById('resultCount');
-        if (!grid) return;
-        
-        if (data.length === 0) {
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#999"><i class="fas fa-search" style="font-size:3rem;display:block;margin-bottom:15px"></i>没有找到匹配的产品</div>';
-            countEl.textContent = '共 0 件产品';
-            return;
-        }
-
-        grid.innerHTML = data.map(p => {
-            const badges = [];
-            if (p.isNew) badges.push('<span class="badge-new">NEW</span>');
-            if (p.isSale && p.discount) badges.push(`<span class="badge-sale">-${p.discount}%</span>`);
-            const badgeHtml = badges.length ? `<div class="card-badge">${badges.join('')}</div>` : '';
-            const stars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '');
-            const priceHtml = p.isSale && p.originalPrice
-                ? `<span class="current-price">$${p.price.toFixed(2)}</span><span class="original-price">$${p.originalPrice.toFixed(2)}</span>`
-                : `<span class="current-price">$${p.price.toFixed(2)}</span>`;
-            return `
-                <div class="catalog-card" data-id="${p.id}">
-                    ${badgeHtml}
-                    <img class="card-image" src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/600x600?text=ShopEasy'">
-                    <div class="card-body">
-                        <div class="card-category">${p.category}</div>
-                        <div class="card-title">${p.name}</div>
-                        <div class="card-rating">${stars} <span>(${p.reviews} reviews)</span></div>
-                        <div class="card-price">${priceHtml}</div>
-                        <div class="card-actions">
-                            <a class="btn-details" href="${p.slug}.html"><i class="fas fa-eye"></i> 查看详情</a>
-                            <button class="btn-compare-sm" data-product-id="${p.id}" title="Add to Compare" onclick="event.stopPropagation(); var id=this.getAttribute('data-product-id'); CompareSystem.isInCompare(id) ? CompareSystem.remove(id) : CompareSystem.add(id);"><i class="fas ${CompareSystem.isInCompare(p.id) ? 'fa-check-circle' : 'fa-plus-circle'}"></i></button>
-                            <button class="btn-cart" onclick="event.stopPropagation(); addToCartLocal(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price})"><i class="fas fa-shopping-cart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-        countEl.textContent = `共 ${data.length} 件产品`;
-    }
-
-    // ----- 本地添加到购物车 (使用父页面的 localStorage) -----
-    function addToCartLocal(id, name, price) {
-        try {
-            let cart = JSON.parse(localStorage.getItem('shopEasyCart') || '[]');
-            const existing = cart.find(item => item.id === id);
-            if (existing) {
-                existing.quantity = (existing.quantity || 1) + 1;
-            } else {
-                cart.push({ id, name, price, quantity: 1, image: '' });
-            }
-            localStorage.setItem('shopEasyCart', JSON.stringify(cart));
-            // 更新所有 cartCount 徽章
-            const badges = document.querySelectorAll('#cartCount');
-            const total = cart.reduce((sum, i) => sum + (i.quantity || 1), 0);
-            badges.forEach(b => { b.textContent = total; b.style.display = total > 0 ? 'inline' : 'none'; });
-            // 短暂动画反馈
-            const btn = event && event.target;
-            if (btn) {
-                btn.style.transform = 'scale(1.2)';
-                setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
-            }
-        } catch(e) {
-            console.warn('addToCartLocal error:', e);
-        }
-    }
-
-    // ----- 过滤 + 排序 + 搜索 -----
-    function filterAndRender() {
-        const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
-        const category = document.getElementById('categoryFilter').value;
-        const sort = document.getElementById('sortFilter').value;
-
-        let filtered = products.filter(p => {
-            if (category !== 'all' && p.category !== category) return false;
-            if (search && !p.name.toLowerCase().includes(search)) return false;
-            return true;
-        });
-
-        switch (sort) {
-            case 'price-asc': filtered.sort((a, b) => a.price - b.price); break;
-            case 'price-desc': filtered.sort((a, b) => b.price - a.price); break;
-            case 'rating': filtered.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews); break;
-        }
-
-        renderProducts(filtered);
-    }
-
-    // ----- 初始化 -----
-    document.addEventListener('DOMContentLoaded', function() {
-        // 同步购物车数量
-        try {
-            const cart = JSON.parse(localStorage.getItem('shopEasyCart') || '[]');
-            const total = cart.reduce((sum, i) => sum + (i.quantity || 1), 0);
-            const badges = document.querySelectorAll('#cartCount');
-            badges.forEach(b => { b.textContent = total; b.style.display = total > 0 ? 'inline' : 'none'; });
-        } catch(e) {}
-        
-        renderProducts(products);
-        
-        document.getElementById('searchInput').addEventListener('input', filterAndRender);
-        document.getElementById('categoryFilter').addEventListener('change', filterAndRender);
-        document.getElementById('sortFilter').addEventListener('change', filterAndRender);
-    });
-    </script>
-    <!-- 产品对比功能 -->
-    <script src="../js/compare.js"></script>
-    <script src="../js/i18n.js"></script>
-
-    <!-- PWA -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
-    </script>
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|    <title>所有产品 - ShopEasy</title>
+     7|    <meta name="description" content="ShopEasy - 浏览我们所有的产品，包括电子产品、家居生活、健康美容等。发现最新促销和新品上市。">
+     8|    <meta name="keywords" content="online shopping, electronics, fashion, home decor, beauty products, all products, ShopEasy catalog">
+     9|    <meta name="author" content="ShopEasy">
+    10|    <meta name="robots" content="index, follow">
+    11|    <meta property="og:title" content="所有产品 - ShopEasy">
+    12|    <meta property="og:description" content="浏览 ShopEasy 所有产品，最新促销和新品上市等你发现">
+    13|    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    14|    <meta property="og:url" content="https://shop2026easy.com/products/">
+    15|    <meta property="og:type" content="website">
+    16|    <meta name="twitter:card" content="summary_large_image">
+    17|    <meta name="twitter:title" content="所有产品 - ShopEasy">
+    18|    <meta name="twitter:description" content="浏览 ShopEasy 所有产品，最新促销和新品上市等你发现">
+    19|    <link rel="canonical" href="https://shop2026easy.com/products/">
+    20|    <link rel="stylesheet" href="../css/style.css">
+    21|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    22|    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    23|    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    24|    <script type="application/ld+json">
+    25|    {
+    26|        "@context": "https://schema.org",
+    27|        "@type": "CollectionPage",
+    28|        "name": "所有产品 - ShopEasy",
+    29|        "url": "https://shop2026easy.com/products/",
+    30|        "description": "浏览 ShopEasy 所有产品目录",
+    31|        "mainEntity": {
+    32|            "@type": "ItemList",
+    33|            "itemListElement": [
+    34|                {"@type": "ListItem", "position": 1, "url": "https://shop2026easy.com/products/wireless-bluetooth-headphones-1-ultra-edition.html"},
+    35|                {"@type": "ListItem", "position": 2, "url": "https://shop2026easy.com/products/wireless-bluetooth-headphones-2-ultra-edition.html"},
+    36|                {"@type": "ListItem", "position": 3, "url": "https://shop2026easy.com/products/wireless-bluetooth-headphones-3-premium-edition.html"},
+    37|                {"@type": "ListItem", "position": 4, "url": "https://shop2026easy.com/products/smart-fitness-watch-2-ultra-edition.html"},
+    38|                {"@type": "ListItem", "position": 5, "url": "https://shop2026easy.com/products/smart-fitness-watch-3-deluxe-edition.html"},
+    39|                {"@type": "ListItem", "position": 6, "url": "https://shop2026easy.com/products/4k-ultra-hd-drone-with-camera.html"},
+    40|                {"@type": "ListItem", "position": 7, "url": "https://shop2026easy.com/products/smart-home-security-camera-360.html"},
+    41|                {"@type": "ListItem", "position": 8, "url": "https://shop2026easy.com/products/portable-blender-usb-c-rechargeable.html"},
+    42|                {"@type": "ListItem", "position": 9, "url": "https://shop2026easy.com/products/massage-gun-deep-tissue.html"}
+    43|            ]
+    44|        }
+    45|    }
+    46|    </script>
+    47|    <style>
+    48|        .products-catalog-page {
+    49|            background: #f8f9fa;
+    50|        }
+    51|        .catalog-header {
+    52|            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    53|            color: white;
+    54|            padding: 60px 0 40px;
+    55|            text-align: center;
+    56|        }
+    57|        .catalog-header h1 {
+    58|            font-size: 2.2rem;
+    59|            margin-bottom: 10px;
+    60|            color: white;
+    61|        }
+    62|        .catalog-header p {
+    63|            font-size: 1.1rem;
+    64|            opacity: 0.9;
+    65|        }
+    66|        .catalog-filters {
+    67|            background: white;
+    68|            padding: 20px 0;
+    69|            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    70|            position: sticky;
+    71|            top: 0;
+    72|            z-index: 100;
+    73|        }
+    74|        .catalog-filters .container {
+    75|            display: flex;
+    76|            gap: 15px;
+    77|            align-items: center;
+    78|            flex-wrap: wrap;
+    79|        }
+    80|        .catalog-filters select, .catalog-filters input {
+    81|            padding: 10px 15px;
+    82|            border: 1px solid #ddd;
+    83|            border-radius: 8px;
+    84|            font-size: 0.95rem;
+    85|        }
+    86|        .catalog-filters input {
+    87|            flex: 1;
+    88|            min-width: 200px;
+    89|        }
+    90|        .catalog-filters select {
+    91|            min-width: 150px;
+    92|        }
+    93|        .catalog-filters .result-count {
+    94|            margin-left: auto;
+    95|            color: #666;
+    96|            font-size: 0.9rem;
+    97|        }
+    98|        .catalog-grid {
+    99|            display: grid;
+   100|            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+   101|            gap: 25px;
+   102|            padding: 40px 0;
+   103|        }
+   104|        .catalog-card {
+   105|            background: white;
+   106|            border-radius: 12px;
+   107|            overflow: hidden;
+   108|            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+   109|            transition: transform 0.3s, box-shadow 0.3s;
+   110|            position: relative;
+   111|        }
+   112|        .catalog-card:hover {
+   113|            transform: translateY(-5px);
+   114|            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+   115|        }
+   116|        .catalog-card .card-badge {
+   117|            position: absolute;
+   118|            top: 12px;
+   119|            left: 12px;
+   120|            z-index: 2;
+   121|            display: flex;
+   122|            gap: 8px;
+   123|        }
+   124|        .catalog-card .badge-new, .catalog-card .badge-sale {
+   125|            padding: 4px 10px;
+   126|            border-radius: 20px;
+   127|            font-size: 0.75rem;
+   128|            font-weight: 600;
+   129|        }
+   130|        .catalog-card .badge-new {
+   131|            background: #4caf50;
+   132|            color: white;
+   133|        }
+   134|        .catalog-card .badge-sale {
+   135|            background: #ff4757;
+   136|            color: white;
+   137|        }
+   138|        .catalog-card .card-image {
+   139|            width: 100%;
+   140|            height: 220px;
+   141|            object-fit: cover;
+   142|            display: block;
+   143|        }
+   144|        .catalog-card .card-body {
+   145|            padding: 18px;
+   146|        }
+   147|        .catalog-card .card-category {
+   148|            font-size: 0.8rem;
+   149|            color: #667eea;
+   150|            font-weight: 500;
+   151|            text-transform: uppercase;
+   152|            letter-spacing: 0.5px;
+   153|        }
+   154|        .catalog-card .card-title {
+   155|            font-size: 1.05rem;
+   156|            font-weight: 600;
+   157|            margin: 6px 0;
+   158|            color: #333;
+   159|            line-height: 1.4;
+   160|        }
+   161|        .catalog-card .card-rating {
+   162|            color: #ffc107;
+   163|            font-size: 0.85rem;
+   164|            margin-bottom: 8px;
+   165|        }
+   166|        .catalog-card .card-rating span {
+   167|            color: #888;
+   168|            margin-left: 5px;
+   169|        }
+   170|        .catalog-card .card-price {
+   171|            display: flex;
+   172|            align-items: center;
+   173|            gap: 8px;
+   174|            margin-bottom: 12px;
+   175|        }
+   176|        .catalog-card .current-price {
+   177|            font-size: 1.3rem;
+   178|            font-weight: 700;
+   179|            color: #e74c3c;
+   180|        }
+   181|        .catalog-card .original-price {
+   182|            font-size: 0.95rem;
+   183|            color: #999;
+   184|            text-decoration: line-through;
+   185|        }
+   186|        .catalog-card .card-actions {
+   187|            display: flex;
+   188|            gap: 10px;
+   189|        }
+   190|        .catalog-card .btn-details {
+   191|            flex: 1;
+   192|            padding: 10px;
+   193|            border: 2px solid #667eea;
+   194|            background: transparent;
+   195|            color: #667eea;
+   196|            border-radius: 8px;
+   197|            font-weight: 600;
+   198|            cursor: pointer;
+   199|            transition: all 0.3s;
+   200|            text-align: center;
+   201|            text-decoration: none;
+   202|            font-size: 0.9rem;
+   203|        }
+   204|        .catalog-card .btn-details:hover {
+   205|            background: #667eea;
+   206|            color: white;
+   207|        }
+   208|        .catalog-card .btn-cart {
+   209|            padding: 10px 16px;
+   210|            background: #667eea;
+   211|            color: white;
+   212|            border: none;
+   213|            border-radius: 8px;
+   214|            cursor: pointer;
+   215|            transition: background 0.3s;
+   216|            font-size: 0.9rem;
+   217|        }
+   218|        .catalog-card .btn-cart:hover {
+   219|            background: #5a6fd6;
+   220|        }
+   221|        @media (max-width: 768px) {
+   222|            .catalog-grid {
+   223|                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+   224|                gap: 15px;
+   225|                padding: 20px 10px;
+   226|            }
+   227|            .catalog-header {
+   228|                padding: 40px 20px 30px;
+   229|            }
+   230|            .catalog-header h1 {
+   231|                font-size: 1.6rem;
+   232|            }
+   233|            .catalog-filters .container {
+   234|                flex-direction: column;
+   235|                align-items: stretch;
+   236|            }
+   237|            .catalog-filters .result-count {
+   238|                margin-left: 0;
+   239|                text-align: center;
+   240|            }
+   241|        }
+   242|    </style>
+   243|</head>
+   244|<body>
+   245|    <!-- Navigation -->
+   246|    <nav class="navbar">
+   247|        <div class="nav-container">
+   248|            <div class="nav-logo">
+   249|                <a href="../index.html" class="logo-link">
+   250|                    <i class="fas fa-shopping-bag"></i>
+   251|                    <span class="logo-text">ShopEasy</span>
+   252|                </a>
+   253|            </div>
+   254|            
+   255|            <div class="nav-menu">
+   256|                <ul class="nav-list">
+   257|                    <li class="nav-item"><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+   258|                    <li class="nav-item"><a href="../index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+   259|                    <li class="nav-item"><a href="../index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+   260|                    <li class="nav-item"><a href="../blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+   261|                    <li class="nav-item"><a href="../payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
+   262|                    <li class="nav-item"><a href="../order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+   263|                    <li class="nav-item"><a href="../wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+   264|                    <li class="nav-item"><a href="../index.html#returns" class="nav-link"><i class="fas fa-exchange-alt"></i> Returns</a></li>
+   265|                    <li class="nav-item"><a href="../index.html#contact" class="nav-link"><i class="fas fa-headset"></i> Support</a></li>
+   266|                </ul>
+   267|            </div>
+   268|            
+   269|            <div class="nav-actions">
+   270|                <a href="../wishlist.html" class="nav-icon-link" title="Wishlist">
+   271|                    <i class="fas fa-heart"></i>
+   272|                    <span class="badge" id="wishlistBadge">0</span>
+   273|                </a>
+   274|                <a href="#" class="nav-icon-link cart-icon" id="cartIcon" title="Cart">
+   275|                    <i class="fas fa-shopping-cart"></i>
+   276|                    <span class="badge" id="cartCount">0</span>
+   277|                </a>
+   278|                <div class="hamburger" id="hamburger">
+   279|                    <span></span>
+   280|                    <span></span>
+   281|                    <span></span>
+   282|                </div>
+   283|            </div>
+   284|        </div>
+   285|    </nav>
+   286|
+   287|    <!-- Catalog Header -->
+   288|    <section class="catalog-header">
+   289|        <div class="container">
+   290|            <h1><i class="fas fa-store"></i> 所有产品</h1>
+   291|            <p>浏览我们的全部产品目录，发现最新促销和新品上市</p>
+   292|        </div>
+   293|    </section>
+   294|
+   295|    <!-- Filters -->
+   296|    <section class="catalog-filters">
+   297|        <div class="container">
+   298|            <input type="text" id="searchInput" placeholder="搜索产品名称..." />
+   299|            <select id="categoryFilter">
+   300|                <option value="all">全部分类</option>
+   301|                <option value="Electronics">电子产品</option>
+   302|                <option value="Fashion">时尚</option>
+   303|                <option value="Home & Living">家居生活</option>
+   304|                <option value="Health & Beauty">健康美容</option>
+   305|            </select>
+   306|            <select id="sortFilter">
+   307|                <option value="default">默认排序</option>
+   308|                <option value="price-asc">价格从低到高</option>
+   309|                <option value="price-desc">价格从高到低</option>
+   310|                <option value="rating">评分最高</option>
+   311|            </select>
+   312|            <div class="result-count" id="resultCount">共 12 件产品</div>
+   313|        </div>
+   314|    </section>
+   315|
+   316|    <!-- Product Grid -->
+   317|    <section class="products-catalog-page">
+   318|        <div class="container">
+   319|            <div class="catalog-grid" id="catalogGrid"></div>
+   320|        </div>
+   321|    </section>
+   322|
+   323|    <!-- Footer -->
+   324|    <footer class="footer">
+   325|        <div class="container">
+   326|            <div class="footer-grid">
+   327|                <div class="footer-section about">
+   328|                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
+   329|                    <p>Your trusted online shopping destination. Quality products, secure payments, and fast delivery.</p>
+   330|                </div>
+   331|                <div class="footer-section links">
+   332|                    <h4>Quick Links</h4>
+   333|                    <ul>
+   334|                        <li><a href="../index.html">Home</a></li>
+   335|                        <li><a href="../index.html#products">Products</a></li>
+   336|                        <li><a href="../blog.html">Blog</a></li>
+   337|                        <li><a href="../payment.html">Payment</a></li>
+   338|                    </ul>
+   339|                </div>
+   340|                <div class="footer-section support">
+   341|                    <h4>Support</h4>
+   342|                    <ul>
+   343|                        <li><a href="../index.html#returns">Returns & Refunds</a></li>
+   344|                        <li><a href="../index.html#contact">Contact Us</a></li>
+   345|                        <li><a href="#">FAQ</a></li>
+   346|                    </ul>
+   347|                </div>
+   348|                <div class="footer-section social">
+   349|                    <h4>Follow Us</h4>
+   350|                    <div class="social-icons">
+   351|                        <a href="#"><i class="fab fa-twitter"></i></a>
+   352|                        <a href="#"><i class="fab fa-facebook"></i></a>
+   353|                        <a href="#"><i class="fab fa-instagram"></i></a>
+   354|                        <a href="#"><i class="fab fa-pinterest"></i></a>
+   355|                    </div>
+   356|                </div>
+   357|            </div>
+   358|            <div class="footer-bottom">
+   359|                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
+   360|            </div>
+   361|        </div>
+   362|    </footer>
+   363|
+   364|    <script>
+   365|    // ----- 产品数据 (完整12个) -----
+   366|    const products = [
+   367|        {
+   368|            id: 1,
+   369|            name: "Wireless Bluetooth Headphones - Ultra Edition",
+   370|            price: 129.99,
+   371|            category: "Electronics",
+   372|            rating: 4.5,
+   373|            reviews: 3666,
+   374|            image: "https://example.com/images/wireless_bluetooth_headphones_1.jpg",
+   375|            slug: "wireless-bluetooth-headphones-1-ultra-edition",
+   376|            isNew: false,
+   377|            isSale: false
+   378|        },
+   379|        {
+   380|            id: 2,
+   381|            name: "Wireless Bluetooth Headphones - Ultra Edition 2",
+   382|            price: 149.99,
+   383|            category: "Electronics",
+   384|            rating: 4.7,
+   385|            reviews: 2843,
+   386|            image: "https://example.com/images/wireless_bluetooth_headphones_2.jpg",
+   387|            slug: "wireless-bluetooth-headphones-2-ultra-edition",
+   388|            isNew: false,
+   389|            isSale: false
+   390|        },
+   391|        {
+   392|            id: 3,
+   393|            name: "Wireless Bluetooth Headphones - Premium Edition",
+   394|            price: 199.99,
+   395|            category: "Electronics",
+   396|            rating: 4.8,
+   397|            reviews: 1956,
+   398|            image: "https://example.com/images/wireless_bluetooth_headphones_3.jpg",
+   399|            slug: "wireless-bluetooth-headphones-3-premium-edition",
+   400|            isNew: false,
+   401|            isSale: false
+   402|        },
+   403|        {
+   404|            id: 4,
+   405|            name: "Smart Fitness Watch",
+   406|            price: 179.99,
+   407|            category: "Fashion",
+   408|            rating: 4.3,
+   409|            reviews: 1523,
+   410|            image: "https://example.com/images/smart_fitness_watch_2.jpg",
+   411|            slug: "smart-fitness-watch-2-ultra-edition",
+   412|            isNew: false,
+   413|            isSale: false
+   414|        },
+   415|        {
+   416|            id: 5,
+   417|            name: "Smart Fitness Watch - Deluxe Edition",
+   418|            price: 249.99,
+   419|            category: "Fashion",
+   420|            rating: 4.6,
+   421|            reviews: 2108,
+   422|            image: "https://example.com/images/smart_fitness_watch_3.jpg",
+   423|            slug: "smart-fitness-watch-3-deluxe-edition",
+   424|            isNew: false,
+   425|            isSale: false
+   426|        },
+   427|        {
+   428|            id: 6,
+   429|            name: "LED Desk Lamp",
+   430|            price: 49.99,
+   431|            category: "Home & Living",
+   432|            rating: 4.4,
+   433|            reviews: 1245,
+   434|            image: "https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=600&h=600&fit=crop",
+   435|            slug: "led-desk-lamp",
+   436|            isNew: false,
+   437|            isSale: false,
+   438|            originalPrice: null,
+   439|            discount: null
+   440|        },
+   441|        {
+   442|            id: 7,
+   443|            name: "Ergonomic Office Chair",
+   444|            price: 299.99,
+   445|            category: "Home & Living",
+   446|            rating: 4.7,
+   447|            reviews: 892,
+   448|            image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&h=600&fit=crop",
+   449|            slug: "ergonomic-office-chair",
+   450|            isNew: false,
+   451|            isSale: false,
+   452|            originalPrice: null,
+   453|            discount: null
+   454|        },
+   455|        {
+   456|            id: 8,
+   457|            name: "Organic Skincare Set",
+   458|            price: 79.99,
+   459|            category: "Health & Beauty",
+   460|            rating: 4.6,
+   461|            reviews: 2105,
+   462|            image: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=600&h=600&fit=crop",
+   463|            slug: "organic-skincare-set",
+   464|            isNew: false,
+   465|            isSale: false,
+   466|            originalPrice: null,
+   467|            discount: null
+   468|        },
+   469|        {
+   470|            id: 9,
+   471|            name: "4K Ultra HD Drone with Camera",
+   472|            price: 399.99,
+   473|            category: "Electronics",
+   474|            rating: 4.7,
+   475|            reviews: 312,
+   476|            image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=600&h=600&fit=crop",
+   477|            slug: "4k-ultra-hd-drone-with-camera",
+   478|            isNew: true,
+   479|            isSale: true,
+   480|            originalPrice: 549.99,
+   481|            discount: 27
+   482|        },
+   483|        {
+   484|            id: 10,
+   485|            name: "Smart Home Security Camera 360°",
+   486|            price: 79.99,
+   487|            category: "Electronics",
+   488|            rating: 4.5,
+   489|            reviews: 189,
+   490|            image: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=600&h=600&fit=crop",
+   491|            slug: "smart-home-security-camera-360",
+   492|            isNew: true,
+   493|            isSale: false,
+   494|            originalPrice: null,
+   495|            discount: null
+   496|        },
+   497|        {
+   498|            id: 11,
+   499|            name: "Portable Blender USB-C Rechargeable",
+   500|            price: 34.99,
+   501|            category: "Home & Living",
+   502|            rating: 4.5,
+   503|            reviews: 267,
+   504|            image: "https://images.unsplash.com/photo-1622484211816-c35a14c1fef2?w=600&h=600&fit=crop",
+   505|            slug: "portable-blender-usb-c-rechargeable",
+   506|            isNew: true,
+   507|            isSale: true,
+   508|            originalPrice: 49.99,
+   509|            discount: 30
+   510|        },
+   511|        {
+   512|            id: 12,
+   513|            name: "Massage Gun Deep Tissue",
+   514|            price: 89.99,
+   515|            category: "Health & Beauty",
+   516|            rating: 4.8,
+   517|            reviews: 423,
+   518|            image: "https://images.unsplash.com/photo-1622056385579-e2ec1db1b290?w=600&h=600&fit=crop",
+   519|            slug: "massage-gun-deep-tissue",
+   520|            isNew: false,
+   521|            isSale: true,
+   522|            originalPrice: 129.99,
+   523|            discount: 31
+   524|        }
+   525|    ];
+   526|
+   527|    // ----- 渲染函数 -----
+   528|    function renderProducts(data) {
+   529|        const grid = document.getElementById('catalogGrid');
+   530|        const countEl = document.getElementById('resultCount');
+   531|        if (!grid) return;
+   532|        
+   533|        if (data.length === 0) {
+   534|            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#999"><i class="fas fa-search" style="font-size:3rem;display:block;margin-bottom:15px"></i>没有找到匹配的产品</div>';
+   535|            countEl.textContent = '共 0 件产品';
+   536|            return;
+   537|        }
+   538|
+   539|        grid.innerHTML = data.map(p => {
+   540|            const badges = [];
+   541|            if (p.isNew) badges.push('<span class="badge-new">NEW</span>');
+   542|            if (p.isSale && p.discount) badges.push(`<span class="badge-sale">-${p.discount}%</span>`);
+   543|            const badgeHtml = badges.length ? `<div class="card-badge">${badges.join('')}</div>` : '';
+   544|            const stars = '★'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '½' : '');
+   545|            const priceHtml = p.isSale && p.originalPrice
+   546|                ? `<span class="current-price">$${p.price.toFixed(2)}</span><span class="original-price">$${p.originalPrice.toFixed(2)}</span>`
+   547|                : `<span class="current-price">$${p.price.toFixed(2)}</span>`;
+   548|            return `
+   549|                <div class="catalog-card" data-id="${p.id}">
+   550|                    ${badgeHtml}
+   551|                    <img class="card-image" src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/600x600?text=ShopEasy'">
+   552|                    <div class="card-body">
+   553|                        <div class="card-category">${p.category}</div>
+   554|                        <div class="card-title">${p.name}</div>
+   555|                        <div class="card-rating">${stars} <span>(${p.reviews} reviews)</span></div>
+   556|                        <div class="card-price">${priceHtml}</div>
+   557|                        <div class="card-actions">
+   558|                            <a class="btn-details" href="${p.slug}.html"><i class="fas fa-eye"></i> 查看详情</a>
+   559|                            <button class="btn-compare-sm" data-product-id="${p.id}" title="Add to Compare" onclick="event.stopPropagation(); var id=this.getAttribute('data-product-id'); CompareSystem.isInCompare(id) ? CompareSystem.remove(id) : CompareSystem.add(id);"><i class="fas ${CompareSystem.isInCompare(p.id) ? 'fa-check-circle' : 'fa-plus-circle'}"></i></button>
+   560|                            <button class="btn-cart" onclick="event.stopPropagation(); addToCartLocal(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price})"><i class="fas fa-shopping-cart"></i></button>
+   561|                        </div>
+   562|                    </div>
+   563|                </div>
+   564|            `;
+   565|        }).join('');
+   566|        countEl.textContent = `共 ${data.length} 件产品`;
+   567|    }
+   568|
+   569|    // ----- 本地添加到购物车 (使用父页面的 localStorage) -----
+   570|    function addToCartLocal(id, name, price) {
+   571|        try {
+   572|            let cart = JSON.parse(localStorage.getItem('shopEasyCart') || '[]');
+   573|            const existing = cart.find(item => item.id === id);
+   574|            if (existing) {
+   575|                existing.quantity = (existing.quantity || 1) + 1;
+   576|            } else {
+   577|                cart.push({ id, name, price, quantity: 1, image: '' });
+   578|            }
+   579|            localStorage.setItem('shopEasyCart', JSON.stringify(cart));
+   580|            // 更新所有 cartCount 徽章
+   581|            const badges = document.querySelectorAll('#cartCount');
+   582|            const total = cart.reduce((sum, i) => sum + (i.quantity || 1), 0);
+   583|            badges.forEach(b => { b.textContent = total; b.style.display = total > 0 ? 'inline' : 'none'; });
+   584|            // 短暂动画反馈
+   585|            const btn = event && event.target;
+   586|            if (btn) {
+   587|                btn.style.transform = 'scale(1.2)';
+   588|                setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
+   589|            }
+   590|        } catch(e) {
+   591|            console.warn('addToCartLocal error:', e);
+   592|        }
+   593|    }
+   594|
+   595|    // ----- 过滤 + 排序 + 搜索 -----
+   596|    function filterAndRender() {
+   597|        const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+   598|        const category = document.getElementById('categoryFilter').value;
+   599|        const sort = document.getElementById('sortFilter').value;
+   600|
+   601|        let filtered = products.filter(p => {
+   602|            if (category !== 'all' && p.category !== category) return false;
+   603|            if (search && !p.name.toLowerCase().includes(search)) return false;
+   604|            return true;
+   605|        });
+   606|
+   607|        switch (sort) {
+   608|            case 'price-asc': filtered.sort((a, b) => a.price - b.price); break;
+   609|            case 'price-desc': filtered.sort((a, b) => b.price - a.price); break;
+   610|            case 'rating': filtered.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews); break;
+   611|        }
+   612|
+   613|        renderProducts(filtered);
+   614|    }
+   615|
+   616|    // ----- 初始化 -----
+   617|    document.addEventListener('DOMContentLoaded', function() {
+   618|        // 同步购物车数量
+   619|        try {
+   620|            const cart = JSON.parse(localStorage.getItem('shopEasyCart') || '[]');
+   621|            const total = cart.reduce((sum, i) => sum + (i.quantity || 1), 0);
+   622|            const badges = document.querySelectorAll('#cartCount');
+   623|            badges.forEach(b => { b.textContent = total; b.style.display = total > 0 ? 'inline' : 'none'; });
+   624|        } catch(e) {}
+   625|        
+   626|        renderProducts(products);
+   627|        
+   628|        document.getElementById('searchInput').addEventListener('input', filterAndRender);
+   629|        document.getElementById('categoryFilter').addEventListener('change', filterAndRender);
+   630|        document.getElementById('sortFilter').addEventListener('change', filterAndRender);
+   631|    });
+   632|    </script>
+   633|    <!-- 产品对比功能 -->
+   634|    <script src="../js/compare.js"></script>
+   635|    <script src="../js/i18n.js"></script>
+   636|  <script src="../js/email-capture.js"></script>
 </body>
-</html>
+   637|</html>
+   638|

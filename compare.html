@@ -1,661 +1,638 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Products - ShopEasy</title>
-    <meta name="description" content="Compare products side-by-side to find the best deal on ShopEasy.">
-    <meta name="robots" content="noindex, follow">
-    <link rel="canonical" href="https://shop2026easy.com/compare.html">
-    <!-- Open Graph -->
-    <meta property="og:title" content="Compare Products - ShopEasy">
-    <meta property="og:description" content="Compare products side-by-side to find the best deal on ShopEasy.">
-    <meta property="og:image" content="https://shop2026easy.com/images/favicon.ico">
-    <meta property="og:url" content="https://shop2026easy.com/compare.html">
-    <meta property="og:type" content="website">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Compare Products - ShopEasy">
-    <meta name="twitter:description" content="Compare products side-by-side to find the best deal on ShopEasy.">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#FFD700">
-
-    <script src="js/error-diagnostics.js"></script>
-    <style>
-        .compare-page {
-            min-height: 100vh;
-            background: #f8f9fa;
-            padding: 120px 20px 60px;
-        }
-        .compare-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .compare-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .compare-header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-        }
-        .compare-header h1 i { color: #667eea; margin-right: 10px; }
-        .compare-header-actions { display: flex; gap: 10px; align-items: center; }
-        .btn-clear-compare {
-            padding: 10px 20px;
-            background: white;
-            color: #e74c3c;
-            border: 2px solid #e74c3c;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-clear-compare:hover { background: #e74c3c; color: white; }
-        .btn-back-shop {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Empty State */
-        .empty-compare {
-            text-align: center;
-            padding: 100px 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
-        .empty-compare i {
-            font-size: 4rem;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-        .empty-compare h2 { color: #333; margin-bottom: 10px; }
-        .empty-compare p { color: #999; margin-bottom: 25px; }
-        .empty-compare .btn-primary {
-            padding: 14px 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        /* Compare Table */
-        .compare-table-wrapper {
-            overflow-x: auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            -webkit-overflow-scrolling: touch;
-        }
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-        .compare-table th, .compare-table td {
-            padding: 14px 18px;
-            text-align: center;
-            vertical-align: middle;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .compare-table th {
-            background: #fafafa;
-            font-weight: 600;
-            color: #888;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            width: 130px;
-            text-align: left;
-        }
-        .compare-table td { min-width: 200px; }
-
-        /* Product Column */
-        .compare-product {
-            position: relative;
-        }
-        .compare-product .remove-product {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: none;
-            background: #fee;
-            color: #e74c3c;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .compare-product .remove-product:hover { background: #e74c3c; color: white; }
-
-        .compare-product img {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: #f8f9fa;
-            margin-bottom: 10px;
-        }
-        .compare-product .product-title {
-            font-weight: 600;
-            color: #333;
-            font-size: 0.95rem;
-            margin-bottom: 5px;
-            line-height: 1.3;
-        }
-        .compare-product .product-title a {
-            color: #333;
-            text-decoration: none;
-        }
-        .compare-product .product-title a:hover { color: #667eea; }
-        .compare-product .product-rating {
-            color: #f39c12;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-        }
-        .compare-product .product-rating span { color: #999; margin-left: 5px; }
-
-        .compare-price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #27ae60;
-        }
-        .compare-price .original-price {
-            font-size: 0.9rem;
-            color: #ccc;
-            text-decoration: line-through;
-            margin-left: 8px;
-            font-weight: 400;
-        }
-
-        .compare-add-cart {
-            padding: 10px 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 8px;
-        }
-        .compare-add-cart:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.4); }
-
-        .compare-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .badge-best { background: #d4edda; color: #155724; }
-        .badge-high { background: #cce5ff; color: #004085; }
-        .badge-medium { background: #fff3cd; color: #856404; }
-        .badge-low { background: #f8d7da; color: #721c24; }
-
-        .spec-cell {
-            font-size: 0.9rem;
-            color: #555;
-        }
-        .spec-cell .spec-label {
-            font-weight: 600;
-            color: #333;
-        }
-
-        /* Category row */
-        .category-header td {
-            background: #f8f9fa;
-            font-weight: 700;
-            color: #667eea;
-            font-size: 0.9rem;
-            text-align: left;
-            padding: 10px 18px;
-        }
-
-        /* Add more floating button */
-        .add-more-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #f0f4ff;
-            border: 2px dashed #667eea;
-            color: #667eea;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-        .add-more-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        /* Skeleton */
-        .skeleton-compare {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-        }
-        .skeleton-row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .skeleton-cell {
-            flex: 1;
-            height: 20px;
-            background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 6px;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        @media (max-width: 768px) {
-            .compare-header { flex-direction: column; align-items: flex-start; }
-            .compare-product img { width: 80px; height: 80px; }
-            .compare-table td { min-width: 160px; }
-        }
-    </style>
-    <!-- Cloudflare Web Analytics -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-link"><i class="fas fa-shopping-bag"></i><span class="logo-text">ShopEasy</span></a>
-            </div>
-            <div class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> <span data-i18n="nav.home">Home</span></a></li>
-                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> <span data-i18n="nav.products">Products</span></a></li>
-                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> <span data-i18n="nav.viewall">View All Products</span></a></li>
-                    <li class="nav-item"><a href="compare.html" class="nav-link active"><i class="fas fa-balance-scale"></i> Compare</a></li>
-                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> <span data-i18n="nav.myorders">My Orders</span></a></li>
-                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> <span data-i18n="nav.wishlist">Wishlist</span></a></li>
-                </ul>
-            </div>
-            <div class="nav-actions">
-                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
-                <a href="cart.html" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
-                <button class="btn-login" onclick="window.location.href='auth.html'" data-i18n="nav.signin">Sign In</button>
-                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register" onclick="window.location.href='auth.html'" data-i18n="nav.register">Register</button>
-                <div class="user-menu" id="userMenu" style="display:none;">
-                    <span class="user-name" id="userName"></span>
-                    <button class="btn-logout" id="btnLogout" data-i18n="nav.signout">Sign Out</button>
-                </div>
-            </div>
-            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
-        </div>
-    </nav>
-
-    <section class="compare-page">
-        <div class="compare-container">
-            <div class="compare-header">
-                <h1><i class="fas fa-balance-scale"></i> Compare Products</h1>
-                <div class="compare-header-actions">
-                    <button class="btn-clear-compare" id="btnClearCompare" style="display:none;"><i class="fas fa-trash-alt"></i> Clear All</button>
-                    <a href="products/" class="btn-back-shop"><i class="fas fa-shopping-bag"></i> Browse Products</a>
-                </div>
-            </div>
-
-            <!-- Skeleton -->
-            <div class="skeleton-compare" id="skeletonCompare">
-                <div class="skeleton-row">
-                    <div class="skeleton-cell" style="height:140px;"></div>
-                    <div class="skeleton-cell" style="height:140px;"></div>
-                    <div class="skeleton-cell" style="height:140px;"></div>
-                </div>
-                <div class="skeleton-row"><div class="skeleton-cell"></div><div class="skeleton-cell"></div><div class="skeleton-cell"></div></div>
-                <div class="skeleton-row"><div class="skeleton-cell"></div><div class="skeleton-cell"></div><div class="skeleton-cell"></div></div>
-                <div class="skeleton-row"><div class="skeleton-cell"></div><div class="skeleton-cell"></div><div class="skeleton-cell"></div></div>
-            </div>
-
-            <!-- Empty state -->
-            <div class="empty-compare" id="emptyCompare" style="display:none;">
-                <i class="fas fa-balance-scale"></i>
-                <h2>No products to compare</h2>
-                <p>Add products from the product page or product details to start comparing.</p>
-                <a href="products/" class="btn-primary"><i class="fas fa-plus-circle"></i> Add Products</a>
-            </div>
-
-            <!-- Compare table -->
-            <div id="compareContent" style="display:none;">
-                <div class="compare-table-wrapper" id="compareTableWrapper"></div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
-                    <p data-i18n="footer.desc">Your trusted online shopping destination for quality products at great prices.</p>
-                </div>
-                <div class="footer-links">
-                    <h4 data-i18n="footer.quicklinks">Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html"><span data-i18n="nav.home">Home</span></a></li>
-                        <li><a href="products/"><span data-i18n="nav.products">Products</span></a></li>
-                        <li><a href="compare.html">Compare</a></li>
-                    </ul>
-                </div>
-                <div class="footer-support">
-                    <h4 data-i18n="footer.customerservice">Customer Service</h4>
-                    <ul>
-                        <li><a href="order-history.html"><span data-i18n="nav.myorders">My Orders</span></a></li>
-                        <li><a href="index.html#returns"><span data-i18n="footer.returns">Returns & Refunds</span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 ShopEasy. <span data-i18n="footer.rights">All rights reserved.</span></p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/i18n.js"></script>
-    <script src="js/compare.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-        (function() {
-            'use strict';
-
-            function formatPrice(price) {
-                if (price === undefined || price === null) return 'N/A';
-                return '$' + Number(price).toFixed(2);
-            }
-
-            function renderStars(rating) {
-                var r = Math.round(rating || 0);
-                var stars = '';
-                for (var i = 0; i < 5; i++) {
-                    stars += i < r ? '\u2605' : '\u2606';
-                }
-                return stars;
-            }
-
-            function getCategory(product) {
-                if (product.category || product.cat) {
-                    var c = product.category || product.cat;
-                    return c.charAt(0).toUpperCase() + c.slice(1);
-                }
-                return 'General';
-            }
-
-            function getSpecRow(label, values, highlight) {
-                var html = '<tr><th>' + label + '</th>';
-                values.forEach(function(v, idx) {
-                    var highlightClass = highlight && highlight[idx] ? ' style="color:#27ae60;font-weight:700;"' : '';
-                    html += '<td class="spec-cell"' + highlightClass + '>' + (v !== undefined && v !== null ? v : 'N/A') + '</td>';
-                });
-                html += '</tr>';
-                return html;
-            }
-
-            function init() {
-                var skeleton = document.getElementById('skeletonCompare');
-                var emptyEl = document.getElementById('emptyCompare');
-                var content = document.getElementById('compareContent');
-                var clearBtn = document.getElementById('btnClearCompare');
-
-                // Simulate loading
-                setTimeout(function() {
-                    skeleton.style.display = 'none';
-
-                    var list = window.CompareSystem.getList();
-                    if (!list || list.length === 0) {
-                        emptyEl.style.display = 'block';
-                        content.style.display = 'none';
-                        clearBtn.style.display = 'none';
-                        return;
-                    }
-
-                    // Fetch products
-                    var products = [];
-                    list.forEach(function(id) {
-                        var p = window.CompareSystem.getProduct(id);
-                        if (p) products.push(p);
-                    });
-
-                    if (products.length === 0) {
-                        emptyEl.style.display = 'block';
-                        content.style.display = 'none';
-                        return;
-                    }
-
-                    emptyEl.style.display = 'none';
-                    content.style.display = 'block';
-                    clearBtn.style.display = 'inline-flex';
-
-                    // Find min/max prices for highlighting
-                    var prices = products.map(function(p) { return Number(p.price || p.original_price || 0); });
-                    var minPrice = Math.min.apply(null, prices);
-                    var maxPrice = Math.max.apply(null, prices);
-
-                    // Find highest rating
-                    var ratings = products.map(function(p) { return Number(p.rating || 0); });
-                    var maxRating = Math.max.apply(null, ratings);
-
-                    // Build table
-                    var html = '<table class="compare-table">';
-
-                    // Header row with product images + remove buttons
-                    html += '<thead><tr><th style="background:none;"></th>';
-                    products.forEach(function(p) {
-                        var imgUrl = p.image || p.image_url || p.img || 'https://via.placeholder.com/120x120?text=No+Image';
-                        var detailUrl = '';
-
-                        // Find detail page
-                        var titleSlug = (p.title || p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '');
-                        if (titleSlug) {
-                            detailUrl = 'products/' + titleSlug + '.html';
-                        }
-
-                        html += '<td class="compare-product">' +
-                            '<button class="remove-product" data-product-id="' + p.id + '" title="Remove"><i class="fas fa-times"></i></button>' +
-                            '<a href="' + detailUrl + '"><img src="' + imgUrl + '" alt="' + (p.title || p.name || 'Product') + '" loading="lazy"></a>' +
-                            '<div class="product-title"><a href="' + detailUrl + '">' + (p.title || p.name || 'Product') + '</a></div>' +
-                            '<div class="product-rating">' + renderStars(p.rating) +
-                            ' <span>' + (p.rating || 0) + ' (' + (p.review_count || 0) + ' rev.)</span></div>' +
-                            '<div class="compare-price">' + formatPrice(p.price) +
-                            (p.original_price ? '<span class="original-price">' + formatPrice(p.original_price) + '</span>' : '') + '</div>' +
-                            '<button class="compare-add-cart add-to-cart" data-product-id="' + p.id + '"><i class="fas fa-cart-plus"></i> Add to Cart</button>' +
-                            '</td>';
-                    });
-                    html += '</tr></thead><tbody>';
-
-                    // Category
-                    html += '<tr class="category-header"><td colspan="' + (products.length + 1) + '"><i class="fas fa-tag"></i> General Info</td></tr>';
-
-                    // Category row
-                    html += getSpecRow('Category', products.map(function(p) {
-                        return getCategory(p);
-                    }));
-
-                    // Brand
-                    html += getSpecRow('Brand', products.map(function(p) {
-                        return p.brand || p.brand_name || '-';
-                    }));
-
-                    // Availability
-                    html += getSpecRow('Availability', products.map(function(p) {
-                        if (p.in_stock === false) return '<span style="color:#e74c3c;">Out of Stock</span>';
-                        return '<span style="color:#27ae60;">In Stock</span>';
-                    }));
-
-                    // Shipping
-                    html += getSpecRow('Shipping', products.map(function(p) {
-                        return p.shipping_info || p.shipping || 'Standard';
-                    }));
-
-                    // Price comparison section
-                    html += '<tr class="category-header"><td colspan="' + (products.length + 1) + '"><i class="fas fa-dollar-sign"></i> Pricing</td></tr>';
-
-                    // Price
-                    html += getSpecRow('Price', products.map(function(p) {
-                        return formatPrice(p.price);
-                    }), products.map(function(p) { return Number(p.price || 0) === minPrice; }));
-
-                    // Original Price
-                    html += getSpecRow('Original Price', products.map(function(p) {
-                        return p.original_price ? formatPrice(p.original_price) : '-';
-                    }));
-
-                    // Discount
-                    html += getSpecRow('Discount', products.map(function(p) {
-                        if (p.original_price && p.price) {
-                            var discount = Math.round((1 - p.price / p.original_price) * 100);
-                            if (discount > 0) {
-                                return '<span style="color:#e74c3c;font-weight:700;">-' + discount + '%</span>';
-                            }
-                        }
-                        return '-';
-                    }));
-
-                    // Sales volume
-                    html += getSpecRow('Sales Volume', products.map(function(p) {
-                        var sv = p.sales_volume || p.sold_count || 0;
-                        if (sv >= 1000) {
-                            return (sv / 1000).toFixed(1) + 'K';
-                        }
-                        return sv || 0;
-                    }));
-
-                    // Performance section
-                    html += '<tr class="category-header"><td colspan="' + (products.length + 1) + '"><i class="fas fa-chart-bar"></i> Performance</td></tr>';
-
-                    // Rating
-                    html += getSpecRow('Rating', products.map(function(p) {
-                        var r = p.rating || 0;
-                        return renderStars(r) + ' ' + r.toFixed(1);
-                    }), products.map(function(p) { return Number(p.rating || 0) >= maxRating; }));
-
-                    // Review count
-                    html += getSpecRow('Reviews', products.map(function(p) {
-                        var rc = p.review_count || 0;
-                        if (rc >= 1000) return (rc / 1000).toFixed(1) + 'K';
-                        return rc || 0;
-                    }));
-
-                    // Score
-                    html += getSpecRow('Score', products.map(function(p) {
-                        return p.score !== undefined ? p.score.toFixed(1) : '-';
-                    }), products.map(function(p) { return p.score !== undefined; }));
-
-                    // Grade
-                    html += getSpecRow('Grade', products.map(function(p) {
-                        if (p.grade) {
-                            var color = p.grade === 'A+' || p.grade === 'A' ? '#27ae60' : (p.grade === 'B' || p.grade === 'B+' ? '#f39c12' : '#e74c3c');
-                            return '<span style="color:' + color + ';font-weight:700;">' + p.grade + '</span>';
-                        }
-                        return '-';
-                    }));
-
-                    // Recommendation
-                    html += getSpecRow('Recommendation', products.map(function(p) {
-                        if (p.recommendation) {
-                            return '<span style="color:#667eea;">' + p.recommendation + '</span>';
-                        }
-                        return '-';
-                    }));
-
-                    // Best Price tag
-                    html += getSpecRow('Best Value', products.map(function(p) {
-                        var isMin = Number(p.price || 0) === minPrice;
-                        return isMin ? '<span class="compare-badge badge-best">Best Price</span>' :
-                               (Number(p.price || 0) === maxPrice ? '<span class="compare-badge badge-low">Highest</span>' :
-                                '<span class="compare-badge badge-medium">Mid</span>');
-                    }));
-
-                    html += '</tbody></table>';
-                    document.getElementById('compareTableWrapper').innerHTML = html;
-
-                    // Event bindings for remove buttons
-                    document.querySelectorAll('.remove-product').forEach(function(btn) {
-                        btn.addEventListener('click', function() {
-                            var id = this.getAttribute('data-product-id');
-                            window.CompareSystem.remove(id);
-                            // Re-render
-                            init();
-                        });
-                    });
-
-                    // Add to cart buttons
-                    document.querySelectorAll('.compare-add-cart').forEach(function(btn) {
-                        btn.addEventListener('click', function() {
-                            var id = this.getAttribute('data-product-id');
-                            var product = window.CompareSystem.getProduct(id);
-                            if (product && typeof window.addToCart === 'function') {
-                                window.addToCart(product);
-                            } else {
-                                CompareSystem.showToast('Added to cart!', 'success');
-                            }
-                        });
-                    });
-
-                    // Clear button
-                    document.getElementById('btnClearCompare').onclick = function() {
-                        window.CompareSystem.clear();
-                        init();
-                    };
-
-                }, 500);
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
-        })();
-    </script>
-
-    <!-- PWA -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
-    </script>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|    <title>Compare Products - ShopEasy</title>
+     7|    <meta name="description" content="Compare products side-by-side to find the best deal on ShopEasy.">
+     8|    <meta name="robots" content="noindex, follow">
+     9|    <link rel="canonical" href="https://shop2026easy.com/compare.html">
+    10|    <link rel="stylesheet" href="css/style.css">
+    11|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    12|    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    13|    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    14|    <script src="js/error-diagnostics.js"></script>
+    15|    <style>
+    16|        .compare-page {
+    17|            min-height: 100vh;
+    18|            background: #f8f9fa;
+    19|            padding: 120px 20px 60px;
+    20|        }
+    21|        .compare-container {
+    22|            max-width: 1200px;
+    23|            margin: 0 auto;
+    24|        }
+    25|        .compare-header {
+    26|            display: flex;
+    27|            justify-content: space-between;
+    28|            align-items: center;
+    29|            margin-bottom: 30px;
+    30|            flex-wrap: wrap;
+    31|            gap: 15px;
+    32|        }
+    33|        .compare-header h1 {
+    34|            font-size: 1.8rem;
+    35|            font-weight: 700;
+    36|            color: #333;
+    37|            margin: 0;
+    38|        }
+    39|        .compare-header h1 i { color: #667eea; margin-right: 10px; }
+    40|        .compare-header-actions { display: flex; gap: 10px; align-items: center; }
+    41|        .btn-clear-compare {
+    42|            padding: 10px 20px;
+    43|            background: white;
+    44|            color: #e74c3c;
+    45|            border: 2px solid #e74c3c;
+    46|            border-radius: 10px;
+    47|            font-weight: 600;
+    48|            cursor: pointer;
+    49|            transition: all 0.3s;
+    50|        }
+    51|        .btn-clear-compare:hover { background: #e74c3c; color: white; }
+    52|        .btn-back-shop {
+    53|            padding: 10px 20px;
+    54|            background: linear-gradient(135deg, #667eea, #764ba2);
+    55|            color: white;
+    56|            border: none;
+    57|            border-radius: 10px;
+    58|            font-weight: 600;
+    59|            cursor: pointer;
+    60|            text-decoration: none;
+    61|            display: inline-flex;
+    62|            align-items: center;
+    63|            gap: 8px;
+    64|        }
+    65|
+    66|        /* Empty State */
+    67|        .empty-compare {
+    68|            text-align: center;
+    69|            padding: 100px 20px;
+    70|            background: white;
+    71|            border-radius: 20px;
+    72|            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    73|        }
+    74|        .empty-compare i {
+    75|            font-size: 4rem;
+    76|            color: #ddd;
+    77|            margin-bottom: 20px;
+    78|        }
+    79|        .empty-compare h2 { color: #333; margin-bottom: 10px; }
+    80|        .empty-compare p { color: #999; margin-bottom: 25px; }
+    81|        .empty-compare .btn-primary {
+    82|            padding: 14px 30px;
+    83|            background: linear-gradient(135deg, #667eea, #764ba2);
+    84|            color: white;
+    85|            border: none;
+    86|            border-radius: 10px;
+    87|            font-weight: 600;
+    88|            cursor: pointer;
+    89|            text-decoration: none;
+    90|            display: inline-block;
+    91|        }
+    92|
+    93|        /* Compare Table */
+    94|        .compare-table-wrapper {
+    95|            overflow-x: auto;
+    96|            background: white;
+    97|            border-radius: 16px;
+    98|            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    99|            -webkit-overflow-scrolling: touch;
+   100|        }
+   101|        .compare-table {
+   102|            width: 100%;
+   103|            border-collapse: collapse;
+   104|            min-width: 600px;
+   105|        }
+   106|        .compare-table th, .compare-table td {
+   107|            padding: 14px 18px;
+   108|            text-align: center;
+   109|            vertical-align: middle;
+   110|            border-bottom: 1px solid #f0f0f0;
+   111|        }
+   112|        .compare-table th {
+   113|            background: #fafafa;
+   114|            font-weight: 600;
+   115|            color: #888;
+   116|            font-size: 0.85rem;
+   117|            text-transform: uppercase;
+   118|            letter-spacing: 0.5px;
+   119|            width: 130px;
+   120|            text-align: left;
+   121|        }
+   122|        .compare-table td { min-width: 200px; }
+   123|
+   124|        /* Product Column */
+   125|        .compare-product {
+   126|            position: relative;
+   127|        }
+   128|        .compare-product .remove-product {
+   129|            position: absolute;
+   130|            top: -5px;
+   131|            right: -5px;
+   132|            width: 28px;
+   133|            height: 28px;
+   134|            border-radius: 50%;
+   135|            border: none;
+   136|            background: #fee;
+   137|            color: #e74c3c;
+   138|            cursor: pointer;
+   139|            display: flex;
+   140|            align-items: center;
+   141|            justify-content: center;
+   142|            font-size: 0.8rem;
+   143|            transition: all 0.2s;
+   144|            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+   145|        }
+   146|        .compare-product .remove-product:hover { background: #e74c3c; color: white; }
+   147|
+   148|        .compare-product img {
+   149|            width: 120px;
+   150|            height: 120px;
+   151|            object-fit: contain;
+   152|            border-radius: 10px;
+   153|            background: #f8f9fa;
+   154|            margin-bottom: 10px;
+   155|        }
+   156|        .compare-product .product-title {
+   157|            font-weight: 600;
+   158|            color: #333;
+   159|            font-size: 0.95rem;
+   160|            margin-bottom: 5px;
+   161|            line-height: 1.3;
+   162|        }
+   163|        .compare-product .product-title a {
+   164|            color: #333;
+   165|            text-decoration: none;
+   166|        }
+   167|        .compare-product .product-title a:hover { color: #667eea; }
+   168|        .compare-product .product-rating {
+   169|            color: #f39c12;
+   170|            font-size: 0.85rem;
+   171|            margin-bottom: 8px;
+   172|        }
+   173|        .compare-product .product-rating span { color: #999; margin-left: 5px; }
+   174|
+   175|        .compare-price {
+   176|            font-size: 1.4rem;
+   177|            font-weight: 700;
+   178|            color: #27ae60;
+   179|        }
+   180|        .compare-price .original-price {
+   181|            font-size: 0.9rem;
+   182|            color: #ccc;
+   183|            text-decoration: line-through;
+   184|            margin-left: 8px;
+   185|            font-weight: 400;
+   186|        }
+   187|
+   188|        .compare-add-cart {
+   189|            padding: 10px 24px;
+   190|            background: linear-gradient(135deg, #667eea, #764ba2);
+   191|            color: white;
+   192|            border: none;
+   193|            border-radius: 8px;
+   194|            font-weight: 600;
+   195|            cursor: pointer;
+   196|            transition: all 0.2s;
+   197|            margin-top: 8px;
+   198|        }
+   199|        .compare-add-cart:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.4); }
+   200|
+   201|        .compare-badge {
+   202|            display: inline-block;
+   203|            padding: 3px 10px;
+   204|            border-radius: 12px;
+   205|            font-size: 0.75rem;
+   206|            font-weight: 600;
+   207|        }
+   208|        .badge-best { background: #d4edda; color: #155724; }
+   209|        .badge-high { background: #cce5ff; color: #004085; }
+   210|        .badge-medium { background: #fff3cd; color: #856404; }
+   211|        .badge-low { background: #f8d7da; color: #721c24; }
+   212|
+   213|        .spec-cell {
+   214|            font-size: 0.9rem;
+   215|            color: #555;
+   216|        }
+   217|        .spec-cell .spec-label {
+   218|            font-weight: 600;
+   219|            color: #333;
+   220|        }
+   221|
+   222|        /* Category row */
+   223|        .category-header td {
+   224|            background: #f8f9fa;
+   225|            font-weight: 700;
+   226|            color: #667eea;
+   227|            font-size: 0.9rem;
+   228|            text-align: left;
+   229|            padding: 10px 18px;
+   230|        }
+   231|
+   232|        /* Add more floating button */
+   233|        .add-more-btn {
+   234|            display: inline-flex;
+   235|            align-items: center;
+   236|            justify-content: center;
+   237|            width: 60px;
+   238|            height: 60px;
+   239|            border-radius: 50%;
+   240|            background: #f0f4ff;
+   241|            border: 2px dashed #667eea;
+   242|            color: #667eea;
+   243|            cursor: pointer;
+   244|            transition: all 0.3s;
+   245|            margin-top: 20px;
+   246|        }
+   247|        .add-more-btn:hover {
+   248|            background: #667eea;
+   249|            color: white;
+   250|        }
+   251|
+   252|        /* Skeleton */
+   253|        .skeleton-compare {
+   254|            background: white;
+   255|            border-radius: 16px;
+   256|            padding: 30px;
+   257|        }
+   258|        .skeleton-row {
+   259|            display: flex;
+   260|            gap: 20px;
+   261|            margin-bottom: 20px;
+   262|        }
+   263|        .skeleton-cell {
+   264|            flex: 1;
+   265|            height: 20px;
+   266|            background: linear-gradient(90deg, #eee 25%, #f5f5f5 50%, #eee 75%);
+   267|            background-size: 200% 100%;
+   268|            animation: shimmer 1.5s infinite;
+   269|            border-radius: 6px;
+   270|        }
+   271|        @keyframes shimmer {
+   272|            0% { background-position: 200% 0; }
+   273|            100% { background-position: -200% 0; }
+   274|        }
+   275|
+   276|        @media (max-width: 768px) {
+   277|            .compare-header { flex-direction: column; align-items: flex-start; }
+   278|            .compare-product img { width: 80px; height: 80px; }
+   279|            .compare-table td { min-width: 160px; }
+   280|        }
+   281|    </style>
+   282|</head>
+   283|<body>
+   284|    <nav class="navbar">
+   285|        <div class="nav-container">
+   286|            <div class="nav-logo">
+   287|                <a href="index.html" class="logo-link"><i class="fas fa-shopping-bag"></i><span class="logo-text">ShopEasy</span></a>
+   288|            </div>
+   289|            <div class="nav-menu">
+   290|                <ul class="nav-list">
+   291|                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> <span data-i18n="nav.home">Home</span></a></li>
+   292|                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> <span data-i18n="nav.products">Products</span></a></li>
+   293|                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> <span data-i18n="nav.viewall">View All Products</span></a></li>
+   294|                    <li class="nav-item"><a href="compare.html" class="nav-link active"><i class="fas fa-balance-scale"></i> Compare</a></li>
+   295|                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> <span data-i18n="nav.myorders">My Orders</span></a></li>
+   296|                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> <span data-i18n="nav.wishlist">Wishlist</span></a></li>
+   297|                </ul>
+   298|            </div>
+   299|            <div class="nav-actions">
+   300|                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
+   301|                <a href="#cart" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+   302|                <button class="btn-login" onclick="window.location.href='auth.html'" data-i18n="nav.signin">Sign In</button>
+   303|                <button class="btn-register" onclick="window.location.href='auth.html'" data-i18n="nav.register">Register</button>
+   304|                <div class="user-menu" id="userMenu" style="display:none;">
+   305|                    <span class="user-name" id="userName"></span>
+   306|                    <button class="btn-logout" id="btnLogout" data-i18n="nav.signout">Sign Out</button>
+   307|                </div>
+   308|            </div>
+   309|            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+   310|        </div>
+   311|    </nav>
+   312|
+   313|    <section class="compare-page">
+   314|        <div class="compare-container">
+   315|            <div class="compare-header">
+   316|                <h1><i class="fas fa-balance-scale"></i> Compare Products</h1>
+   317|                <div class="compare-header-actions">
+   318|                    <button class="btn-clear-compare" id="btnClearCompare" style="display:none;"><i class="fas fa-trash-alt"></i> Clear All</button>
+   319|                    <a href="products/" class="btn-back-shop"><i class="fas fa-shopping-bag"></i> Browse Products</a>
+   320|                </div>
+   321|            </div>
+   322|
+   323|            <!-- Skeleton -->
+   324|            <div class="skeleton-compare" id="skeletonCompare">
+   325|                <div class="skeleton-row">
+   326|                    <div class="skeleton-cell" style="height:140px;"></div>
+   327|                    <div class="skeleton-cell" style="height:140px;"></div>
+   328|                    <div class="skeleton-cell" style="height:140px;"></div>
+   329|                </div>
+   330|                <div class="skeleton-row"><div class="skeleton-cell"></div><div class="skeleton-cell"></div><div class="skeleton-cell"></div></div>
+   331|                <div class="skeleton-row"><div class="skeleton-cell"></div><div class="skeleton-cell"></div><div class="skeleton-cell"></div></div>
+   332|                <div class="skeleton-row"><div class="skeleton-cell"></div><div class="skeleton-cell"></div><div class="skeleton-cell"></div></div>
+   333|            </div>
+   334|
+   335|            <!-- Empty state -->
+   336|            <div class="empty-compare" id="emptyCompare" style="display:none;">
+   337|                <i class="fas fa-balance-scale"></i>
+   338|                <h2>No products to compare</h2>
+   339|                <p>Add products from the product page or product details to start comparing.</p>
+   340|                <a href="products/" class="btn-primary"><i class="fas fa-plus-circle"></i> Add Products</a>
+   341|            </div>
+   342|
+   343|            <!-- Compare table -->
+   344|            <div id="compareContent" style="display:none;">
+   345|                <div class="compare-table-wrapper" id="compareTableWrapper"></div>
+   346|            </div>
+   347|        </div>
+   348|    </section>
+   349|
+   350|    <footer class="footer">
+   351|        <div class="container">
+   352|            <div class="footer-content">
+   353|                <div class="footer-logo">
+   354|                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
+   355|                    <p data-i18n="footer.desc">Your trusted online shopping destination for quality products at great prices.</p>
+   356|                </div>
+   357|                <div class="footer-links">
+   358|                    <h4 data-i18n="footer.quicklinks">Quick Links</h4>
+   359|                    <ul>
+   360|                        <li><a href="index.html"><span data-i18n="nav.home">Home</span></a></li>
+   361|                        <li><a href="products/"><span data-i18n="nav.products">Products</span></a></li>
+   362|                        <li><a href="compare.html">Compare</a></li>
+   363|                    </ul>
+   364|                </div>
+   365|                <div class="footer-support">
+   366|                    <h4 data-i18n="footer.customerservice">Customer Service</h4>
+   367|                    <ul>
+   368|                        <li><a href="order-history.html"><span data-i18n="nav.myorders">My Orders</span></a></li>
+   369|                        <li><a href="index.html#returns"><span data-i18n="footer.returns">Returns & Refunds</span></a></li>
+   370|                    </ul>
+   371|                </div>
+   372|            </div>
+   373|            <div class="footer-bottom">
+   374|                <p>&copy; 2026 ShopEasy. <span data-i18n="footer.rights">All rights reserved.</span></p>
+   375|            </div>
+   376|        </div>
+   377|    </footer>
+   378|
+   379|    <script src="js/i18n.js"></script>
+   380|    <script src="js/compare.js"></script>
+   381|    <script src="js/main.js"></script>
+   382|    <script>
+   383|        (function() {
+   384|            'use strict';
+   385|
+   386|            function formatPrice(price) {
+   387|                if (price === undefined || price === null) return 'N/A';
+   388|                return '$' + Number(price).toFixed(2);
+   389|            }
+   390|
+   391|            function renderStars(rating) {
+   392|                var r = Math.round(rating || 0);
+   393|                var stars = '';
+   394|                for (var i = 0; i < 5; i++) {
+   395|                    stars += i < r ? '\u2605' : '\u2606';
+   396|                }
+   397|                return stars;
+   398|            }
+   399|
+   400|            function getCategory(product) {
+   401|                if (product.category || product.cat) {
+   402|                    var c = product.category || product.cat;
+   403|                    return c.charAt(0).toUpperCase() + c.slice(1);
+   404|                }
+   405|                return 'General';
+   406|            }
+   407|
+   408|            function getSpecRow(label, values, highlight) {
+   409|                var html = '<tr><th>' + label + '</th>';
+   410|                values.forEach(function(v, idx) {
+   411|                    var highlightClass = highlight && highlight[idx] ? ' style="color:#27ae60;font-weight:700;"' : '';
+   412|                    html += '<td class="spec-cell"' + highlightClass + '>' + (v !== undefined && v !== null ? v : 'N/A') + '</td>';
+   413|                });
+   414|                html += '</tr>';
+   415|                return html;
+   416|            }
+   417|
+   418|            function init() {
+   419|                var skeleton = document.getElementById('skeletonCompare');
+   420|                var emptyEl = document.getElementById('emptyCompare');
+   421|                var content = document.getElementById('compareContent');
+   422|                var clearBtn = document.getElementById('btnClearCompare');
+   423|
+   424|                // Simulate loading
+   425|                setTimeout(function() {
+   426|                    skeleton.style.display = 'none';
+   427|
+   428|                    var list = window.CompareSystem.getList();
+   429|                    if (!list || list.length === 0) {
+   430|                        emptyEl.style.display = 'block';
+   431|                        content.style.display = 'none';
+   432|                        clearBtn.style.display = 'none';
+   433|                        return;
+   434|                    }
+   435|
+   436|                    // Fetch products
+   437|                    var products = [];
+   438|                    list.forEach(function(id) {
+   439|                        var p = window.CompareSystem.getProduct(id);
+   440|                        if (p) products.push(p);
+   441|                    });
+   442|
+   443|                    if (products.length === 0) {
+   444|                        emptyEl.style.display = 'block';
+   445|                        content.style.display = 'none';
+   446|                        return;
+   447|                    }
+   448|
+   449|                    emptyEl.style.display = 'none';
+   450|                    content.style.display = 'block';
+   451|                    clearBtn.style.display = 'inline-flex';
+   452|
+   453|                    // Find min/max prices for highlighting
+   454|                    var prices = products.map(function(p) { return Number(p.price || p.original_price || 0); });
+   455|                    var minPrice = Math.min.apply(null, prices);
+   456|                    var maxPrice = Math.max.apply(null, prices);
+   457|
+   458|                    // Find highest rating
+   459|                    var ratings = products.map(function(p) { return Number(p.rating || 0); });
+   460|                    var maxRating = Math.max.apply(null, ratings);
+   461|
+   462|                    // Build table
+   463|                    var html = '<table class="compare-table">';
+   464|
+   465|                    // Header row with product images + remove buttons
+   466|                    html += '<thead><tr><th style="background:none;"></th>';
+   467|                    products.forEach(function(p) {
+   468|                        var imgUrl = p.image || p.image_url || p.img || 'https://via.placeholder.com/120x120?text=No+Image';
+   469|                        var detailUrl = '';
+   470|
+   471|                        // Find detail page
+   472|                        var titleSlug = (p.title || p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '');
+   473|                        if (titleSlug) {
+   474|                            detailUrl = 'products/' + titleSlug + '.html';
+   475|                        }
+   476|
+   477|                        html += '<td class="compare-product">' +
+   478|                            '<button class="remove-product" data-product-id="' + p.id + '" title="Remove"><i class="fas fa-times"></i></button>' +
+   479|                            '<a href="' + detailUrl + '"><img src="' + imgUrl + '" alt="' + (p.title || p.name || 'Product') + '" loading="lazy"></a>' +
+   480|                            '<div class="product-title"><a href="' + detailUrl + '">' + (p.title || p.name || 'Product') + '</a></div>' +
+   481|                            '<div class="product-rating">' + renderStars(p.rating) +
+   482|                            ' <span>' + (p.rating || 0) + ' (' + (p.review_count || 0) + ' rev.)</span></div>' +
+   483|                            '<div class="compare-price">' + formatPrice(p.price) +
+   484|                            (p.original_price ? '<span class="original-price">' + formatPrice(p.original_price) + '</span>' : '') + '</div>' +
+   485|                            '<button class="compare-add-cart add-to-cart" data-product-id="' + p.id + '"><i class="fas fa-cart-plus"></i> Add to Cart</button>' +
+   486|                            '</td>';
+   487|                    });
+   488|                    html += '</tr></thead><tbody>';
+   489|
+   490|                    // Category
+   491|                    html += '<tr class="category-header"><td colspan="' + (products.length + 1) + '"><i class="fas fa-tag"></i> General Info</td></tr>';
+   492|
+   493|                    // Category row
+   494|                    html += getSpecRow('Category', products.map(function(p) {
+   495|                        return getCategory(p);
+   496|                    }));
+   497|
+   498|                    // Brand
+   499|                    html += getSpecRow('Brand', products.map(function(p) {
+   500|                        return p.brand || p.brand_name || '-';
+   501|                    }));
+   502|
+   503|                    // Availability
+   504|                    html += getSpecRow('Availability', products.map(function(p) {
+   505|                        if (p.in_stock === false) return '<span style="color:#e74c3c;">Out of Stock</span>';
+   506|                        return '<span style="color:#27ae60;">In Stock</span>';
+   507|                    }));
+   508|
+   509|                    // Shipping
+   510|                    html += getSpecRow('Shipping', products.map(function(p) {
+   511|                        return p.shipping_info || p.shipping || 'Standard';
+   512|                    }));
+   513|
+   514|                    // Price comparison section
+   515|                    html += '<tr class="category-header"><td colspan="' + (products.length + 1) + '"><i class="fas fa-dollar-sign"></i> Pricing</td></tr>';
+   516|
+   517|                    // Price
+   518|                    html += getSpecRow('Price', products.map(function(p) {
+   519|                        return formatPrice(p.price);
+   520|                    }), products.map(function(p) { return Number(p.price || 0) === minPrice; }));
+   521|
+   522|                    // Original Price
+   523|                    html += getSpecRow('Original Price', products.map(function(p) {
+   524|                        return p.original_price ? formatPrice(p.original_price) : '-';
+   525|                    }));
+   526|
+   527|                    // Discount
+   528|                    html += getSpecRow('Discount', products.map(function(p) {
+   529|                        if (p.original_price && p.price) {
+   530|                            var discount = Math.round((1 - p.price / p.original_price) * 100);
+   531|                            if (discount > 0) {
+   532|                                return '<span style="color:#e74c3c;font-weight:700;">-' + discount + '%</span>';
+   533|                            }
+   534|                        }
+   535|                        return '-';
+   536|                    }));
+   537|
+   538|                    // Sales volume
+   539|                    html += getSpecRow('Sales Volume', products.map(function(p) {
+   540|                        var sv = p.sales_volume || p.sold_count || 0;
+   541|                        if (sv >= 1000) {
+   542|                            return (sv / 1000).toFixed(1) + 'K';
+   543|                        }
+   544|                        return sv || 0;
+   545|                    }));
+   546|
+   547|                    // Performance section
+   548|                    html += '<tr class="category-header"><td colspan="' + (products.length + 1) + '"><i class="fas fa-chart-bar"></i> Performance</td></tr>';
+   549|
+   550|                    // Rating
+   551|                    html += getSpecRow('Rating', products.map(function(p) {
+   552|                        var r = p.rating || 0;
+   553|                        return renderStars(r) + ' ' + r.toFixed(1);
+   554|                    }), products.map(function(p) { return Number(p.rating || 0) >= maxRating; }));
+   555|
+   556|                    // Review count
+   557|                    html += getSpecRow('Reviews', products.map(function(p) {
+   558|                        var rc = p.review_count || 0;
+   559|                        if (rc >= 1000) return (rc / 1000).toFixed(1) + 'K';
+   560|                        return rc || 0;
+   561|                    }));
+   562|
+   563|                    // Score
+   564|                    html += getSpecRow('Score', products.map(function(p) {
+   565|                        return p.score !== undefined ? p.score.toFixed(1) : '-';
+   566|                    }), products.map(function(p) { return p.score !== undefined; }));
+   567|
+   568|                    // Grade
+   569|                    html += getSpecRow('Grade', products.map(function(p) {
+   570|                        if (p.grade) {
+   571|                            var color = p.grade === 'A+' || p.grade === 'A' ? '#27ae60' : (p.grade === 'B' || p.grade === 'B+' ? '#f39c12' : '#e74c3c');
+   572|                            return '<span style="color:' + color + ';font-weight:700;">' + p.grade + '</span>';
+   573|                        }
+   574|                        return '-';
+   575|                    }));
+   576|
+   577|                    // Recommendation
+   578|                    html += getSpecRow('Recommendation', products.map(function(p) {
+   579|                        if (p.recommendation) {
+   580|                            return '<span style="color:#667eea;">' + p.recommendation + '</span>';
+   581|                        }
+   582|                        return '-';
+   583|                    }));
+   584|
+   585|                    // Best Price tag
+   586|                    html += getSpecRow('Best Value', products.map(function(p) {
+   587|                        var isMin = Number(p.price || 0) === minPrice;
+   588|                        return isMin ? '<span class="compare-badge badge-best">Best Price</span>' :
+   589|                               (Number(p.price || 0) === maxPrice ? '<span class="compare-badge badge-low">Highest</span>' :
+   590|                                '<span class="compare-badge badge-medium">Mid</span>');
+   591|                    }));
+   592|
+   593|                    html += '</tbody></table>';
+   594|                    document.getElementById('compareTableWrapper').innerHTML = html;
+   595|
+   596|                    // Event bindings for remove buttons
+   597|                    document.querySelectorAll('.remove-product').forEach(function(btn) {
+   598|                        btn.addEventListener('click', function() {
+   599|                            var id = this.getAttribute('data-product-id');
+   600|                            window.CompareSystem.remove(id);
+   601|                            // Re-render
+   602|                            init();
+   603|                        });
+   604|                    });
+   605|
+   606|                    // Add to cart buttons
+   607|                    document.querySelectorAll('.compare-add-cart').forEach(function(btn) {
+   608|                        btn.addEventListener('click', function() {
+   609|                            var id = this.getAttribute('data-product-id');
+   610|                            var product = window.CompareSystem.getProduct(id);
+   611|                            if (product && typeof window.addToCart === 'function') {
+   612|                                window.addToCart(product);
+   613|                            } else {
+   614|                                CompareSystem.showToast('Added to cart!', 'success');
+   615|                            }
+   616|                        });
+   617|                    });
+   618|
+   619|                    // Clear button
+   620|                    document.getElementById('btnClearCompare').onclick = function() {
+   621|                        window.CompareSystem.clear();
+   622|                        init();
+   623|                    };
+   624|
+   625|                }, 500);
+   626|            }
+   627|
+   628|            if (document.readyState === 'loading') {
+   629|                document.addEventListener('DOMContentLoaded', init);
+   630|            } else {
+   631|                init();
+   632|            }
+   633|        })();
+   634|    </script>
+   635|  <script src="js/email-capture.js"></script>
 </body>
-</html>
+   636|</html>
+   637|

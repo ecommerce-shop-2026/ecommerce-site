@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>邮件订阅管理 — ShopEasy</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  :root { --bg:#f5f7fa; --card:#fff; --accent:#2563eb; --danger:#dc2626; --text:#1e293b; --sub:#64748b; --border:#e2e8f0; }
+  body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); min-height:100vh; margin:0; }
+  .admin-header { background:var(--card); border-bottom:1px solid var(--border); padding:16px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .admin-header h1 { margin:0; font-size:20px; color:var(--text); }
+  .admin-header .stats { color:var(--sub); font-size:14px; }
+  .container { max-width:1100px; margin:0 auto; padding:24px; }
+  .toolbar { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .btn { padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-size:14px; font-weight:500; transition:all .2s; }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { background:#1d4ed8; }
+  .btn-outline { background:var(--card); border:1px solid var(--border); color:var(--text); }
+  .btn-outline:hover { background:var(--bg); }
+  .btn-danger { background:var(--danger); color:#fff; }
+  .btn-danger:hover { background:#b91c1c; }
+  .btn-sm { padding:6px 14px; font-size:13px; }
+  .btn-ghost { background:transparent; border:none; color:var(--danger); cursor:pointer; padding:4px 8px; }
+  .btn-ghost:hover { background:#fef2f2; border-radius:6px; }
+  .email-table-wrap { background:var(--card); border-radius:12px; border:1px solid var(--border); overflow:hidden; }
+  .email-table { width:100%; border-collapse:collapse; }
+  .email-table th { text-align:left; padding:12px 16px; font-size:13px; color:var(--sub); font-weight:600; border-bottom:1px solid var(--border); background:var(--bg); }
+  .email-table td { padding:12px 16px; font-size:14px; border-bottom:1px solid var(--border); color:var(--text); }
+  .email-table tr:last-child td { border-bottom:none; }
+  .email-table tr:hover td { background:#f8fafc; }
+  .email-table .source-tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:12px; background:#dbeafe; color:#1d4ed8; }
+  .email-table .source-tag.checkout { background:#fef3c7; color:#92400e; }
+  .checkbox-cell { width:40px; text-align:center; }
+  .empty-state { text-align:center; padding:60px 20px; color:var(--sub); }
+  .empty-state .icon { font-size:48px; margin-bottom:16px; }
+  .toast { position:fixed; bottom:24px; right:24px; background:var(--text); color:#fff; padding:12px 24px; border-radius:8px; font-size:14px; opacity:0; transition:opacity .3s; z-index:999; }
+  .toast.show { opacity:1; }
+  .import-area { margin-top:20px; padding:24px; background:var(--card); border-radius:12px; border:1px dashed var(--border); text-align:center; }
+  .import-area textarea { width:100%; max-width:500px; height:120px; border:1px solid var(--border); border-radius:8px; padding:12px; font-size:14px; resize:vertical; }
+  .select-all-row { padding:8px 16px; border-bottom:1px solid var(--border); display:flex; gap:16px; align-items:center; }
+  .select-all-row label { font-size:13px; color:var(--sub); cursor:pointer; }
+</style>
+</head>
+<body>
+
+<header class="admin-header">
+  <h1>📧 邮件订阅管理</h1>
+  <div class="stats">共 <strong id="emailCount">0</strong> 位订阅者</div>
+</header>
+
+<div class="container">
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="exportCSV()">📥 导出 CSV</button>
+    <button class="btn btn-outline" onclick="copyAll()">📋 复制全部邮箱</button>
+    <button class="btn btn-outline" onclick="document.getElementById('importPanel').hidden = !document.getElementById('importPanel').hidden">📤 批量导入</button>
+    <button class="btn btn-danger btn-sm" onclick="deleteSelected()" style="margin-left:auto">🗑 删除选中</button>
+  </div>
+
+  <div id="importPanel" class="import-area" hidden>
+    <h4>批量导入邮箱</h4>
+    <p style="color:var(--sub);font-size:13px">每行一个邮箱地址，或用逗号分隔</p>
+    <textarea id="importText" placeholder="user1@example.com&#10;user2@example.com"></textarea>
+    <br><br>
+    <button class="btn btn-primary" onclick="importEmails()">导入</button>
+    <button class="btn btn-outline" onclick="document.getElementById('importPanel').hidden=true">取消</button>
+  </div>
+
+  <div class="email-table-wrap">
+    <div class="select-all-row">
+      <label><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"> 全选</label>
+      <span id="selectedCount" style="color:var(--sub);font-size:13px"></span>
+    </div>
+    <table class="email-table">
+      <thead>
+        <tr>
+          <th class="checkbox-cell"></th>
+          <th>邮箱</th>
+          <th>订阅时间</th>
+          <th>来源</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="emailTableBody">
+        <tr class="empty-state">
+          <td colspan="5">
+            <div class="icon">📭</div>
+            <div>暂无订阅者。用户订阅后会显示在这里。</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  const STORAGE_KEY = 'shopeasy_newsletter_emails';
+
+  function getEmails() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { return []; }
+  }
+
+  function saveEmails(emails) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(emails));
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2000);
+  }
+
+  function render() {
+    var emails = getEmails();
+    var tbody = document.getElementById('emailTableBody');
+    document.getElementById('emailCount').textContent = emails.length;
+
+    if (emails.length === 0) {
+      tbody.innerHTML = '<tr class="empty-state"><td colspan="5"><div class="icon">📭</div><div>暂无订阅者。用户订阅后会显示在这里。</div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = emails.map(function(e, i) {
+      var source = e.source || 'popup';
+      var tagClass = source === 'checkout' ? 'checkout' : '';
+      return '<tr>' +
+        '<td class="checkbox-cell"><input type="checkbox" class="email-check" data-index="' + i + '"></td>' +
+        '<td>' + escapeHtml(e.email) + '</td>' +
+        '<td>' + escapeHtml(e.date || '未知') + '</td>' +
+        '<td><span class="source-tag ' + tagClass + '">' + escapeHtml(source) + '</span></td>' +
+        '<td><button class="btn-ghost" onclick="deleteOne(' + i + ')">删除</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  window.toggleSelectAll = function(cb) {
+    document.querySelectorAll('.email-check').forEach(function(el) {
+      el.checked = cb.checked;
+    });
+    updateSelectedCount();
+  };
+
+  window.deleteOne = function(index) {
+    var emails = getEmails();
+    emails.splice(index, 1);
+    saveEmails(emails);
+    render();
+    showToast('已删除');
+  };
+
+  window.deleteSelected = function() {
+    var emails = getEmails();
+    var checks = document.querySelectorAll('.email-check:checked');
+    if (checks.length === 0) { showToast('请先选中邮箱'); return; }
+    if (!confirm('确定删除选中的 ' + checks.length + ' 个邮箱？')) return;
+
+    var indexes = Array.from(checks).map(function(c) { return parseInt(c.dataset.index); }).sort(function(a,b){ return b-a; });
+    indexes.forEach(function(i) { emails.splice(i, 1); });
+    saveEmails(emails);
+    render();
+    document.getElementById('selectAll').checked = false;
+    showToast('已删除 ' + indexes.length + ' 个邮箱');
+  };
+
+  window.exportCSV = function() {
+    var emails = getEmails();
+    if (emails.length === 0) { showToast('没有数据可导出'); return; }
+    var csv = 'email,date,source\n' + emails.map(function(e) {
+      return e.email + ',' + (e.date || '') + ',' + (e.source || 'popup');
+    }).join('\n');
+    var blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'shopeasy-emails.csv'; a.click();
+    URL.revokeObjectURL(url);
+    showToast('CSV 已下载');
+  };
+
+  window.copyAll = function() {
+    var emails = getEmails();
+    if (emails.length === 0) { showToast('没有数据可复制'); return; }
+    var list = emails.map(function(e){ return e.email; }).join('\n');
+    navigator.clipboard.writeText(list).then(function() {
+      showToast('已复制 ' + emails.length + ' 个邮箱到剪贴板');
+    });
+  };
+
+  window.importEmails = function() {
+    var raw = document.getElementById('importText').value.trim();
+    if (!raw) return;
+    var addrs = raw.split(/[\n,]+/).map(function(s){ return s.trim(); }).filter(function(s){ return s.includes('@') && s.includes('.'); });
+    if (addrs.length === 0) { showToast('未识别到有效邮箱'); return; }
+
+    var emails = getEmails();
+    var existing = new Set(emails.map(function(e){ return e.email.toLowerCase(); }));
+    var added = 0;
+    var now = new Date().toISOString().replace('T',' ').substring(0,19);
+    addrs.forEach(function(addr) {
+      if (!existing.has(addr.toLowerCase())) {
+        emails.push({email: addr, date: now, source: 'import'});
+        existing.add(addr.toLowerCase());
+        added++;
+      }
+    });
+    saveEmails(emails);
+    render();
+    document.getElementById('importPanel').hidden = true;
+    document.getElementById('importText').value = '';
+    showToast('成功导入 ' + added + ' 个新邮箱');
+  };
+
+  function updateSelectedCount() {
+    var n = document.querySelectorAll('.email-check:checked').length;
+    document.getElementById('selectedCount').textContent = n > 0 ? '已选 ' + n + ' 个' : '';
+  }
+
+  document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('email-check')) updateSelectedCount();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

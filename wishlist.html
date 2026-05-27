@@ -1,299 +1,284 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Wishlist - ShopEasy</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Error Diagnostics -->
-    <script src="js/error-diagnostics.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="canonical" href="https://shop2026easy.com/wishlist.html">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#FFD700">
-
-    <meta name="description" content="Your wishlist - ShopEasy">
-    <meta name="keywords" content="wishlist, saved items, ShopEasy, favorites">
-    <meta name="robots" content="noindex, follow">
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="My Wishlist - ShopEasy">
-    <meta property="og:description" content="Your saved items and wishlist on ShopEasy">
-    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
-    <meta property="og:url" content="https://shop2026easy.com/wishlist.html">
-    <meta property="og:type" content="website">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="My Wishlist - ShopEasy">
-    <meta name="twitter:description" content="Your saved items and wishlist on ShopEasy">
-    <meta name="twitter:image" content="https://shop2026easy.com/images/twitter-card.jpg">
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "My Wishlist - ShopEasy",
-        "url": "https://shop2026easy.com/wishlist.html",
-        "description": "Your saved items and wishlist on ShopEasy.",
-        "breadcrumb": {
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://shop2026easy.com/"
-            },{
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Wishlist",
-                "item": "https://shop2026easy.com/wishlist.html"
-            }]
-        }
-    }
-    </script>
-    <!-- Cloudflare Web Analytics -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-link">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="logo-text">ShopEasy</span>
-                </a>
-            </div>
-            
-            <div class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
-                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
-                    <li class="nav-item"><a href="index.html#returns" class="nav-link"><i class="fas fa-exchange-alt"></i> Returns</a></li>
-                    <li class="nav-item"><a href="wishlist.html" class="nav-link active"><i class="fas fa-heart"></i> Wishlist</a></li>
-                </ul>
-            </div>
-            
-            <div class="nav-actions">
-                <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
-                    <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
-                    <div class="search-results" id="searchResults"></div>
-                </div>
-                <a href="wishlist.html" class="btn-wishlist-nav">
-                    <i class="fas fa-heart"></i>
-                    <span class="wishlist-count">0</span>
-                </a>
-                <a href="cart.html" class="btn-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
-                </a>
-                <button class="btn-login">Sign In</button>
-                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register">Register</button>
-            </div>
-            
-            <button class="nav-toggle" id="navToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Wishlist Section -->
-    <section class="section wishlist-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title"><i class="fas fa-heart"></i> My Wishlist</h2>
-                <p class="section-subtitle">
-                    <span id="wishlist-count-display">0</span> item(s) in your wishlist
-                </p>
-            </div>
-            
-            <div class="wishlist-grid" id="wishlistGrid">
-                <!-- Wishlist items will be loaded dynamically -->
-                <div class="empty-wishlist" id="emptyWishlist">
-                    <i class="fas fa-heart"></i>
-                    <h3>Your wishlist is empty</h3>
-                    <p>Start adding items you love to your wishlist!</p>
-                    <a href="index.html#products" class="btn-browse-products">
-                        <i class="fas fa-shopping-bag"></i> Browse Products
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <a href="index.html" class="logo-link">
-                        <i class="fas fa-shopping-bag"></i>
-                        <span class="logo-text">ShopEasy</span>
-                    </a>
-                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
-                </div>
-                
-                <div class="footer-links">
-                    <div class="link-group">
-                        <h4 class="link-title">Shop</h4>
-                        <a href="index.html#products" class="footer-link">All Products</a>
-                        <a href="index.html#categories" class="footer-link">Categories</a>
-                        <a href="payment.html" class="footer-link">Payment Options</a>
-                    </div>
-                    
-                    <div class="link-group">
-                        <h4 class="link-title">Support</h4>
-                        <a href="index.html#returns" class="footer-link">Returns & Refunds</a>
-                        <a href="#" class="footer-link">Shipping Info</a>
-                        <a href="#" class="footer-link">FAQ</a>
-                    </div>
-                    
-                    <div class="link-group">
-                        <h4 class="link-title">Legal</h4>
-                        <a href="#" class="footer-link">Privacy Policy</a>
-                        <a href="#" class="footer-link">Terms of Service</a>
-                        <a href="#" class="footer-link">Cookie Policy</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">&copy; 2024 ShopEasy. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="js/ux-enhancements.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/products_data.js"></script>
-    <script src="js/cart-system.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/reviews.js"></script>
-    <script src="js/wishlist.js"></script>
-    <script>
-    // Wishlist page specific logic
-    document.addEventListener('DOMContentLoaded', function() {
-        loadWishlistPage();
-    });
-
-    function loadWishlistPage() {
-        var grid = document.getElementById('wishlistGrid');
-        var emptyMsg = document.getElementById('emptyWishlist');
-        
-        if (!grid) return;
-        
-        // Get wishlist products using the API
-        var wishlistProducts = [];
-        if (typeof window.wishlist !== 'undefined') {
-            wishlistProducts = window.wishlist.getProducts();
-        }
-        
-        // Clear existing items (keep empty message)
-        var existingCards = grid.querySelectorAll('.wishlist-item-card');
-        existingCards.forEach(function(c) { c.remove(); });
-        
-        if (wishlistProducts.length === 0) {
-            emptyMsg.style.display = 'block';
-            return;
-        }
-        
-        emptyMsg.style.display = 'none';
-        
-        wishlistProducts.forEach(function(product) {
-            var card = document.createElement('div');
-            card.className = 'product-card wishlist-item-card';
-            card.setAttribute('data-id', product.id);
-            
-            var imgSrc = product.images && product.images[0] ? product.images[0] : '';
-            var iconHtml = '';
-            if (!imgSrc && product.icon) {
-                iconHtml = '<i class="' + product.icon + '" style="font-size:48px;color:#9ca3af;"></i>';
-            }
-            
-            card.innerHTML = 
-                '<div class="product-image" onclick="viewProductDetail(' + product.id + ')">' +
-                    (imgSrc ? '<img src="' + imgSrc + '" alt="' + product.name + '" loading="lazy" class="product-img">' : 
-                              '<div style="display:flex;align-items:center;justify-content:center;height:100%;">' + iconHtml + '</div>') +
-                '</div>' +
-                '<div class="product-info">' +
-                    '<h3 class="product-title" onclick="viewProductDetail(' + product.id + ')">' + product.name + '</h3>' +
-                    '<div class="product-category">' + (product.category || '') + '</div>' +
-                    '<div class="product-price">$' + (product.price ? product.price.toFixed(2) : '0.00') + '</div>' +
-                    '<div class="product-rating">' +
-                        createStarRating(product.rating || 0) +
-                        '<span class="rating-score">' + (product.rating || '') + '</span>' +
-                    '</div>' +
-                    '<div class="wishlist-item-actions">' +
-                        '<button class="btn-add-to-cart" data-id="' + product.id + '">' +
-                            '<i class="fas fa-cart-plus"></i> Add to Cart' +
-                        '</button>' +
-                        '<button class="btn-wishlist wishlist-remove-btn" data-id="' + product.id + '">' +
-                            '<i class="fas fa-heart"></i> Remove' +
-                        '</button>' +
-                    '</div>' +
-                '</div>';
-            
-            // Insert before empty message
-            grid.insertBefore(card, emptyMsg);
-        });
-        
-        // Update count display
-        var countDisplay = document.getElementById('wishlist-count-display');
-        if (countDisplay && typeof window.wishlist !== 'undefined') {
-            countDisplay.textContent = window.wishlist.count;
-        }
-    }
-
-    // Override createStarRating in case it's not available from main.js
-    if (typeof createStarRating !== 'function') {
-        function createStarRating(rating) {
-            var stars = '';
-            var fullStars = Math.floor(rating);
-            var hasHalfStar = rating % 1 >= 0.5;
-            for (var i = 0; i < fullStars; i++) { stars += '<i class="fas fa-star"></i>'; }
-            if (hasHalfStar) { stars += '<i class="fas fa-star-half-alt"></i>'; }
-            var emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-            for (var i = 0; i < emptyStars; i++) { stars += '<i class="far fa-star"></i>'; }
-            return stars;
-        }
-    }
-
-    // Listen for wishlist changes and refresh the page
-    document.addEventListener('click', function(e) {
-        // If a wishlist remove button is clicked, the wishlist.js toggle handles storage
-        // After a short delay, refresh the display
-        if (e.target.closest('.wishlist-remove-btn') || e.target.closest('.btn-wishlist')) {
-            setTimeout(loadWishlistPage, 100);
-        }
-    });
-
-    // Re-load wishlist page when returning to it
-    window.addEventListener('focus', function() {
-        setTimeout(loadWishlistPage, 50);
-    });
-    </script>
-
-    <!-- PWA -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
-    </script>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|    <title>My Wishlist - ShopEasy</title>
+     7|    <link rel="stylesheet" href="css/style.css">
+     8|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     9|    <!-- Error Diagnostics -->
+    10|    <script src="js/error-diagnostics.js"></script>
+    11|    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    12|    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    13|    <meta name="description" content="Your wishlist - ShopEasy">
+    14|    <meta name="keywords" content="wishlist, saved items, ShopEasy, favorites">
+    15|    <meta name="robots" content="noindex, follow">
+    16|    <!-- Open Graph Tags -->
+    17|    <meta property="og:title" content="My Wishlist - ShopEasy">
+    18|    <meta property="og:description" content="Your saved items and wishlist on ShopEasy">
+    19|    <meta property="og:image" content="https://shop2026easy.com/images/og-image.jpg">
+    20|    <meta property="og:url" content="https://shop2026easy.com/wishlist.html">
+    21|    <meta property="og:type" content="website">
+    22|    <!-- Twitter Card -->
+    23|    <meta name="twitter:card" content="summary_large_image">
+    24|    <meta name="twitter:title" content="My Wishlist - ShopEasy">
+    25|    <meta name="twitter:description" content="Your saved items and wishlist on ShopEasy">
+    26|    <meta name="twitter:image" content="https://shop2026easy.com/images/twitter-card.jpg">
+    27|    <!-- JSON-LD Structured Data -->
+    28|    <script type="application/ld+json">
+    29|    {
+    30|        "@context": "https://schema.org",
+    31|        "@type": "WebPage",
+    32|        "name": "My Wishlist - ShopEasy",
+    33|        "url": "https://shop2026easy.com/wishlist.html",
+    34|        "description": "Your saved items and wishlist on ShopEasy.",
+    35|        "breadcrumb": {
+    36|            "@type": "BreadcrumbList",
+    37|            "itemListElement": [{
+    38|                "@type": "ListItem",
+    39|                "position": 1,
+    40|                "name": "Home",
+    41|                "item": "https://shop2026easy.com/"
+    42|            },{
+    43|                "@type": "ListItem",
+    44|                "position": 2,
+    45|                "name": "Wishlist",
+    46|                "item": "https://shop2026easy.com/wishlist.html"
+    47|            }]
+    48|        }
+    49|    }
+    50|    </script>
+    51|</head>
+    52|<body>
+    53|    <!-- Navigation -->
+    54|    <nav class="navbar">
+    55|        <div class="nav-container">
+    56|            <div class="nav-logo">
+    57|                <a href="index.html" class="logo-link">
+    58|                    <i class="fas fa-shopping-bag"></i>
+    59|                    <span class="logo-text">ShopEasy</span>
+    60|                </a>
+    61|            </div>
+    62|            
+    63|            <div class="nav-menu">
+    64|                <ul class="nav-list">
+    65|                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+    66|                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+    67|                    <li class="nav-item"><a href="index.html#categories" class="nav-link"><i class="fas fa-list"></i> Categories</a></li>
+    68|                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+    69|                    <li class="nav-item"><a href="payment.html" class="nav-link"><i class="fas fa-credit-card"></i> Payment</a></li>
+    70|                    <li class="nav-item"><a href="index.html#returns" class="nav-link"><i class="fas fa-exchange-alt"></i> Returns</a></li>
+    71|                    <li class="nav-item"><a href="wishlist.html" class="nav-link active"><i class="fas fa-heart"></i> Wishlist</a></li>
+    72|                </ul>
+    73|            </div>
+    74|            
+    75|            <div class="nav-actions">
+    76|                <div class="search-container">
+    77|                    <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
+    78|                    <button class="btn-search" id="searchBtn"><i class="fas fa-search"></i></button>
+    79|                    <div class="search-results" id="searchResults"></div>
+    80|                </div>
+    81|                <a href="wishlist.html" class="btn-wishlist-nav">
+    82|                    <i class="fas fa-heart"></i>
+    83|                    <span class="wishlist-count">0</span>
+    84|                </a>
+    85|                <a href="#cart" class="btn-cart">
+    86|                    <i class="fas fa-shopping-cart"></i>
+    87|                    <span class="cart-count">0</span>
+    88|                </a>
+    89|                <button class="btn-login">Sign In</button>
+    90|                <button class="btn-register">Register</button>
+    91|            </div>
+    92|            
+    93|            <button class="nav-toggle" id="navToggle">
+    94|                <i class="fas fa-bars"></i>
+    95|            </button>
+    96|        </div>
+    97|    </nav>
+    98|
+    99|    <!-- Wishlist Section -->
+   100|    <section class="section wishlist-section">
+   101|        <div class="container">
+   102|            <div class="section-header">
+   103|                <h2 class="section-title"><i class="fas fa-heart"></i> My Wishlist</h2>
+   104|                <p class="section-subtitle">
+   105|                    <span id="wishlist-count-display">0</span> item(s) in your wishlist
+   106|                </p>
+   107|            </div>
+   108|            
+   109|            <div class="wishlist-grid" id="wishlistGrid">
+   110|                <!-- Wishlist items will be loaded dynamically -->
+   111|                <div class="empty-wishlist" id="emptyWishlist">
+   112|                    <i class="fas fa-heart"></i>
+   113|                    <h3>Your wishlist is empty</h3>
+   114|                    <p>Start adding items you love to your wishlist!</p>
+   115|                    <a href="index.html#products" class="btn-browse-products">
+   116|                        <i class="fas fa-shopping-bag"></i> Browse Products
+   117|                    </a>
+   118|                </div>
+   119|            </div>
+   120|        </div>
+   121|    </section>
+   122|
+   123|    <!-- Footer -->
+   124|    <footer class="footer">
+   125|        <div class="container">
+   126|            <div class="footer-content">
+   127|                <div class="footer-logo">
+   128|                    <a href="index.html" class="logo-link">
+   129|                        <i class="fas fa-shopping-bag"></i>
+   130|                        <span class="logo-text">ShopEasy</span>
+   131|                    </a>
+   132|                    <p class="footer-desc">Your trusted online shopping destination since 2024</p>
+   133|                </div>
+   134|                
+   135|                <div class="footer-links">
+   136|                    <div class="link-group">
+   137|                        <h4 class="link-title">Shop</h4>
+   138|                        <a href="index.html#products" class="footer-link">All Products</a>
+   139|                        <a href="index.html#categories" class="footer-link">Categories</a>
+   140|                        <a href="payment.html" class="footer-link">Payment Options</a>
+   141|                    </div>
+   142|                    
+   143|                    <div class="link-group">
+   144|                        <h4 class="link-title">Support</h4>
+   145|                        <a href="index.html#returns" class="footer-link">Returns & Refunds</a>
+   146|                        <a href="#" class="footer-link">Shipping Info</a>
+   147|                        <a href="#" class="footer-link">FAQ</a>
+   148|                    </div>
+   149|                    
+   150|                    <div class="link-group">
+   151|                        <h4 class="link-title">Legal</h4>
+   152|                        <a href="#" class="footer-link">Privacy Policy</a>
+   153|                        <a href="#" class="footer-link">Terms of Service</a>
+   154|                        <a href="#" class="footer-link">Cookie Policy</a>
+   155|                    </div>
+   156|                </div>
+   157|            </div>
+   158|            
+   159|            <div class="footer-bottom">
+   160|                <p class="copyright">&copy; 2024 ShopEasy. All rights reserved.</p>
+   161|                <div class="social-links">
+   162|                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+   163|                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+   164|                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+   165|                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+   166|                </div>
+   167|            </div>
+   168|        </div>
+   169|    </footer>
+   170|
+   171|    <!-- JavaScript -->
+   172|    <script src="js/ux-enhancements.js"></script>
+   173|    <script src="js/main.js"></script>
+   174|    <script src="js/products_data.js"></script>
+   175|    <script src="js/cart-system.js"></script>
+   176|    <script src="js/search.js"></script>
+   177|    <script src="js/reviews.js"></script>
+   178|    <script src="js/wishlist.js"></script>
+   179|    <script>
+   180|    // Wishlist page specific logic
+   181|    document.addEventListener('DOMContentLoaded', function() {
+   182|        loadWishlistPage();
+   183|    });
+   184|
+   185|    function loadWishlistPage() {
+   186|        var grid = document.getElementById('wishlistGrid');
+   187|        var emptyMsg = document.getElementById('emptyWishlist');
+   188|        
+   189|        if (!grid) return;
+   190|        
+   191|        // Get wishlist products using the API
+   192|        var wishlistProducts = [];
+   193|        if (typeof window.wishlist !== 'undefined') {
+   194|            wishlistProducts = window.wishlist.getProducts();
+   195|        }
+   196|        
+   197|        // Clear existing items (keep empty message)
+   198|        var existingCards = grid.querySelectorAll('.wishlist-item-card');
+   199|        existingCards.forEach(function(c) { c.remove(); });
+   200|        
+   201|        if (wishlistProducts.length === 0) {
+   202|            emptyMsg.style.display = 'block';
+   203|            return;
+   204|        }
+   205|        
+   206|        emptyMsg.style.display = 'none';
+   207|        
+   208|        wishlistProducts.forEach(function(product) {
+   209|            var card = document.createElement('div');
+   210|            card.className = 'product-card wishlist-item-card';
+   211|            card.setAttribute('data-id', product.id);
+   212|            
+   213|            var imgSrc = product.images && product.images[0] ? product.images[0] : '';
+   214|            var iconHtml = '';
+   215|            if (!imgSrc && product.icon) {
+   216|                iconHtml = '<i class="' + product.icon + '" style="font-size:48px;color:#9ca3af;"></i>';
+   217|            }
+   218|            
+   219|            card.innerHTML = 
+   220|                '<div class="product-image" onclick="viewProductDetail(' + product.id + ')">' +
+   221|                    (imgSrc ? '<img src="' + imgSrc + '" alt="' + product.name + '" loading="lazy" class="product-img">' : 
+   222|                              '<div style="display:flex;align-items:center;justify-content:center;height:100%;">' + iconHtml + '</div>') +
+   223|                '</div>' +
+   224|                '<div class="product-info">' +
+   225|                    '<h3 class="product-title" onclick="viewProductDetail(' + product.id + ')">' + product.name + '</h3>' +
+   226|                    '<div class="product-category">' + (product.category || '') + '</div>' +
+   227|                    '<div class="product-price">$' + (product.price ? product.price.toFixed(2) : '0.00') + '</div>' +
+   228|                    '<div class="product-rating">' +
+   229|                        createStarRating(product.rating || 0) +
+   230|                        '<span class="rating-score">' + (product.rating || '') + '</span>' +
+   231|                    '</div>' +
+   232|                    '<div class="wishlist-item-actions">' +
+   233|                        '<button class="btn-add-to-cart" data-id="' + product.id + '">' +
+   234|                            '<i class="fas fa-cart-plus"></i> Add to Cart' +
+   235|                        '</button>' +
+   236|                        '<button class="btn-wishlist wishlist-remove-btn" data-id="' + product.id + '">' +
+   237|                            '<i class="fas fa-heart"></i> Remove' +
+   238|                        '</button>' +
+   239|                    '</div>' +
+   240|                '</div>';
+   241|            
+   242|            // Insert before empty message
+   243|            grid.insertBefore(card, emptyMsg);
+   244|        });
+   245|        
+   246|        // Update count display
+   247|        var countDisplay = document.getElementById('wishlist-count-display');
+   248|        if (countDisplay && typeof window.wishlist !== 'undefined') {
+   249|            countDisplay.textContent = window.wishlist.count;
+   250|        }
+   251|    }
+   252|
+   253|    // Override createStarRating in case it's not available from main.js
+   254|    if (typeof createStarRating !== 'function') {
+   255|        function createStarRating(rating) {
+   256|            var stars = '';
+   257|            var fullStars = Math.floor(rating);
+   258|            var hasHalfStar = rating % 1 >= 0.5;
+   259|            for (var i = 0; i < fullStars; i++) { stars += '<i class="fas fa-star"></i>'; }
+   260|            if (hasHalfStar) { stars += '<i class="fas fa-star-half-alt"></i>'; }
+   261|            var emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+   262|            for (var i = 0; i < emptyStars; i++) { stars += '<i class="far fa-star"></i>'; }
+   263|            return stars;
+   264|        }
+   265|    }
+   266|
+   267|    // Listen for wishlist changes and refresh the page
+   268|    document.addEventListener('click', function(e) {
+   269|        // If a wishlist remove button is clicked, the wishlist.js toggle handles storage
+   270|        // After a short delay, refresh the display
+   271|        if (e.target.closest('.wishlist-remove-btn') || e.target.closest('.btn-wishlist')) {
+   272|            setTimeout(loadWishlistPage, 100);
+   273|        }
+   274|    });
+   275|
+   276|    // Re-load wishlist page when returning to it
+   277|    window.addEventListener('focus', function() {
+   278|        setTimeout(loadWishlistPage, 50);
+   279|    });
+   280|    </script>
+   281|  <script src="js/email-capture.js"></script>
 </body>
-</html>
+   282|</html>
+   283|

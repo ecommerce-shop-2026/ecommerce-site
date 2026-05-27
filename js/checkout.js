@@ -54,6 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Payment method switch — toggle between card form and PayPal
+    const paymentRadios = document.querySelectorAll('input[name="payment"]');
+    const cardForm = document.querySelector('.card-form');
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            handlePaymentMethodSwitch(this.value);
+            // Update active label styling
+            document.querySelectorAll('.payment-option').forEach(l => l.classList.remove('active'));
+            this.closest('.payment-option').classList.add('active');
+        });
+    });
+    
     // Form实时验证提示 — add validation styling on blur
     const formInputs = document.querySelectorAll('.checkout-form input, .checkout-form select');
     formInputs.forEach(input => {
@@ -129,6 +141,7 @@ function loadOrderSummary() {
     let shippingCost = 0;
     if (selectedShipping) {
         shippingMethod = selectedShipping.value;
+        // 配送费用计算: standard=free, express=$9.99, overnight=$19.99
         switch(shippingMethod) {
             case 'express': shippingCost = 9.99; break;
             case 'overnight': shippingCost = 19.99; break;
@@ -192,7 +205,7 @@ function getCartData() {
     } else {
         // Fallback to localStorage
         try {
-            const saved = localStorage.getItem('shopEasyCart');
+            const saved = localStorage.getItem('ShopEasyCart');
             if (saved) {
                 const parsed = JSON.parse(saved);
                 if (Array.isArray(parsed)) {
@@ -211,7 +224,150 @@ function getCartData() {
     return cartData;
 }
 
-// Process payment — tries Stripe first, falls back to local simulation
+/**
+ * Handle payment method switching — show/hide card form vs PayPal buttons
+ */
+function handlePaymentMethodSwitch(method) {
+    var cardForm = document.querySelector('.card-form');
+    var paypalContainer = document.getElementById('paypal-button-container');
+    
+    if (method === 'paypal') {
+        // Hide card form, show PayPal
+        if (cardForm) cardForm.style.display = 'none';
+        
+        // Get cart data for PayPal
+        var cartData = getCartData();
+        if (cartData.items.length === 0) {
+            showCheckoutNotification('Your cart is empty. Add items before checkout.', 'error');
+            // Switch back to card
+            var cardRadio = document.querySelector('input[name="payment"][value="card"]');
+            if (cardRadio) cardRadio.checked = true;
+            handlePaymentMethodSwitch('card');
+            return;
+        }
+        
+        // Calculate totals
+        var selectedShipping = document.querySelector('input[name="shipping"]:checked');
+        var shippingCost = 0;
+        var shippingLabel = 'Standard Shipping';
+        if (selectedShipping) {
+            switch (selectedShipping.value) {
+                case 'express': shippingCost = 9.99; shippingLabel = 'Express Shipping'; break;
+                case 'overnight': shippingCost = 19.99; shippingLabel = 'Overnight Shipping'; break;
+            }
+        }
+        
+        var subtotal = cartData.total || 0;
+        var tax = subtotal * 0.08;
+        var total = subtotal + shippingCost + tax;
+        
+        var paypalOrderData = {
+            total: total,
+            subtotal: subtotal,
+            shipping: shippingCost,
+            tax: tax,
+            currency: 'USD',
+            orderDescription: 'AeroPet Modern Order - ' + cartData.items.length + ' item(s)',
+            items: cartData.items
+        };
+        
+        // Render PayPal button
+        if (typeof window.renderPayPalButton === 'function') {
+            window.renderPayPalButton(
+                'paypal-button-container',
+                paypalOrderData,
+                function onPayPalSuccess(result) {
+                    // Payment successful — create order and redirect
+                    completePayPalOrder(cartData, shippingCost, shippingLabel, subtotal, tax, total, result);
+                },
+                function onPayPalError(err) {
+                    showCheckoutNotification('PayPal payment failed: ' + (err.message || 'Unknown error'), 'error');
+                }
+            );
+        } else {
+            showCheckoutNotification('PayPal is not available. Please choose another payment method.', 'error');
+            // Switch back to card
+            var cardRadio2 = document.querySelector('input[name="payment"][value="card"]');
+            if (cardRadio2) { cardRadio2.checked = true; handlePaymentMethodSwitch('card'); }
+        }
+        
+    } else {
+        // Show card form, hide PayPal
+        if (cardForm) cardForm.style.display = 'block';
+        if (typeof window.hidePayPalButton === 'function') {
+            window.hidePayPalButton('paypal-button-container');
+        }
+    }
+}
+
+/**
+ * Complete PayPal order — save to localStorage and redirect
+ */
+function completePayPalOrder(cartData, shippingCost, shippingLabel, subtotal, tax, total, paypalResult) {
+    var email = document.getElementById('email');
+    var firstName = document.getElementById('firstName');
+    var lastName = document.getElementById('lastName');
+    var address = document.getElementById('address');
+    var city = document.getElementById('city');
+    var zip = document.getElementById('zip');
+    var country = document.getElementById('country');
+    
+    // Build customer info
+    var customer = {
+        email: (email && email.value) || paypalResult.payerEmail || '',
+        firstName: (firstName && firstName.value) || paypalResult.payerName.split(' ')[0] || '',
+        lastName: (lastName && lastName.value) || paypalResult.payerName.split(' ').slice(1).join(' ') || '',
+        address: (address && address.value) || '',
+        city: (city && city.value) || '',
+        zip: (zip && zip.value) || '',
+        country: (country && country.value) || '',
+        phone: ''
+    };
+    
+    // Generate order ID
+    var now = new Date();
+    var dateStr = now.getFullYear().toString() +
+        String(now.getMonth() + 1).padStart(2, '0') +
+        String(now.getDate()).padStart(2, '0');
+    var randomStr = String(Math.floor(Math.random() * 999999)).padStart(6, '0');
+    var orderId = 'ORD-' + dateStr + '-' + randomStr;
+    
+    var order = {
+        id: orderId,
+        date: now.toISOString(),
+        items: cartData.items.map(function(item) { return Object.assign({}, item); }),
+        subtotal: subtotal,
+        shipping: shippingCost,
+        tax: tax,
+        total: total,
+        status: 'Processing',
+        shippingMethod: shippingLabel,
+        customer: customer,
+        payment: {
+            method: 'PayPal',
+            paypalOrderId: paypalResult.orderID,
+            paypalPayerId: paypalResult.payerID
+        }
+    };
+    
+    // Save order
+    // Save order
+    saveOrder(order);
+    saveLastOrder(order);
+    
+    // Sync to DSers
+    if (typeof window.dsersIntegration !== 'undefined' && window.dsersIntegration.syncOrder) {
+        window.dsersIntegration.syncOrder(order).then(function(r) {
+            if (r.success) console.log('DSers synced:', r.dsers_order_id);
+        }).catch(function(e) { console.warn('DSers sync:', e); });
+    }
+    
+    // Show confirmation and redirect
+    showCheckoutNotification('PayPal payment successful! Order confirmed.', 'success');
+    showOrderConfirmation(order);
+}
+
+// Process payment
 async function processPayment() {
     // Validate all form fields
     const email = document.getElementById('email');
@@ -224,7 +380,11 @@ async function processPayment() {
     const cardNum = document.getElementById('cardNumber');
     const cardName = document.getElementById('cardName');
     
-    // Run all validations
+    // Check if PayPal is selected — skip card validation
+    var selectedPayment = document.querySelector('input[name="payment"]:checked');
+    var isPayPal = selectedPayment && selectedPayment.value === 'paypal';
+    
+    // Run all validations (skip card fields for PayPal)
     const validations = [
         { field: email, name: 'Email' },
         { field: firstName, name: 'First Name' },
@@ -234,6 +394,14 @@ async function processPayment() {
         { field: zip, name: 'ZIP Code' },
         { field: country, name: 'Country' }
     ];
+    
+    // Add card validations only for non-PayPal
+    if (!isPayPal) {
+        validations.push(
+            { field: cardNum, name: 'Card Number' },
+            { field: cardName, name: 'Name on Card' }
+        );
+    }
     
     let firstInvalid = null;
     let allValid = true;
@@ -258,6 +426,15 @@ async function processPayment() {
         return;
     }
     
+    // If PayPal is selected, the PayPal button handles payment — just validate shipping
+    if (isPayPal) {
+        showCheckoutNotification('Please click the PayPal button below to complete your payment', 'info');
+        // Scroll to PayPal button
+        var paypalContainer = document.getElementById('paypal-button-container');
+        if (paypalContainer) paypalContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+    
     // Get cart data
     const cartData = getCartData();
     
@@ -276,22 +453,22 @@ async function processPayment() {
     // Get shipping method and costs
     const selectedShipping = document.querySelector('input[name="shipping"]:checked');
     let shippingMethod = 'standard';
-    let shippingLabel = 'Standard Shipping (China Post)';
+    let shippingLabel = 'Standard Shipping';
     let shippingCost = 0;
     if (selectedShipping) {
         shippingMethod = selectedShipping.value;
         switch(shippingMethod) {
             case 'express':
                 shippingCost = 9.99;
-                shippingLabel = 'Express Shipping (DHL/UPS)';
+                shippingLabel = 'Express Shipping';
                 break;
             case 'overnight':
                 shippingCost = 19.99;
-                shippingLabel = 'Priority Shipping';
+                shippingLabel = 'Overnight Shipping';
                 break;
             default:
                 shippingCost = 0;
-                shippingLabel = 'Standard Shipping (China Post)';
+                shippingLabel = 'Standard Shipping';
         }
     }
     
@@ -328,12 +505,6 @@ async function processPayment() {
     }
     
     // === LOCAL SIMULATION (Stripe not configured / fallback) ===
-    // Show processing state
-    if (payButton) {
-        payButton.disabled = true;
-        payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing (Demo)...';
-    }
-    
     setTimeout(function() {
         // Payment successful — 生成订单号
         const now = new Date();
@@ -367,6 +538,19 @@ async function processPayment() {
         // 保存到 shopeasy_last_order 供 order-confirmed.html 读取
         saveLastOrder(order);
         
+        // 同步到 DSers（一件代发自动下单）
+        if (typeof window.dsersIntegration !== 'undefined') {
+            window.dsersIntegration.syncOrder(order).then(function(result) {
+                if (result.success) {
+                    console.log('✅ DSers order synced:', result.dsers_order_id);
+                } else {
+                    console.warn('⚠️ DSers sync failed:', result.error);
+                }
+            }).catch(function(err) {
+                console.warn('⚠️ DSers sync error:', err);
+            });
+        }
+        
         // Clear cart
         clearCart();
         
@@ -393,39 +577,16 @@ async function processPayment() {
 function saveOrder(order) {
     try {
         let orders = [];
-        const saved = localStorage.getItem('shopEasyOrders');
+        const saved = localStorage.getItem('ShopEasyOrders');
         if (saved) {
             try {
                 orders = JSON.parse(saved);
                 if (!Array.isArray(orders)) orders = [];
             } catch(e) { orders = []; }
         }
-        orders.unshift(order); // 最新订单在最前面
-        localStorage.setItem('shopEasyOrders', JSON.stringify(orders));
+        orders.unshift(order);
+        localStorage.setItem('ShopEasyOrders', JSON.stringify(orders));
         console.log('订单已保存:', order.id);
-
-        // 发送订单通知到邮箱（静默发送，不影响用户体验）
-        // 使用 Formspree 免费表单服务
-        // 如需更换通知邮箱，去 https://formspree.io 注册免费账号
-        try {
-            fetch('https://formspree.io/f/xeojpvdr', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    subject: '新订单通知 - ' + order.id,
-                    orderId: order.id,
-                    orderDate: order.date,
-                    customer: order.customer ? (order.customer.email || '') : '',
-                    total: order.total || 0,
-                    items: (order.items || []).map(function(i) {
-                        return i.name + ' x' + (i.quantity || 1) + ' = $' + ((i.price || 0) * (i.quantity || 1)).toFixed(2);
-                    }).join(', '),
-                    paymentMethod: (order.payment && order.payment.method) || 'Unknown',
-                    _gotcha: '',
-                })
-            }).catch(function() {});
-        } catch(e) {}
-
     } catch(e) {
         console.log('无法保存订单到localStorage');
     }
@@ -438,11 +599,7 @@ function clearCart() {
         window.cart.count = 0;
         window.cart.total = 0;
         try {
-            localStorage.setItem('shopEasyCart', JSON.stringify(window.cart));
-        } catch(e) {}
-    } else {
-        try {
-            localStorage.setItem('shopEasyCart', JSON.stringify({ items: [], total: 0, count: 0 }));
+            localStorage.setItem('ShopEasyCart', JSON.stringify(window.cart));
         } catch(e) {}
     }
 }
@@ -629,7 +786,7 @@ window.closeOrderConfirmation = function() {
 // loadOrderHistory() — 加载最近订单
 function loadOrderHistory() {
     try {
-        const saved = localStorage.getItem('shopEasyOrders');
+        const saved = localStorage.getItem('aeroPetOrders');
         if (!saved) return [];
         const orders = JSON.parse(saved);
         if (!Array.isArray(orders)) return [];
@@ -714,3 +871,48 @@ function saveLastOrder(order) {
         console.log('Could not save last order data');
     }
 }
+
+/**
+ * Collect all data for a complete order
+ */
+window.collectOrderData = function(orderId = null) {
+    const cartData = (window.cart && window.cart.items) ? window.cart : { items: [], total: 0 };
+    
+    // Get values from form
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const email = document.getElementById('email');
+    const address = document.getElementById('address');
+    const city = document.getElementById('city');
+    const zip = document.getElementById('zip');
+    const country = document.getElementById('country');
+
+    const customer = {
+        email: email ? email.value : '',
+        firstName: firstName ? firstName.value : '',
+        lastName: lastName ? lastName.value : '',
+        address: address ? address.value : '',
+        city: city ? city.value : '',
+        zip: zip ? zip.value : '',
+        country: country ? country.value : ''
+    };
+    
+    // Get shipping info
+    const selectedShipping = document.querySelector('input[name="shipping"]:checked');
+    let shippingLabel = 'Standard Shipping';
+    if (selectedShipping) {
+        switch(selectedShipping.value) {
+            case 'express': shippingLabel = 'Express Shipping'; break;
+            case 'overnight': shippingLabel = 'Overnight Shipping'; break;
+        }
+    }
+
+    return {
+        id: orderId || `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        customer: customer,
+        items: cartData.items || [],
+        total: cartData.total || 0,
+        shippingMethod: shippingLabel,
+        timestamp: new Date().toISOString()
+    };
+};

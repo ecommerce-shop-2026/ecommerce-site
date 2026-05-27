@@ -1,358 +1,334 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <meta name="google-site-verification" content="C2y6ulUFoXo53vGFft0igq6FE-q4e1HS4tf-BavIJAE">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed - ShopEasy</title>
-    <meta name="description" content="Your order has been confirmed. Thank you for shopping with ShopEasy.">
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="canonical" href="https://shop2026easy.com/order-confirmed.html">
-    <!-- Open Graph -->
-    <meta property="og:title" content="Order Confirmed - ShopEasy">
-    <meta property="og:description" content="Your order has been confirmed. Thank you for shopping with ShopEasy.">
-    <meta property="og:image" content="https://shop2026easy.com/images/favicon.ico">
-    <meta property="og:url" content="https://shop2026easy.com/order-confirmed.html">
-    <meta property="og:type" content="website">
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Order Confirmed - ShopEasy">
-    <meta name="twitter:description" content="Your order has been confirmed. Thank you for shopping with ShopEasy.">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#FFD700">
-
-    <script src="js/error-diagnostics.js"></script>
-    <style>
-        .confirmed-page {
-            min-height: 100vh;
-            background: #f8f9fa;
-            padding: 120px 20px 60px;
-        }
-        .confirmed-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            padding: 50px 40px;
-            text-align: center;
-            animation: confirmedIn 0.6s ease;
-        }
-        @keyframes confirmedIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .confirmed-icon {
-            font-size: 4.5rem;
-            color: #27ae60;
-            margin-bottom: 15px;
-        }
-        .confirmed-icon i {
-            animation: checkmarkBounce 0.6s ease;
-        }
-        @keyframes checkmarkBounce {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-        .confirmed-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        .confirmed-subtitle {
-            color: #888;
-            font-size: 1rem;
-            margin-bottom: 30px;
-        }
-        .order-number {
-            display: inline-block;
-            background: #f0f4ff;
-            padding: 10px 24px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-        }
-        .order-details {
-            text-align: left;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 20px 0;
-            margin-bottom: 20px;
-        }
-        .order-details h3 {
-            font-size: 0.9rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 0.9rem;
-        }
-        .detail-row .label { color: #888; }
-        .detail-row .value { color: #333; font-weight: 500; }
-        .order-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 15px 0 5px;
-            color: #333;
-        }
-        .confirmed-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        .confirmed-actions .btn-primary {
-            padding: 14px 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .confirmed-actions .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
-        }
-        .confirmed-actions .btn-secondary {
-            padding: 14px 30px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            color: #555;
-            background: white;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .confirmed-actions .btn-secondary:hover {
-            border-color: #667eea;
-            color: #667eea;
-        }
-        .email-notice {
-            color: #999;
-            font-size: 0.85rem;
-            margin-top: 20px;
-        }
-        .email-notice i { color: #667eea; }
-        .confirmed-skeleton { text-align: center; padding: 80px 0; }
-        .confirmed-skeleton .spinner { margin: 0 auto 20px; }
-        @media (max-width: 768px) {
-            .confirmed-container { padding: 30px 20px; }
-            .confirmed-title { font-size: 1.4rem; }
-        }
-    </style>
-    <!-- Cloudflare Web Analytics -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0acb25389a1a400bb4c27d88defc5c60"}'></script>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-link"><i class="fas fa-shopping-bag"></i><span class="logo-text">ShopEasy</span></a>
-            </div>
-            <div class="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
-                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> View All Products</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
-                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
-                </ul>
-            </div>
-            <div class="nav-actions">
-                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
-                <a href="cart.html" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
-                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
-                <button class="btn-lang-switcher" data-i18n-switcher onclick="i18n.toggle()" style="background:transparent;color:#FFD700;border:1px solid #FFD700;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;"><i class="fas fa-language"></i> <span data-i18n-switcher-label>中文</span></button><button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
-            </div>
-            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
-        </div>
-    </nav>
-
-    <section class="confirmed-page">
-        <div class="confirmed-container">
-            <!-- Loading state -->
-            <div class="confirmed-skeleton" id="confirmedSkeleton">
-                <div class="spinner"></div>
-                <p>Loading order details...</p>
-            </div>
-
-            <!-- Content -->
-            <div class="confirmed-content" id="confirmedContent" style="display:none;">
-                <div class="confirmed-icon"><i class="fas fa-check-circle"></i></div>
-                <h1 class="confirmed-title">Order Confirmed!</h1>
-                <p class="confirmed-subtitle">Thank you for your purchase. Your order has been placed successfully.</p>
-                <div class="order-number" id="orderNumber">ORD-20260425-XXXXX</div>
-                
-                <div class="order-details">
-                    <h3><i class="fas fa-receipt"></i> Order Summary</h3>
-                    <div id="orderItems"></div>
-                    <div class="order-total">
-                        <span>Total Charged</span>
-                        <span id="orderTotal">$0.00</span>
-                    </div>
-                </div>
-
-                <div class="order-details">
-                    <h3><i class="fas fa-truck"></i> Shipping To</h3>
-                    <div id="shippingInfo"></div>
-                </div>
-
-                <div class="confirmed-actions">
-                    <a href="order-history.html" class="btn-primary"><i class="fas fa-history"></i> View My Orders</a>
-                    <a href="products/" class="btn-secondary"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
-                </div>
-                
-                <p class="email-notice"><i class="fas fa-envelope"></i> A confirmation email has been sent to your email address.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
-                    <p>Your trusted online shopping destination.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html#products">Products</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-support">
-                    <h4>Help</h4>
-                    <ul>
-                        <li><a href="index.html#returns">Returns</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        (function() {
-            'use strict';
-            var ORDER_KEY = 'shopeasy_last_order';
-
-            function loadOrder() {
-                var skeleton = document.getElementById('confirmedSkeleton');
-                var content = document.getElementById('confirmedContent');
-
-                try {
-                    var orderData = JSON.parse(localStorage.getItem(ORDER_KEY)) ||
-                                    JSON.parse(sessionStorage.getItem(ORDER_KEY));
-                } catch(e) { orderData = null; }
-
-                // Simulate brief loading
-                setTimeout(function() {
-                    skeleton.style.display = 'none';
-                    content.style.display = 'block';
-
-                    if (!orderData) {
-                        document.getElementById('orderNumber').textContent = 'Demo Order';
-                        document.getElementById('orderTotal').textContent = '$0.00';
-                        document.getElementById('orderItems').innerHTML = '<p style="color:#888;">Demo order - placeholder data</p>';
-    document.getElementById('shippingInfo').innerHTML = '<p style="color:#888;font-size:13px;">Shipping from China via standard post. Tracking number will be provided within 3-5 business days after order processing.</p>';
-                        return;
-                    }
-
-                    // Order number
-                    document.getElementById('orderNumber').textContent = orderData.orderId || 'ORD-UNKNOWN';
-
-                    // Order items
-                    var itemsHtml = '';
-                    if (orderData.items && orderData.items.length) {
-                        orderData.items.forEach(function(item) {
-                            itemsHtml += '<div class="detail-row">' +
-                                '<span class="label">' + (item.name || 'Product') + ' x' + (item.quantity || 1) + '</span>' +
-                                '<span class="value">' + (item.price || '$0.00') + '</span>' +
-                                '</div>';
-                        });
-                    } else {
-                        itemsHtml = '<div class="detail-row"><span class="label">Items from cart</span><span class="value">See order history</span></div>';
-                    }
-                    document.getElementById('orderItems').innerHTML = itemsHtml;
-
-                    // Total
-                    document.getElementById('orderTotal').textContent = orderData.total || '$0.00';
-
-                    // Shipping
-                    var shipping = orderData.shipping || {};
-                    var shipHtml = '';
-                    if (shipping.firstName || shipping.lastName) {
-                        shipHtml += '<div class="detail-row"><span class="label">Name</span><span class="value">' + (shipping.firstName || '') + ' ' + (shipping.lastName || '') + '</span></div>';
-                    }
-                    if (shipping.address) {
-                        shipHtml += '<div class="detail-row"><span class="label">Address</span><span class="value">' + shipping.address + '</span></div>';
-                    }
-                    if (shipping.city || shipping.zip) {
-                        shipHtml += '<div class="detail-row"><span class="label">City/ZIP</span><span class="value">' + (shipping.city || '') + ' ' + (shipping.zip || '') + '</span></div>';
-                    }
-                    if (shipping.country) {
-                        shipHtml += '<div class="detail-row"><span class="label">Country</span><span class="value">' + shipping.country + '</span></div>';
-                    }
-                    if (!shipHtml) {
-                        shipHtml = '<p style="color:#888;">No shipping information available</p>';
-                    }
-                    document.getElementById('shippingInfo').innerHTML = shipHtml;
-
-                }, 800);
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadOrder);
-            } else {
-                loadOrder();
-            }
-        })();
-    </script>
-    <script src="js/i18n.js"></script>
-    <script src="js/main.js"></script>
-
-    <!-- PWA -->
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
-    </script>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|    <title>Order Confirmed - ShopEasy</title>
+     7|    <meta name="description" content="Your order has been confirmed. Thank you for shopping with ShopEasy.">
+     8|    <meta name="robots" content="noindex, nofollow">
+     9|    <link rel="canonical" href="https://shop2026easy.com/order-confirmed.html">
+    10|    <link rel="stylesheet" href="css/style.css">
+    11|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    12|    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    13|    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    14|    <script src="js/error-diagnostics.js"></script>
+    15|    <style>
+    16|        .confirmed-page {
+    17|            min-height: 100vh;
+    18|            background: #f8f9fa;
+    19|            padding: 120px 20px 60px;
+    20|        }
+    21|        .confirmed-container {
+    22|            max-width: 700px;
+    23|            margin: 0 auto;
+    24|            background: white;
+    25|            border-radius: 20px;
+    26|            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    27|            padding: 50px 40px;
+    28|            text-align: center;
+    29|            animation: confirmedIn 0.6s ease;
+    30|        }
+    31|        @keyframes confirmedIn {
+    32|            from { opacity: 0; transform: translateY(30px); }
+    33|            to { opacity: 1; transform: translateY(0); }
+    34|        }
+    35|        .confirmed-icon {
+    36|            font-size: 4.5rem;
+    37|            color: #27ae60;
+    38|            margin-bottom: 15px;
+    39|        }
+    40|        .confirmed-icon i {
+    41|            animation: checkmarkBounce 0.6s ease;
+    42|        }
+    43|        @keyframes checkmarkBounce {
+    44|            0% { transform: scale(0); }
+    45|            50% { transform: scale(1.3); }
+    46|            100% { transform: scale(1); }
+    47|        }
+    48|        .confirmed-title {
+    49|            font-size: 1.8rem;
+    50|            font-weight: 700;
+    51|            color: #333;
+    52|            margin-bottom: 8px;
+    53|        }
+    54|        .confirmed-subtitle {
+    55|            color: #888;
+    56|            font-size: 1rem;
+    57|            margin-bottom: 30px;
+    58|        }
+    59|        .order-number {
+    60|            display: inline-block;
+    61|            background: #f0f4ff;
+    62|            padding: 10px 24px;
+    63|            border-radius: 10px;
+    64|            font-size: 1.1rem;
+    65|            font-weight: 700;
+    66|            color: #667eea;
+    67|            margin-bottom: 30px;
+    68|            letter-spacing: 1px;
+    69|        }
+    70|        .order-details {
+    71|            text-align: left;
+    72|            border-top: 1px solid #eee;
+    73|            border-bottom: 1px solid #eee;
+    74|            padding: 20px 0;
+    75|            margin-bottom: 20px;
+    76|        }
+    77|        .order-details h3 {
+    78|            font-size: 0.9rem;
+    79|            color: #888;
+    80|            text-transform: uppercase;
+    81|            letter-spacing: 1px;
+    82|            margin-bottom: 12px;
+    83|        }
+    84|        .detail-row {
+    85|            display: flex;
+    86|            justify-content: space-between;
+    87|            padding: 6px 0;
+    88|            font-size: 0.9rem;
+    89|        }
+    90|        .detail-row .label { color: #888; }
+    91|        .detail-row .value { color: #333; font-weight: 500; }
+    92|        .order-total {
+    93|            display: flex;
+    94|            justify-content: space-between;
+    95|            font-size: 1.2rem;
+    96|            font-weight: 700;
+    97|            padding: 15px 0 5px;
+    98|            color: #333;
+    99|        }
+   100|        .confirmed-actions {
+   101|            display: flex;
+   102|            gap: 12px;
+   103|            justify-content: center;
+   104|            margin-top: 30px;
+   105|            flex-wrap: wrap;
+   106|        }
+   107|        .confirmed-actions .btn-primary {
+   108|            padding: 14px 30px;
+   109|            background: linear-gradient(135deg, #667eea, #764ba2);
+   110|            color: white;
+   111|            border: none;
+   112|            border-radius: 10px;
+   113|            font-size: 1rem;
+   114|            font-weight: 600;
+   115|            cursor: pointer;
+   116|            text-decoration: none;
+   117|            transition: transform 0.2s, box-shadow 0.2s;
+   118|            display: inline-flex;
+   119|            align-items: center;
+   120|            gap: 8px;
+   121|        }
+   122|        .confirmed-actions .btn-primary:hover {
+   123|            transform: translateY(-2px);
+   124|            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+   125|        }
+   126|        .confirmed-actions .btn-secondary {
+   127|            padding: 14px 30px;
+   128|            border: 2px solid #e0e0e0;
+   129|            border-radius: 10px;
+   130|            font-size: 1rem;
+   131|            font-weight: 600;
+   132|            cursor: pointer;
+   133|            text-decoration: none;
+   134|            color: #555;
+   135|            background: white;
+   136|            transition: all 0.3s;
+   137|            display: inline-flex;
+   138|            align-items: center;
+   139|            gap: 8px;
+   140|        }
+   141|        .confirmed-actions .btn-secondary:hover {
+   142|            border-color: #667eea;
+   143|            color: #667eea;
+   144|        }
+   145|        .email-notice {
+   146|            color: #999;
+   147|            font-size: 0.85rem;
+   148|            margin-top: 20px;
+   149|        }
+   150|        .email-notice i { color: #667eea; }
+   151|        .confirmed-skeleton { text-align: center; padding: 80px 0; }
+   152|        .confirmed-skeleton .spinner { margin: 0 auto 20px; }
+   153|        @media (max-width: 768px) {
+   154|            .confirmed-container { padding: 30px 20px; }
+   155|            .confirmed-title { font-size: 1.4rem; }
+   156|        }
+   157|    </style>
+   158|</head>
+   159|<body>
+   160|    <nav class="navbar">
+   161|        <div class="nav-container">
+   162|            <div class="nav-logo">
+   163|                <a href="index.html" class="logo-link"><i class="fas fa-shopping-bag"></i><span class="logo-text">ShopEasy</span></a>
+   164|            </div>
+   165|            <div class="nav-menu">
+   166|                <ul class="nav-list">
+   167|                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+   168|                    <li class="nav-item"><a href="index.html#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+   169|                    <li class="nav-item"><a href="products/" class="nav-link"><i class="fas fa-eye"></i> View All Products</a></li>
+   170|                    <li class="nav-item"><a href="blog.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+   171|                    <li class="nav-item"><a href="order-history.html" class="nav-link"><i class="fas fa-history"></i> My Orders</a></li>
+   172|                    <li class="nav-item"><a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a></li>
+   173|                </ul>
+   174|            </div>
+   175|            <div class="nav-actions">
+   176|                <a href="wishlist.html" class="btn-wishlist-nav"><i class="fas fa-heart"></i><span class="wishlist-count">0</span></a>
+   177|                <a href="#cart" class="btn-cart"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+   178|                <button class="btn-login" onclick="window.location.href='auth.html'">Sign In</button>
+   179|                <button class="btn-register" onclick="window.location.href='auth.html'">Register</button>
+   180|            </div>
+   181|            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+   182|        </div>
+   183|    </nav>
+   184|
+   185|    <section class="confirmed-page">
+   186|        <div class="confirmed-container">
+   187|            <!-- Loading state -->
+   188|            <div class="confirmed-skeleton" id="confirmedSkeleton">
+   189|                <div class="spinner"></div>
+   190|                <p>Loading order details...</p>
+   191|            </div>
+   192|
+   193|            <!-- Content -->
+   194|            <div class="confirmed-content" id="confirmedContent" style="display:none;">
+   195|                <div class="confirmed-icon"><i class="fas fa-check-circle"></i></div>
+   196|                <h1 class="confirmed-title">Order Confirmed!</h1>
+   197|                <p class="confirmed-subtitle">Thank you for your purchase. Your order has been placed successfully.</p>
+   198|                <div class="order-number" id="orderNumber">ORD-20260425-XXXXX</div>
+   199|                
+   200|                <div class="order-details">
+   201|                    <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+   202|                    <div id="orderItems"></div>
+   203|                    <div class="order-total">
+   204|                        <span>Total Charged</span>
+   205|                        <span id="orderTotal">$0.00</span>
+   206|                    </div>
+   207|                </div>
+   208|
+   209|                <div class="order-details">
+   210|                    <h3><i class="fas fa-truck"></i> Shipping To</h3>
+   211|                    <div id="shippingInfo"></div>
+   212|                </div>
+   213|
+   214|                <div class="confirmed-actions">
+   215|                    <a href="order-history.html" class="btn-primary"><i class="fas fa-history"></i> View My Orders</a>
+   216|                    <a href="products/" class="btn-secondary"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
+   217|                </div>
+   218|                
+   219|                <p class="email-notice"><i class="fas fa-envelope"></i> A confirmation email has been sent to your email address.</p>
+   220|            </div>
+   221|        </div>
+   222|    </section>
+   223|
+   224|    <footer class="footer">
+   225|        <div class="container">
+   226|            <div class="footer-content">
+   227|                <div class="footer-logo">
+   228|                    <h3><i class="fas fa-shopping-bag"></i> ShopEasy</h3>
+   229|                    <p>Your trusted online shopping destination.</p>
+   230|                </div>
+   231|                <div class="footer-links">
+   232|                    <h4>Quick Links</h4>
+   233|                    <ul>
+   234|                        <li><a href="index.html">Home</a></li>
+   235|                        <li><a href="index.html#products">Products</a></li>
+   236|                        <li><a href="blog.html">Blog</a></li>
+   237|                    </ul>
+   238|                </div>
+   239|                <div class="footer-support">
+   240|                    <h4>Help</h4>
+   241|                    <ul>
+   242|                        <li><a href="index.html#returns">Returns</a></li>
+   243|                        <li><a href="contact.html">Contact</a></li>
+   244|                    </ul>
+   245|                </div>
+   246|            </div>
+   247|            <div class="footer-bottom">
+   248|                <p>&copy; 2026 ShopEasy. All rights reserved.</p>
+   249|            </div>
+   250|        </div>
+   251|    </footer>
+   252|
+   253|    <script>
+   254|        (function() {
+   255|            'use strict';
+   256|            var ORDER_KEY = 'shopeasy_last_order';
+   257|
+   258|            function loadOrder() {
+   259|                var skeleton = document.getElementById('confirmedSkeleton');
+   260|                var content = document.getElementById('confirmedContent');
+   261|
+   262|                try {
+   263|                    var orderData = JSON.parse(localStorage.getItem(ORDER_KEY)) ||
+   264|                                    JSON.parse(sessionStorage.getItem(ORDER_KEY));
+   265|                } catch(e) { orderData = null; }
+   266|
+   267|                // Simulate brief loading
+   268|                setTimeout(function() {
+   269|                    skeleton.style.display = 'none';
+   270|                    content.style.display = 'block';
+   271|
+   272|                    if (!orderData) {
+   273|                        document.getElementById('orderNumber').textContent = 'Demo Order';
+   274|                        document.getElementById('orderTotal').textContent = '$0.00';
+   275|                        document.getElementById('orderItems').innerHTML = '<p style="color:#888;">Demo order - placeholder data</p>';
+   276|                        document.getElementById('shippingInfo').innerHTML = '<p style="color:#888;">No shipping info available</p>';
+   277|                        return;
+   278|                    }
+   279|
+   280|                    // Order number
+   281|                    document.getElementById('orderNumber').textContent = orderData.orderId || 'ORD-UNKNOWN';
+   282|
+   283|                    // Order items
+   284|                    var itemsHtml = '';
+   285|                    if (orderData.items && orderData.items.length) {
+   286|                        orderData.items.forEach(function(item) {
+   287|                            itemsHtml += '<div class="detail-row">' +
+   288|                                '<span class="label">' + (item.name || 'Product') + ' x' + (item.quantity || 1) + '</span>' +
+   289|                                '<span class="value">' + (item.price || '$0.00') + '</span>' +
+   290|                                '</div>';
+   291|                        });
+   292|                    } else {
+   293|                        itemsHtml = '<div class="detail-row"><span class="label">Items from cart</span><span class="value">See order history</span></div>';
+   294|                    }
+   295|                    document.getElementById('orderItems').innerHTML = itemsHtml;
+   296|
+   297|                    // Total
+   298|                    document.getElementById('orderTotal').textContent = orderData.total || '$0.00';
+   299|
+   300|                    // Shipping
+   301|                    var shipping = orderData.shipping || {};
+   302|                    var shipHtml = '';
+   303|                    if (shipping.firstName || shipping.lastName) {
+   304|                        shipHtml += '<div class="detail-row"><span class="label">Name</span><span class="value">' + (shipping.firstName || '') + ' ' + (shipping.lastName || '') + '</span></div>';
+   305|                    }
+   306|                    if (shipping.address) {
+   307|                        shipHtml += '<div class="detail-row"><span class="label">Address</span><span class="value">' + shipping.address + '</span></div>';
+   308|                    }
+   309|                    if (shipping.city || shipping.zip) {
+   310|                        shipHtml += '<div class="detail-row"><span class="label">City/ZIP</span><span class="value">' + (shipping.city || '') + ' ' + (shipping.zip || '') + '</span></div>';
+   311|                    }
+   312|                    if (shipping.country) {
+   313|                        shipHtml += '<div class="detail-row"><span class="label">Country</span><span class="value">' + shipping.country + '</span></div>';
+   314|                    }
+   315|                    if (!shipHtml) {
+   316|                        shipHtml = '<p style="color:#888;">No shipping information available</p>';
+   317|                    }
+   318|                    document.getElementById('shippingInfo').innerHTML = shipHtml;
+   319|
+   320|                }, 800);
+   321|            }
+   322|
+   323|            if (document.readyState === 'loading') {
+   324|                document.addEventListener('DOMContentLoaded', loadOrder);
+   325|            } else {
+   326|                loadOrder();
+   327|            }
+   328|        })();
+   329|    </script>
+   330|    <script src="js/main.js"></script>
+   331|  <script src="js/email-capture.js"></script>
 </body>
-</html>
+   332|</html>
+   333|

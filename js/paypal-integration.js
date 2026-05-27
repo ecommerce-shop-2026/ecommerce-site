@@ -1,256 +1,197 @@
 /**
- * PayPal Payment Integration for ShopEasy
+ * PayPal Integration Module for ShopEasy
  * 
- * Uses PayPal Smart Buttons for client-side checkout.
- * No backend required — works on static sites (GitHub Pages).
+ * Handles PayPal payment via the client-side JavaScript SDK.
+ * No backend required — works entirely on static GitHub Pages hosting.
  * 
- * ===== SETUP =====
- * 1. Go to https://developer.paypal.com/dashboard/applications
- * 2. Create a REST API app → copy Client ID
- * 3. Set CLIENT_ID below
- * 
- * ===== TEST =====
- * Sandbox test accounts: https://developer.paypal.com/dashboard/accounts
+ * Dependencies: PayPal SDK (loaded in payment.html)
  */
 
-const PAYPAL_CONFIG = {
-    // === STEP 1: Replace with your PayPal Client ID ===
-    CLIENT_ID: 'EHpg9e77mqLk_h4rEJtOcMp4yXmWGMvLg18sRiYwmOSqBpQ84CFL3kyqNxIWzDTO1xVPTaqWT4vRvajJ',
+(function() {
+    'use strict';
 
-    CURRENCY: 'USD',
-    STYLE: {
-        layout: 'vertical',
-        color: 'gold',
-        shape: 'rect',
-        label: 'paypal',
-        tagline: false,
-    },
-};
+    const PAYPAL_CLIENT_ID = 'EGio8dplZepKFlO-dHw3xMrGx9eKu9VI2u9hbJ4UNsRalbiUvzUF7B1zsyE-kWlbz-LH6TV28F3dmPvD';
 
-let paypalButtonsRendered = false;
-let paypalSdkLoaded = false;
+    var paypalScriptLoaded = false;
+    var paypalButtonsRendered = false;
 
-function isPayPalConfigured() {
-    return PAYPAL_CONFIG.CLIENT_ID &&
-        typeof PAYPAL_CONFIG.CLIENT_ID === 'string' &&
-        PAYPAL_CONFIG.CLIENT_ID.length > 10;
-}
+    /**
+     * Load PayPal SDK script dynamically
+     */
+    function loadPayPalSDK(currency) {
+        return new Promise(function(resolve, reject) {
+            if (paypalScriptLoaded && typeof paypal !== 'undefined') {
+                resolve();
+                return;
+            }
 
-/**
- * Dynamically load PayPal JS SDK
- */
-function loadPayPalSDK() {
-    if (paypalSdkLoaded) return;
-    if (!isPayPalConfigured()) return;
-
-    paypalSdkLoaded = true;
-    var script = document.createElement('script');
-    script.src = 'https://www.paypal.com/sdk/js?client-id=' + PAYPAL_CONFIG.CLIENT_ID +
-                 '&currency=' + PAYPAL_CONFIG.CURRENCY;
-    script.onload = function() {
-        renderPayPalButtons();
-    };
-    script.onerror = function() {
-        console.error('Failed to load PayPal SDK');
-        document.getElementById('paypal-button-container').innerHTML =
-            '<p style="color:#FF6B6B;text-align:center;font-size:13px;">Failed to load PayPal. Check your Client ID.</p>';
-    };
-    document.body.appendChild(script);
-}
-
-function renderPayPalButtons() {
-    if (paypalButtonsRendered) return;
-
-    var container = document.getElementById('paypal-button-container');
-    if (!container) return;
-    container.innerHTML = '';
-
-    if (typeof paypal === 'undefined') {
-        container.innerHTML = '<p style="color:#888;text-align:center;font-size:13px;">PayPal SDK loading...</p>';
-        return;
+            var script = document.createElement('script');
+            script.src = 'https://www.paypal.com/sdk/js?client-id=' + PAYPAL_CLIENT_ID +
+                '&currency=' + (currency || 'USD') +
+                '&intent=capture';
+            script.onload = function() {
+                paypalScriptLoaded = true;
+                console.log('PayPal SDK loaded');
+                resolve();
+            };
+            script.onerror = function() {
+                console.error('Failed to load PayPal SDK');
+                reject(new Error('PayPal SDK failed to load'));
+            };
+            document.head.appendChild(script);
+        });
     }
 
-    try {
-        paypal.Buttons({
-            style: PAYPAL_CONFIG.STYLE,
+    /**
+     * Render PayPal buttons in the specified container
+     * @param {string} containerId - DOM element ID for the button container
+     * @param {object} orderData - { total, currency, items, orderDescription }
+     * @param {function} onSuccess - Callback(orderResult) on successful payment
+     * @param {function} onError - Callback(error) on payment failure
+     */
+    window.renderPayPalButton = function(containerId, orderData, onSuccess, onError) {
+        var container = document.getElementById(containerId);
+        if (!container) {
+            console.error('PayPal container #' + containerId + ' not found');
+            return;
+        }
 
-            createOrder: function() {
-                var cartData = getCartDataForPayPal();
-                if (!cartData || !cartData.items || cartData.items.length === 0) {
-                    showNotification('Your cart is empty', 'error');
-                    return;
+        if (paypalButtonsRendered) {
+            // Already rendered, just show the container
+            container.style.display = 'block';
+            return;
+        }
+
+        var currency = orderData.currency || 'USD';
+        var total = orderData.total || 0;
+
+        if (total <= 0) {
+            console.warn('PayPal: order total is $0, cannot render buttons');
+            if (onError) onError(new Error('Cart is empty'));
+            return;
+        }
+
+        loadPayPalSDK(currency).then(function() {
+            container.style.display = 'block';
+
+            // Clear any previous buttons
+            container.innerHTML = '';
+
+            paypal.Buttons({
+
+                style: {
+                    layout: 'vertical',
+                    color: 'gold',
+                    shape: 'rect',
+                    label: 'paypal'
+                },
+
+                // Create the order on PayPal
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: orderData.orderDescription || 'ShopEasy Order',
+                            amount: {
+                                currency_code: currency,
+                                value: total.toFixed(2),
+                                breakdown: {
+                                    item_total: {
+                                        currency_code: currency,
+                                        value: (orderData.subtotal || total).toFixed(2)
+                                    },
+                                    shipping: {
+                                        currency_code: currency,
+                                        value: (orderData.shipping || 0).toFixed(2)
+                                    },
+                                    tax_total: {
+                                        currency_code: currency,
+                                        value: (orderData.tax || 0).toFixed(2)
+                                    }
+                                }
+                            },
+                            items: (orderData.items || []).map(function(item, i) {
+                                return {
+                                    name: item.name || ('Item ' + (i + 1)),
+                                    quantity: String(item.quantity || 1),
+                                    unit_amount: {
+                                        currency_code: currency,
+                                        value: (item.price || 0).toFixed(2)
+                                    }
+                                };
+                            })
+                        }]
+                    });
+                },
+
+                // Finalize the transaction after buyer approval
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        console.log('PayPal payment captured:', details);
+
+                        // Mark PayPal buttons as rendered so we don't re-render
+                        paypalButtonsRendered = true;
+
+                        // Hide the button container
+                        container.style.display = 'none';
+
+                        var result = {
+                            orderID: data.orderID,
+                            payerID: details.payer ? details.payer.payer_id : '',
+                            payerName: (details.payer && details.payer.name) ?
+                                details.payer.name.given_name + ' ' + details.payer.name.surname :
+                                '',
+                            payerEmail: details.payer ? details.payer.email : '',
+                            status: details.status || 'COMPLETED',
+                            method: 'paypal'
+                        };
+
+                        if (onSuccess) onSuccess(result);
+                    });
+                },
+
+                // Handle errors
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    if (onError) onError(err);
+                },
+
+                // Buyer cancelled the PayPal popup
+                onCancel: function(data) {
+                    console.log('PayPal payment cancelled by user');
+                    if (onError) onError(new Error('Payment cancelled'));
                 }
 
-                // Build purchase_units for client-side order
-                var total = cartData.total || 0;
-                var items = cartData.items.map(function(item) {
-                    return {
-                        name: item.name,
-                        unit_amount: {
-                            currency_code: PAYPAL_CONFIG.CURRENCY,
-                            value: (item.price || 0).toFixed(2)
-                        },
-                        quantity: item.quantity || 1,
-                    };
-                });
+            }).render('#' + containerId);
 
-                // Static site (GitHub Pages): create order client-side
-                return paypal.Buttons().createOrder({
-                    purchase_units: [{
-                        amount: {
-                            currency_code: PAYPAL_CONFIG.CURRENCY,
-                            value: total.toFixed(2),
-                            breakdown: {
-                                item_total: {
-                                    currency_code: PAYPAL_CONFIG.CURRENCY,
-                                    value: total.toFixed(2)
-                                }
-                            }
-                        },
-                        items: items
-                    }]
-                });
-            },
-
-            onApprove: function(data) {
-                completePayPalOrder(data);
-            },
-
-            onCancel: function() {
-                showNotification('PayPal payment was cancelled.', 'error');
-                var btn = document.getElementById('payButton');
-                if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Pay Now'; }
-            },
-
-            onError: function(err) {
-                console.error('PayPal error:', err);
-                showNotification('PayPal error. Please try again.', 'error');
-            },
-        }).render('#paypal-button-container').then(function() {
             paypalButtonsRendered = true;
-            document.getElementById('paypal-config-hint').style.display = 'none';
+            console.log('PayPal buttons rendered in #' + containerId);
+
+        }).catch(function(err) {
+            console.error('PayPal setup failed:', err);
+            if (onError) onError(err);
         });
+    };
 
-    } catch (e) {
-        console.error('PayPal render error:', e);
-        container.innerHTML = '<p style="color:#FF6B6B;font-size:13px;text-align:center;">PayPal setup error</p>';
-    }
-}
-
-function completePayPalOrder(data) {
-    var btn = document.getElementById('payButton');
-    if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing PayPal...';
-    }
-
-    var cartData = getCartDataForPayPal();
-    var customer = getCustomerInfo();
-
-    var now = new Date();
-    var dateStr = now.getFullYear() +
-        String(now.getMonth() + 1).padStart(2, '0') +
-        String(now.getDate()).padStart(2, '0');
-    var randomStr = String(Math.floor(Math.random() * 999999)).padStart(6, '0');
-    var orderId = 'PP-' + dateStr + '-' + randomStr;
-
-    var shippingEl = document.querySelector('input[name="shipping"]:checked');
-    var shippingCost = shippingEl && shippingEl.value === 'express' ? 9.99 :
-                       shippingEl && shippingEl.value === 'overnight' ? 19.99 : 0;
-    var shippingLabel = shippingEl && shippingEl.value === 'express' ? 'Express Shipping' :
-                        shippingEl && shippingEl.value === 'overnight' ? 'Overnight Shipping' : 'Standard Shipping';
-    var subtotal = cartData.total || 0;
-    var tax = subtotal * 0.08;
-    var total = subtotal + shippingCost + tax;
-
-    var order = {
-        id: orderId,
-        date: now.toISOString(),
-        items: cartData.items.map(function(i) { return Object.assign({}, i); }),
-        subtotal: subtotal,
-        shipping: shippingCost,
-        tax: tax,
-        total: total,
-        status: 'Paid',
-        shippingMethod: shippingLabel,
-        customer: customer,
-        payment: {
-            method: 'PayPal',
-            status: 'completed',
-            paypalOrderId: data.orderID,
-            paypalPayerId: data.payerID,
+    /**
+     * Hide PayPal buttons (e.g., when switching back to credit card)
+     */
+    window.hidePayPalButton = function(containerId) {
+        var container = document.getElementById(containerId);
+        if (container) {
+            container.style.display = 'none';
         }
     };
 
-    if (typeof saveOrder === 'function') saveOrder(order);
-    if (typeof saveLastOrder === 'function') saveLastOrder(order);
-    if (typeof clearCart === 'function') clearCart();
-
-    if (typeof showOrderConfirmation === 'function') {
-        showOrderConfirmation(order);
-    } else {
-        window.location.href = 'order-confirmed.html';
-    }
-    showNotification('PayPal payment successful! 🎉', 'success');
-}
-
-function getCartDataForPayPal() {
-    if (typeof window.cart !== 'undefined' && window.cart) {
-        return {
-            items: window.cart.items || [],
-            total: window.cart.total || 0,
-            count: window.cart.count || 0,
-        };
-    }
-    try {
-        var saved = localStorage.getItem('shopEasyCart');
-        if (saved) {
-            var parsed = JSON.parse(saved);
-            if (Array.isArray(parsed)) {
-                return {
-                    items: parsed,
-                    total: parsed.reduce(function(s, i) { return s + (i.price * i.quantity); }, 0),
-                    count: parsed.reduce(function(s, i) { return s + i.quantity; }, 0),
-                };
-            }
-            return parsed;
+    /**
+     * Reset PayPal state (when switching payment methods)
+     */
+    window.resetPayPal = function(containerId) {
+        paypalButtonsRendered = false;
+        var container = document.getElementById(containerId);
+        if (container) {
+            container.style.display = 'none';
+            container.innerHTML = '';
         }
-    } catch (e) {}
-    return { items: [], total: 0, count: 0 };
-}
-
-function getCustomerInfo() {
-    return {
-        email: (document.getElementById('email') || {}).value || '',
-        firstName: (document.getElementById('firstName') || {}).value || '',
-        lastName: (document.getElementById('lastName') || {}).value || '',
-        address: (document.getElementById('address') || {}).value || '',
-        city: (document.getElementById('city') || {}).value || '',
-        state: '',
-        zip: (document.getElementById('zip') || {}).value || '',
-        country: (document.getElementById('country') || {}).value || '',
-        phone: '',
     };
-}
 
-function showPayPalSection() {
-    var section = document.getElementById('paypal-section');
-    var hint = document.getElementById('paypal-config-hint');
-    if (!section) return;
-
-    if (!isPayPalConfigured()) {
-        section.style.display = 'none';
-        return;
-    }
-
-    section.style.display = 'block';
-    if (hint) hint.style.display = 'block';
-    loadPayPalSDK();
-}
-
-// Auto-init
-document.addEventListener('DOMContentLoaded', function() {
-    if (isPayPalConfigured()) {
-        showPayPalSection();
-    }
-});
+})();

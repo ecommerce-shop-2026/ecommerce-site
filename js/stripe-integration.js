@@ -20,7 +20,7 @@
 const STRIPE_CONFIG = {
     // === STEP 1: Replace with your Stripe Publishable Key ===
     // Test: replace with your publishable key (starts with pk_)
-    PUBLISHABLE_KEY: 'pk_test_TYooMQauvdEDq54NiTphI7jx', // Stripe public test key
+    PUBLISHABLE_KEY: null, // <--- Replace with your Stripe publishable key
 
     // === STEP 2: Set your deployed API endpoint ===
     // Cloudflare Pages: '/api/create-checkout-session' (same domain, auto)
@@ -217,45 +217,3 @@ function handleStripeReturn() {
 // Run on script load (not DOMContentLoaded — same pattern as cart-system.js)
 // Stripe return handling reads URL params, which are available immediately
 handleStripeReturn();
-
-/**
- * Show inline Stripe setup guide (triggered by clicking demo badge link)
- * Replaces the page content temporarily with setup instructions
- */
-function showStripeGuide() {
-    var overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
-    overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
-    
-    var box = document.createElement('div');
-    box.style.cssText = 'background:#1a1a2e;border:1px solid #FFD700;border-radius:12px;padding:28px;max-width:560px;width:100%;color:#FFF8DC;max-height:80vh;overflow-y:auto;';
-    box.onclick = function(e) { e.stopPropagation(); };
-    
-    box.innerHTML = `
-        <h3 style="color:#FFD700;margin:0 0 12px 0;">🔧 Enable Live Payments</h3>
-        <div style="font-size:14px;line-height:1.7;">
-        <p><b>✅ Stripe key is configured!</b><br>
-        Publishable key is set. To process real payments, you need a backend server.</p>
-        <p><b>Option 1: Deploy Cloudflare Pages Function (recommended)</b><br>
-        → Create account at <a href="https://dash.cloudflare.com" target="_blank" style="color:#87CEEB;">cloudflare.com</a><br>
-        → Set up Pages project linked to <code style="background:#333;padding:2px 6px;border-radius:4px;">ecommerce-shop-2026/ecommerce-site</code><br>
-        → Go to Settings → Environment Variables → Add:<br>
-        <code style="background:#333;padding:2px 6px;border-radius:4px;">STRIPE_SECRET_KEY</code> = <code style="background:#333;padding:2px 6px;border-radius:4px;">sk_test_...</code><br>
-        → The <code style="background:#333;padding:2px 6px;border-radius:4px;">api/create-checkout-session.js</code> function auto-deploys</p>
-        <p><b>Option 2: Use Stripe Payment Link (simplest)</b><br>
-        → Go to <a href="https://dashboard.stripe.com/payment-links" target="_blank" style="color:#87CEEB;">dashboard.stripe.com/payment-links</a><br>
-        → Create a Payment Link → Copy URL<br>
-        → Set <code style="background:#333;padding:2px 6px;border-radius:4px;">PAYMENT_LINK</code> in <code style="background:#333;padding:2px 6px;border-radius:4px;">js/stripe-integration.js</code></p>
-        <p><b>Need a Stripe account?</b><br>
-        → <a href="https://dashboard.stripe.com/register" target="_blank" style="color:#87CEEB;">dashboard.stripe.com/register</a><br>
-        → Then get keys at <a href="https://dashboard.stripe.com/apikeys" target="_blank" style="color:#87CEEB;">dashboard.stripe.com/apikeys</a></p>
-        </div>
-        <div style="margin-top:16px;padding:12px;background:#16213e;border-radius:8px;font-size:13px;color:#B8860B;">
-        <b>💡 While testing:</b> Demo mode handles payments locally. Test with any card info.
-        </div>
-        <button onclick="this.closest(&quot;[style*='fixed']&quot;).remove()" style="margin-top:16px;width:100%;padding:10px;background:#FFD700;color:#1a1a2e;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Got it</button>
-    `;
-    
-    overlay.appendChild(box);
-    document.body.appendChild(overlay);
-}
